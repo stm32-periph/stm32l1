@@ -52,9 +52,6 @@
      High-density devices
      @note The needed define symbols for this config are already declared in the
            preprocessor section: USE_STDPERIPH_DRIVER, STM32L1XX_HD, USE_STM32L152D_EVAL
- - Under Windows->Preferences->General->Workspace->Linked Resources, add 
-   a variable path named "CurPath" which points to the folder containing
-   "Libraries", "Project" and "Utilities" folders.
  - Rebuild all project files: Select the project in the "Project explorer" 
    window then click on Project->build project menu.
  - Run program: Select the project in the "Project explorer" window then click 

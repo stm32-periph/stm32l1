@@ -2,14 +2,14 @@
   ******************************************************************************
   * @file    stm32l1xx_flash.h
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    05-March-2012
+  * @version V1.2.0
+  * @date    22-February-2013
   * @brief   This file contains all the functions prototypes for the FLASH 
   *          firmware library.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -214,6 +214,18 @@ typedef enum
   * @}
   */
 
+
+/** @defgroup  Selection_Protection_Mode
+  * @{
+  */
+#define OB_PcROP_Enable     ((uint16_t)0x0100) /*!< Disabled PcROP, nWPRi bits used for Write Protection on sector i */
+#define OB_PcROP_Disable    ((uint16_t)0x0000) /*!< Enable PcROP, nWPRi bits used for PCRoP Protection on sector i   */
+#define IS_OB_PCROP_SELECT(OB_PcROP) (((OB_PcROP) == OB_PcROP_Enable) || ((OB_PcROP) == OB_PcROP_Disable))
+/**
+  * @}
+  */
+
+
 /** @defgroup Option_Bytes_Read_Protection 
   * @{
   */ 
@@ -311,23 +323,25 @@ typedef enum
   * @{
   */ 
 
-#define FLASH_FLAG_BSY                 FLASH_SR_BSY  /*!< FLASH Busy flag */
-#define FLASH_FLAG_EOP                 FLASH_SR_EOP  /*!< FLASH End of Programming flag */
-#define FLASH_FLAG_ENDHV               FLASH_SR_ENHV  /*!< FLASH End of High Voltage flag */
-#define FLASH_FLAG_READY               FLASH_SR_READY  /*!< FLASH Ready flag after low power mode */
-#define FLASH_FLAG_WRPERR              FLASH_SR_WRPERR  /*!< FLASH Write protected error flag */
-#define FLASH_FLAG_PGAERR              FLASH_SR_PGAERR  /*!< FLASH Programming Alignment error flag */
-#define FLASH_FLAG_SIZERR              FLASH_SR_SIZERR  /*!< FLASH Size error flag  */
-#define FLASH_FLAG_OPTVERR             FLASH_SR_OPTVERR  /*!< FLASH Option Validity error flag  */
-#define FLASH_FLAG_OPTVERRUSR          FLASH_SR_OPTVERRUSR  /*!< FLASH Option User Validity error flag  */
- 
-#define IS_FLASH_CLEAR_FLAG(FLAG) ((((FLAG) & (uint32_t)0xFFFFE0FD) == 0x00000000) && ((FLAG) != 0x00000000))
+#define FLASH_FLAG_BSY                 FLASH_SR_BSY        /*!< FLASH Busy flag */
+#define FLASH_FLAG_EOP                 FLASH_SR_EOP        /*!< FLASH End of Programming flag */
+#define FLASH_FLAG_ENDHV               FLASH_SR_ENHV       /*!< FLASH End of High Voltage flag */
+#define FLASH_FLAG_READY               FLASH_SR_READY      /*!< FLASH Ready flag after low power mode */
+#define FLASH_FLAG_WRPERR              FLASH_SR_WRPERR     /*!< FLASH Write protected error flag */
+#define FLASH_FLAG_PGAERR              FLASH_SR_PGAERR     /*!< FLASH Programming Alignment error flag */
+#define FLASH_FLAG_SIZERR              FLASH_SR_SIZERR     /*!< FLASH Size error flag  */
+#define FLASH_FLAG_OPTVERR             FLASH_SR_OPTVERR    /*!< FLASH Option Validity error flag  */
+#define FLASH_FLAG_OPTVERRUSR          FLASH_SR_OPTVERRUSR /*!< FLASH Option User Validity error flag  */
+#define FLASH_FLAG_RDERR               FLASH_SR_RDERR      /*!< FLASH Read protected error flag 
+                                                                (available only in STM32L1XX_MDP devices)  */
+    
+#define IS_FLASH_CLEAR_FLAG(FLAG) ((((FLAG) & (uint32_t)0xFFFFC0FD) == 0x00000000) && ((FLAG) != 0x00000000))
 
 #define IS_FLASH_GET_FLAG(FLAG)  (((FLAG) == FLASH_FLAG_BSY) || ((FLAG) == FLASH_FLAG_EOP) || \
                                   ((FLAG) == FLASH_FLAG_ENDHV) || ((FLAG) == FLASH_FLAG_READY ) || \
                                   ((FLAG) ==  FLASH_FLAG_WRPERR) || ((FLAG) == FLASH_FLAG_PGAERR ) || \
                                   ((FLAG) ==  FLASH_FLAG_SIZERR) || ((FLAG) == FLASH_FLAG_OPTVERR) || \
-                                  ((FLAG) ==  FLASH_FLAG_OPTVERRUSR))
+                                  ((FLAG) ==  FLASH_FLAG_OPTVERRUSR) || ((FLAG) ==  FLASH_FLAG_RDERR))
 /**
   * @}
   */ 
@@ -418,6 +432,9 @@ FLASH_Status FLASH_OB_WRPConfig(uint32_t OB_WRP, FunctionalState NewState);
 FLASH_Status FLASH_OB_WRP1Config(uint32_t OB_WRP1, FunctionalState NewState);
 FLASH_Status FLASH_OB_WRP2Config(uint32_t OB_WRP2, FunctionalState NewState);
 FLASH_Status FLASH_OB_RDPConfig(uint8_t OB_RDP);
+FLASH_Status FLASH_OB_PCROPConfig(uint32_t OB_WRP, FunctionalState NewState);
+FLASH_Status FLASH_OB_PCROP1Config(uint32_t OB_WRP1, FunctionalState NewState);
+FLASH_Status FLASH_OB_PCROPSelectionConfig(uint16_t OB_PcROP);
 FLASH_Status FLASH_OB_UserConfig(uint8_t OB_IWDG, uint8_t OB_STOP, uint8_t OB_STDBY);
 FLASH_Status FLASH_OB_BORConfig(uint8_t OB_BOR);
 FLASH_Status FLASH_OB_BootConfig(uint8_t OB_BOOT);
@@ -426,6 +443,7 @@ uint32_t FLASH_OB_GetWRP(void);
 uint32_t FLASH_OB_GetWRP1(void);
 uint32_t FLASH_OB_GetWRP2(void);
 FlagStatus FLASH_OB_GetRDP(void);
+FlagStatus FLASH_OB_GetSPRMOD(void);
 uint8_t FLASH_OB_GetBOR(void);
 
 /* Interrupts and flags management functions **********************************/  

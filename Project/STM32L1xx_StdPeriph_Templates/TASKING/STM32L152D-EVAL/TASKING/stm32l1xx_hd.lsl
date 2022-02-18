@@ -130,7 +130,7 @@ section_setup ::linear
                                             )
                 {
                         vector ( id = 0, fill = "_lc_ub_stack" );                               // Top of Stack
-                        vector ( id = 1, fill = "_START" );                              // Reset Handler
+                        vector ( id = 1, fill = "Reset_Handler" );                              // Reset Handler
                         vector ( id = 2, optional, fill = "NMI_Handler" );
                         vector ( id = 3, optional, fill = "HardFault_Handler" );
                         vector ( id = 4, optional, fill = "MemManage_Handler" );

@@ -74,32 +74,32 @@
 		<link>
 			<name>CMSIS</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>Doc</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>STM32_EVAL</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>StdPeriph_Driver</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>TrueSTUDIO</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>User</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>CMSIS/system_stm32l1xx.c</name>
@@ -290,6 +290,11 @@
 			<name>TrueSTUDIO/startup_stm32l1xx_hd.s</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/Libraries/CMSIS/Device/ST/STM32L1xx/Source/Templates/TrueSTUDIO/startup_stm32l1xx_hd.s</locationURI>
+		</link>
+		<link>
+			<name>TrueSTUDIO/syscalls.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/syscalls.c</locationURI>
 		</link>
 		<link>
 			<name>User/main.c</name>

@@ -6,10 +6,12 @@
 			<Set Header="Target" >
 				<Section Header="ToolSetARM" >
 					<Property Header="BuildToolSetARM" Value="ARM\GNU.config" />
-							
+																									
 				</Section>
-					
+																			
 			</Set>
+										
 		</Config>
+						
 	</Options>
 </Project>

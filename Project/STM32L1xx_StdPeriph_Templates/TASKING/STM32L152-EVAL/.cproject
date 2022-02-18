@@ -15,7 +15,7 @@
 				<configuration artifactExtension="abs" artifactName="STM32L152-EVAL" buildArtefactType="com.tasking.arm.buildArtefactType.elf" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.tasking.arm.buildArtefactType.elf" cleanCommand="&quot;${PRODDIR}/bin/rm&quot; -rf" description="" id="com.tasking.config.arm.abs.debug.1585263443" name="Debug" parent="com.tasking.config.arm.abs.debug">
 					<folderInfo id="com.tasking.config.arm.abs.debug.1585263443." name="/" resourcePath="">
 						<toolChain id="com.tasking.arm.abs.debug.1204838435" name="TASKING VX-toolset for ARM" superClass="com.tasking.arm.abs.debug">
-							<option id="com.tasking.arm.pluginVersion.1594082914" name="Plugin version" superClass="com.tasking.arm.pluginVersion" value="1.77.0.0" valueType="string"/>
+							<option id="com.tasking.arm.pluginVersion.1594082914" name="Plugin version" superClass="com.tasking.arm.pluginVersion" value="1.88.0.0" valueType="string"/>
 							<option id="com.tasking.arm.prodDir.924968085" name="Product directory:" superClass="com.tasking.arm.prodDir" value="${eclipse_home}/.." valueType="string"/>
 							<option id="com.tasking.arm.cpu.938916442" name="Processor:" superClass="com.tasking.arm.cpu" value="stm32l152vb" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="com.tasking.managedbuilder.TASKING_ELF" id="com.tasking.arm.platform.abs.debug.1896385303" name="Debug" osList="" superClass="com.tasking.arm.platform.abs.debug"/>
@@ -85,7 +85,7 @@
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 			<storageModule moduleId="com.tasking.toolInfo">
-				<toolInfo>TASKING program builder v4.2r1 Build 063</toolInfo>
+				<toolInfo>TASKING program builder v4.3r1 Build 068</toolInfo>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
@@ -103,7 +103,7 @@
 				<configuration artifactExtension="abs" artifactName="STM32L152D-EVAL" buildArtefactType="com.tasking.arm.buildArtefactType.elf" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.tasking.arm.buildArtefactType.elf" cleanCommand="&quot;${PRODDIR}/bin/rm&quot; -rf" description="" id="com.tasking.config.arm.abs.release.1688983012" name="Release" parent="com.tasking.config.arm.abs.release">
 					<folderInfo id="com.tasking.config.arm.abs.release.1688983012." name="/" resourcePath="">
 						<toolChain id="com.tasking.arm.abs.release.15817535" name="TASKING VX-toolset for ARM" superClass="com.tasking.arm.abs.release">
-							<option id="com.tasking.arm.pluginVersion.614444870" name="Plugin version" superClass="com.tasking.arm.pluginVersion" value="1.77.0.0" valueType="string"/>
+							<option id="com.tasking.arm.pluginVersion.614444870" name="Plugin version" superClass="com.tasking.arm.pluginVersion" value="1.88.0.0" valueType="string"/>
 							<option id="com.tasking.arm.prodDir.282327544" name="Product directory:" superClass="com.tasking.arm.prodDir" value="${eclipse_home}/.." valueType="string"/>
 							<option id="com.tasking.arm.cpu.1009682772" name="Processor:" superClass="com.tasking.arm.cpu" value="stm32l152zd" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="com.tasking.managedbuilder.TASKING_ELF" id="com.tasking.arm.platform.abs.release.760927223" name="Release" osList="" superClass="com.tasking.arm.platform.abs.release"/>

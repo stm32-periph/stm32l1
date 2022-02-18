@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_flash.c
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    05-March-2012
+  * @version V1.2.0
+  * @date    22-February-2013
   * @brief   This file provides all the Flash firmware functions. These functions 
   *          can be executed from Internal FLASH or Internal SRAM memories. 
   *          The functions that should be called from SRAM are defined inside 
@@ -75,7 +75,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -939,6 +939,9 @@ FLASH_Status DATA_EEPROM_ProgramWord(uint32_t Address, uint32_t Data)
     (+) FLASH_Status FLASH_OB_WRP1Config(uint32_t OB_WRP1, FunctionalState NewState);
     (+) FLASH_Status FLASH_OB_WRP2Config(uint32_t OB_WRP2, FunctionalState NewState);   
     (+) FLASH_Status FLASH_OB_RDPConfig(uint8_t OB_RDP);
+    (+) FLASH_Status FLASH_OB_PCROPConfig(uint32_t OB_WRP, FunctionalState NewState);
+    (+) FLASH_Status FLASH_OB_PCROP1Config(uint32_t OB_WRP1, FunctionalState NewState);
+    (+) FLASH_Status FLASH_OB_PCROPSelectionConfig(uint16_t OB_PcROP);
     (+) FLASH_Status FLASH_OB_UserConfig(uint8_t OB_IWDG, uint8_t OB_STOP, uint8_t OB_STDBY);
     (+) FLASH_Status FLASH_OB_BORConfig(uint8_t OB_BOR);
     (+) uint8_t FLASH_OB_GetUser(void);
@@ -946,6 +949,7 @@ FLASH_Status DATA_EEPROM_ProgramWord(uint32_t Address, uint32_t Data)
     (+) uint32_t FLASH_OB_GetWRP1(void);
     (+) uint32_t FLASH_OB_GetWRP2(void);     
     (+) FlagStatus FLASH_OB_GetRDP(void);
+    (+) FlagStatus FLASH_OB_GetSPRMOD(void);    
     (+) uint8_t FLASH_OB_GetBOR(void);
     (+) FLASH_Status FLASH_OB_BootConfig(uint16_t OB_BOOT);
    
@@ -959,11 +963,26 @@ FLASH_Status DATA_EEPROM_ProgramWord(uint32_t Address, uint32_t Data)
         (++) void FLASH_OB_UserConfig(uint8_t OB_IWDG, uint8_t OB_STOP, uint8_t OB_STDBY) => to configure 
              the user option Bytes: IWDG, STOP and the Standby.
         (++) void FLASH_OB_BORConfig(uint8_t OB_BOR) => to Set the BOR level.
-        (++) FLASH_Status FLASH_ProgramOTP(uint32_t Address, uint32_t Data) => to program the OTP bytes			.
     (#) Once all needed option bytes to be programmed are correctly written, call the
         FLASH_OB_Launch(void) function to launch the Option Bytes programming process.
     (#) Call the FLASH_OB_Lock() to disable the Flash option control register access (recommended
         to protect the option Bytes against possible unwanted operations).
+
+    [..] Proprietary code Read Out Protection (PcROP):    
+    (#) The PcROP sector is selected by using the same option bytes as the Write
+        protection (nWRPi bits). As a result, these 2 options are exclusive each other.
+    (#) In order to activate the PcROP (change the function of the nWRPi option bits), 
+        the SPRMOD option bit must be activated.
+    (#) The active value of nWRPi bits is inverted when PCROP mode is active, this
+        means: if SPRMOD = 1 and nWRPi = 1 (default value), then the user sector "i"
+        is read/write protected.
+    (#) To activate PCROP mode for Flash sector(s), you need to follow the sequence below:
+        (++) For sector(s) within the first 128KB of the Flash, use this function 
+             FLASH_OB_PCROPConfig(OB_WRP_Pagesxxx, ENABLE)
+        (++) For sector(s) within the second 128KB of the Flash, use this function 
+             FLASH_OB_PCROP1Config(OB_WRP_Pagesxxx, ENABLE)             
+        (++) Activate the PCROP mode using FLASH_OB_PCROPSelectionConfig(OB_PcROP_Enable) function
+    (#) PcROP is available only in STM32L1XX_MDP devices
 
 @endverbatim
   * @{
@@ -1010,19 +1029,15 @@ void FLASH_OB_Launch(void)
 }
 
 /**
-  * @brief  Write protects the desired pages.
-  * @note   To correctly run this function, the FLASH_OB_Unlock() function
-  *         must be called before.
-  *         Call the FLASH_OB_Lock() to disable the flash control register access and the option bytes 
-  *        (recommended to protect the FLASH memory against possible unwanted operation).
+  * @brief  Write protects the desired pages of the first 128KB of the Flash.
   * @param  OB_WRP: specifies the address of the pages to be write protected.
   *   This parameter can be:
-  * @param  value between OB_WRP_Pages0to15 and OB_WRP_Pages496to511
-  * @param  OB_WRP_AllPages
+  *     @arg  value between OB_WRP_Pages0to15 and OB_WRP_Pages496to511
+  *     @arg  OB_WRP_AllPages
   * @param  NewState: new state of the specified FLASH Pages Wtite protection.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval FLASH Status: The returned value can be: 
-  * FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
+  *         FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
   */
 FLASH_Status FLASH_OB_WRPConfig(uint32_t OB_WRP, FunctionalState NewState)
 {
@@ -1071,13 +1086,9 @@ FLASH_Status FLASH_OB_WRPConfig(uint32_t OB_WRP, FunctionalState NewState)
 }
 
 /**
-  * @brief  Write protects the desired pages.
+  * @brief  Write protects the desired pages of the second 128KB of the Flash.
   * @note   This function can be used only for STM32L1XX_HD and STM32L1XX_MDP 
   *         density devices.
-  *         To correctly run this function, the FLASH_OB_Unlock() function
-  *         must be called before.
-  *         Call the FLASH_OB_Lock() to disable the flash control register access and the option bytes 
-  *         (recommended to protect the FLASH memory against possible unwanted operation).
   * @param  OB_WRP1: specifies the address of the pages to be write protected.
   *   This parameter can be:
   *     @arg  value between OB_WRP_Pages512to527 and OB_WRP_Pages1008to1023
@@ -1134,12 +1145,8 @@ FLASH_Status FLASH_OB_WRP1Config(uint32_t OB_WRP1, FunctionalState NewState)
 }
 
 /**
-  * @brief  Write protects the desired pages.
+  * @brief  Write protects the desired pages of the third 128KB of the Flash.
   * @note   This function can be used only for STM32L1XX_HD density devices.
-  *         To correctly run this function, the FLASH_OB_Unlock() function
-  *         must be called before.
-  *         Call the FLASH_OB_Lock() to disable the flash control register access and the option bytes 
-  *         (recommended to protect the FLASH memory against possible unwanted operation).
   * @param  OB_WRP2: specifies the address of the pages to be write protected.
   *   This parameter can be:
   *     @arg  value between OB_WRP_Pages1024to1039 and OB_WRP_Pages1520to1535
@@ -1199,15 +1206,16 @@ FLASH_Status FLASH_OB_WRP2Config(uint32_t OB_WRP2, FunctionalState NewState)
   * @brief  Enables or disables the read out protection.
   * @note   To correctly run this function, the FLASH_OB_Unlock() function
   *         must be called before.
-  *         Call the FLASH_OB_Lock() to disable the flash control register access and the option bytes 
-  *         (recommended to protect the FLASH memory against possible unwanted operation).
   * @param  FLASH_ReadProtection_Level: specifies the read protection level. 
   *   This parameter can be:
   *     @arg OB_RDP_Level_0: No protection
   *     @arg OB_RDP_Level_1: Read protection of the memory
   *     @arg OB_RDP_Level_2: Chip protection
-  *     @retval FLASH Status: The returned value can be: 
-  * FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
+  * 
+  *  !!!Warning!!! When enabling OB_RDP_Level_2 it's no more possible to go back to level 1 or 0
+  *   
+  * @retval FLASH Status: The returned value can be: 
+  *         FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
   */
 FLASH_Status FLASH_OB_RDPConfig(uint8_t OB_RDP)
 {
@@ -1237,11 +1245,175 @@ FLASH_Status FLASH_OB_RDPConfig(uint8_t OB_RDP)
 }
 
 /**
+  * @brief  Enables or disables the read/write protection (PCROP) of the desired 
+  *         sectors, for the first 128KB of the Flash.
+  * @note   This function can be used only for STM32L1XX_MDP devices
+  * @param  OB_WRP: specifies the address of the pages to be write protected.
+  *   This parameter can be:
+  *     @arg  value between OB_WRP_Pages0to15 and OB_WRP_Pages496to511
+  *     @arg  OB_WRP_AllPages
+  * @param  NewState: new state of the specified FLASH Pages Write protection.
+  *   This parameter can be: ENABLE or DISABLE.
+  * @retval FLASH Status: The returned value can be: 
+  *         FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
+  */
+FLASH_Status FLASH_OB_PCROPConfig(uint32_t OB_WRP, FunctionalState NewState)
+{
+  uint32_t WRP01_Data = 0, WRP23_Data = 0;
+  
+  FLASH_Status status = FLASH_COMPLETE;
+  uint32_t tmp1 = 0, tmp2 = 0;
+  
+  /* Check the parameters */
+  assert_param(IS_OB_WRP(OB_WRP));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+     
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation(FLASH_ER_PRG_TIMEOUT);
+ 
+  if(status == FLASH_COMPLETE)
+  {
+    if (NewState != DISABLE)
+    {
+      WRP01_Data = (uint16_t)(~OB_WRP & (WRP01_MASK & OB->WRP01));
+      WRP23_Data = (uint16_t)((((~OB_WRP & WRP23_MASK)>>16 & OB->WRP23))); 
+
+      tmp1 = (uint32_t)((~WRP01_Data) << 16)|(WRP01_Data);
+      OB->WRP01 = tmp1;
+      
+      tmp2 = (uint32_t)((~WRP23_Data) << 16)|(WRP23_Data);
+      OB->WRP23 = tmp2;
+    
+    }             
+    
+    else
+    {
+      WRP01_Data = (uint16_t)((OB_WRP & WRP01_MASK) | OB->WRP01);
+      WRP23_Data = (uint16_t)(((OB_WRP & WRP23_MASK) >> 16) | OB->WRP23); 
+     
+      tmp1 = (uint32_t)(~(WRP01_Data) << 16)|(WRP01_Data);
+      OB->WRP01 = tmp1;
+      
+      tmp2 = (uint32_t)(~(WRP23_Data) << 16)|(WRP23_Data);
+      OB->WRP23 = tmp2;  
+
+    }
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation(FLASH_ER_PRG_TIMEOUT);
+  }
+
+  /* Return the write protection operation Status */
+  return status;      
+}
+
+/**
+  * @brief  Enables or disables the read/write protection (PCROP) of the desired 
+  *         sectors, for the second 128KB of the Flash.
+  * @note   This function can be used only for STM32L1XX_MDP devices
+  * @param  OB_WRP1: specifies the address of the pages to be write protected.
+  *   This parameter can be:
+  *     @arg  value between OB_WRP_Pages512to527 and OB_WRP_Pages1008to1023
+  *     @arg OB_WRP_AllPages
+  * @param  NewState: new state of the specified FLASH Pages Write protection.
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval FLASH Status: The returned value can be: 
+  *         FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
+  */
+FLASH_Status FLASH_OB_PCROP1Config(uint32_t OB_WRP1, FunctionalState NewState)
+{
+  uint32_t WRP45_Data = 0, WRP67_Data = 0;
+  
+  FLASH_Status status = FLASH_COMPLETE;
+  uint32_t tmp1 = 0, tmp2 = 0;
+  
+  /* Check the parameters */
+  assert_param(IS_OB_WRP(OB_WRP1));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+     
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation(FLASH_ER_PRG_TIMEOUT);
+ 
+  if(status == FLASH_COMPLETE)
+  {
+    if (NewState != DISABLE)
+    {
+      WRP45_Data = (uint16_t)(~OB_WRP1 & (WRP45_MASK & OB->WRP45));
+      WRP67_Data = (uint16_t)((((~OB_WRP1 & WRP67_MASK)>>16 & OB->WRP67))); 
+
+      tmp1 = (uint32_t)((~WRP45_Data) << 16)|(WRP45_Data);
+      OB->WRP45 = tmp1;
+      
+      tmp2 = (uint32_t)((~WRP67_Data) << 16)|(WRP67_Data);
+      OB->WRP67 = tmp2;
+    }             
+    else
+    {
+      WRP45_Data = (uint16_t)((OB_WRP1 & WRP45_MASK) | OB->WRP45);
+      WRP67_Data = (uint16_t)(((OB_WRP1 & WRP67_MASK)>>16) | OB->WRP67); 
+      tmp1 = (uint32_t)(~(WRP45_Data) << 16)|(WRP45_Data);
+      OB->WRP45 = tmp1;
+      
+      tmp2 = (uint32_t)(~(WRP67_Data) << 16)|(WRP67_Data);
+      OB->WRP67 = tmp2;   
+    }
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation(FLASH_ER_PRG_TIMEOUT);
+  }
+
+  /* Return the write protection operation Status */
+  return status;      
+}
+
+/**
+  * @brief  Select the Protection Mode (SPRMOD).
+  * @note   This function can be used only for STM32L1XX_MDP devices
+  * @note   Once SPRMOD bit is active, unprotection of a protected sector is not possible 
+  * @note   Read a protected sector will set RDERR Flag and write a protected sector will set WRPERR Flag
+  * @param  OB_PcROP: Select the Protection Mode of nWPRi bits. 
+  *   This parameter can be:
+  *     @arg OB_PcROP_Enable: nWRPi control the  read&write protection (PcROP) of respective user sectors.
+  *     @arg OB_PcROP_Disable: nWRPi control the write protection of respective user sectors.
+  * @retval FLASH Status: The returned value can be: 
+  *         FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
+  */
+FLASH_Status FLASH_OB_PCROPSelectionConfig(uint16_t OB_PcROP)
+{
+  FLASH_Status status = FLASH_COMPLETE;
+  uint16_t tmp1 = 0;
+  uint32_t tmp2 = 0;
+  uint8_t optiontmp = 0;
+  uint16_t optiontmp2 = 0;
+  
+  /* Check the parameters */
+  assert_param(IS_OB_PCROP_SELECT(OB_PcROP));
+  status = FLASH_WaitForLastOperation(FLASH_ER_PRG_TIMEOUT);
+  
+  /* Mask RDP Byte */
+  optiontmp =  (uint8_t)(*(__IO uint8_t *)(OB_BASE)); 
+  
+  /* Update Option Byte */
+  optiontmp2 = (uint16_t)(OB_PcROP | optiontmp); 
+  
+  
+  /* calculate the option byte to write */
+  tmp1 = (uint16_t)(~(optiontmp2 ));
+  tmp2 = (uint32_t)(((uint32_t)((uint32_t)(tmp1) << 16)) | ((uint32_t)optiontmp2));
+  
+  if(status == FLASH_COMPLETE)
+  {         
+    /* program PCRop */
+    OB->RDP = tmp2;
+  }
+  
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation(FLASH_ER_PRG_TIMEOUT);
+  
+  /* Return the Read protection operation Status */
+  return status;            
+}
+
+/**
   * @brief  Programs the FLASH User Option Byte: IWDG_SW / RST_STOP / RST_STDBY.
-  * @note   To correctly run this function, the FLASH_OB_Unlock() function
-  *         must be called before.
-  *         Call the FLASH_OB_Lock() to disable the flash control register access and the option bytes 
-  *         (recommended to protect the FLASH memory against possible unwanted operation).
   * @param  OB_IWDG: Selects the WDG mode.
   *   This parameter can be one of the following values:
   *     @arg OB_IWDG_SW: Software WDG selected
@@ -1255,7 +1427,7 @@ FLASH_Status FLASH_OB_RDPConfig(uint8_t OB_RDP)
   *     @arg OB_STDBY_NoRST: No reset generated when entering in STANDBY
   *     @arg OB_STDBY_RST: Reset generated when entering in STANDBY
   * @retval FLASH Status: The returned value can be: 
-  * FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
+  *         FLASH_ERROR_PROGRAM, FLASH_ERROR_WRP, FLASH_COMPLETE or FLASH_TIMEOUT.
   */
 FLASH_Status FLASH_OB_UserConfig(uint8_t OB_IWDG, uint8_t OB_STOP, uint8_t OB_STDBY)
 {
@@ -1292,10 +1464,6 @@ FLASH_Status FLASH_OB_UserConfig(uint8_t OB_IWDG, uint8_t OB_STOP, uint8_t OB_ST
 
 /**
   * @brief  Programs the FLASH brownout reset threshold level Option Byte.
-  * @note   To correctly run this function, the FLASH_OB_Unlock() function
-  *         must be called before.
-  *         Call the FLASH_OB_Lock() to disable the flash control register access and the option bytes 
-  *         (recommended to protect the FLASH memory against possible unwanted operation).
   * @param  OB_BOR: Selects the brownout reset threshold level.
   *   This parameter can be one of the following values:
   *     @arg OB_BOR_OFF: BOR is disabled at power down, the reset is asserted when the VDD 
@@ -1342,10 +1510,6 @@ FLASH_Status FLASH_OB_BORConfig(uint8_t OB_BOR)
 /**
   * @brief  Configures to boot from Bank1 or Bank2.
   * @note   This function can be used only for STM32L1XX_HD density devices.
-  *         To correctly run this function, the FLASH_OB_Unlock() function
-  *         must be called before.
-  *         Call the FLASH_OB_Lock() to disable the flash control register access and the option bytes 
-  *         (recommended to protect the FLASH memory against possible unwanted operation).
   * @param  OB_BOOT: select the FLASH Bank to boot from.
   *   This parameter can be one of the following values:
   *     @arg OB_BOOT_BANK2: At startup, if boot pins are set in boot from user Flash
@@ -1460,6 +1624,31 @@ FlagStatus FLASH_OB_GetRDP(void)
 }
 
 /**
+  * @brief  Returns the SPRMOD Status.
+  * @note   This function can be used only for STM32L1XX_MDP devices  
+  * @param  None
+  * @retval The SPRMOD Status.
+  */
+FlagStatus FLASH_OB_GetSPRMOD(void)
+{
+  FlagStatus readstatus = RESET;
+  uint16_t tmp = 0;
+  
+  /* Return the SPRMOD value */
+  tmp = (uint16_t)(FLASH->OBR & (uint16_t)(0x0100));
+  
+  if (tmp != (uint16_t)0x0000)
+  {
+    readstatus = SET;
+  }
+  else
+  {
+    readstatus = RESET;
+  }
+  return readstatus;
+}
+
+/**
   * @brief  Returns the FLASH BOR level.
   * @param  None
   * @retval The FLASH User Option Bytes.
@@ -1526,6 +1715,7 @@ void FLASH_ITConfig(uint32_t FLASH_IT, FunctionalState NewState)
   *     @arg FLASH_FLAG_SIZERR: FLASH size error flag
   *     @arg FLASH_FLAG_OPTVERR: FLASH Option validity error flag
   *     @arg FLASH_FLAG_OPTVERRUSR: FLASH Option User validity error flag
+  *     @arg FLASH_FLAG_RDERR: FLASH Read protected error flag (available only in STM32L1XX_MDP devices)
   * @retval The new state of FLASH_FLAG (SET or RESET).
   */
 FlagStatus FLASH_GetFlagStatus(uint32_t FLASH_FLAG)
@@ -1557,6 +1747,7 @@ FlagStatus FLASH_GetFlagStatus(uint32_t FLASH_FLAG)
   *     @arg FLASH_FLAG_SIZERR: FLASH size error flag    
   *     @arg FLASH_FLAG_OPTVERR: FLASH Option validity error flag
   *     @arg FLASH_FLAG_OPTVERRUSR: FLASH Option User validity error flag
+  *     @arg FLASH_FLAG_RDERR: FLASH Read protected error flag (available only in STM32L1XX_MDP devices)
   * @retval None
   */
 void FLASH_ClearFlag(uint32_t FLASH_FLAG)
