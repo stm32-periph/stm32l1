@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    NVIC/IRQ_Priority/stm32l1xx_it.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and peripherals
   *          interrupt service routine.
@@ -17,13 +17,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -181,12 +189,15 @@ void EXTI0_IRQHandler(void)
     EXTI_ClearITPendingBit(KEY_BUTTON_EXTI_LINE);
   }
 }
- 
+
+#ifdef USE_STM32L152_EVAL 
+
 /**
   * @brief  This function handles External lines 9 to 5 interrupt request.
   * @param  None
   * @retval None
   */
+
 void EXTI9_5_IRQHandler(void)
 {
   /* Generate SysTick exception */
@@ -195,12 +206,29 @@ void EXTI9_5_IRQHandler(void)
   /* Clear SEL_BUTTON_EXTI_LINE pending bit */
   EXTI_ClearITPendingBit(SEL_BUTTON_EXTI_LINE);
 }
+#elif defined USE_STM32L152D_EVAL
+
+/**
+  * @brief  This function handles External lines 15 to 10 interrupt request.
+  * @param  None
+  * @retval None
+  */
+
+void EXTI15_10_IRQHandler(void)
+{
+  /* Generate SysTick exception */
+  SCB->ICSR |= 0x04000000;
+  
+  /* Clear SEL_BUTTON_EXTI_LINE pending bit */
+  EXTI_ClearITPendingBit(SEL_BUTTON_EXTI_LINE);
+}
+#endif
 
 /******************************************************************************/
 /*                 STM32L1xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
 /*  available peripheral interrupt handler's name please refer to the startup */
-/*  file (startup_stm32l1xx_md.s).                                            */
+/*  file (startup_stm32l1xx_xx.s).                                            */
 /******************************************************************************/
 
 /**
@@ -220,4 +248,4 @@ void EXTI9_5_IRQHandler(void)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_gpio.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the GPIO 
   *          firmware library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_GPIO_H
@@ -46,7 +49,9 @@
                                     ((PERIPH) == GPIOC) || \
                                     ((PERIPH) == GPIOD) || \
                                     ((PERIPH) == GPIOE) || \
-                                    ((PERIPH) == GPIOH))
+                                    ((PERIPH) == GPIOH) || \
+                                    ((PERIPH) == GPIOF) || \
+                                    ((PERIPH) == GPIOG))
 
 /** @defgroup Configuration_Mode_enumeration 
   * @{
@@ -252,6 +257,7 @@ typedef struct
   */ 
 #define GPIO_AF_TIM3          ((uint8_t)0x02)  /*!< TIM3 Alternate Function mapping */
 #define GPIO_AF_TIM4          ((uint8_t)0x02)  /*!< TIM4 Alternate Function mapping */
+#define GPIO_AF_TIM5          ((uint8_t)0x02)  /*!< TIM5 Alternate Function mapping */
 /** 
   * @brief  AF 3 selection  
   */ 
@@ -269,11 +275,20 @@ typedef struct
 #define GPIO_AF_SPI1          ((uint8_t)0x05)  /*!< SPI1 Alternate Function mapping */
 #define GPIO_AF_SPI2          ((uint8_t)0x05)  /*!< SPI2 Alternate Function mapping */
 /** 
+  * @brief  AF 6 selection  
+  */ 
+#define GPIO_AF_SPI3          ((uint8_t)0x06)  /*!< SPI3 Alternate Function mapping */
+/** 
   * @brief  AF 7 selection  
   */ 
 #define GPIO_AF_USART1        ((uint8_t)0x07)  /*!< USART1 Alternate Function mapping */
 #define GPIO_AF_USART2        ((uint8_t)0x07)  /*!< USART2 Alternate Function mapping */
 #define GPIO_AF_USART3        ((uint8_t)0x07)  /*!< USART3 Alternate Function mapping */
+/** 
+  * @brief  AF 8 selection  
+  */ 
+#define GPIO_AF_UART4         ((uint8_t)0x08)  /*!< UART4 Alternate Function mapping */
+#define GPIO_AF_UART5         ((uint8_t)0x08)  /*!< UART5 Alternate Function mapping */
 /** 
   * @brief  AF 10 selection  
   */ 
@@ -282,6 +297,11 @@ typedef struct
   * @brief  AF 11 selection  
   */ 
 #define GPIO_AF_LCD           ((uint8_t)0x0B)  /*!< LCD Alternate Function mapping */
+/** 
+  * @brief  AF 12 selection  
+  */ 
+#define GPIO_AF_FSMC           ((uint8_t)0x0C)  /*!< FSMC Alternate Function mapping */
+#define GPIO_AF_SDIO           ((uint8_t)0x0C)  /*!< SDIO Alternate Function mapping */
 /** 
   * @brief  AF 14 selection  
   */ 
@@ -292,17 +312,20 @@ typedef struct
   */ 
 #define GPIO_AF_EVENTOUT      ((uint8_t)0x0F)  /*!< EVENTOUT Alternate Function mapping */
 
-#define IS_GPIO_AF(AF)   (((AF) == GPIO_AF_RTC_50Hz) || ((AF) == GPIO_AF_MCO) || \
-                          ((AF) == GPIO_AF_RTC_AF1) || ((AF) == GPIO_AF_WKUP) || \
-                          ((AF) == GPIO_AF_SWJ)    || ((AF) == GPIO_AF_TRACE) || \
-                          ((AF) == GPIO_AF_TIM2)   || ((AF)== GPIO_AF_TIM3) || \
-                          ((AF) == GPIO_AF_TIM4)   || ((AF)== GPIO_AF_TIM9) || \
-                          ((AF) == GPIO_AF_TIM10)  || ((AF)== GPIO_AF_TIM11) || \
-                          ((AF) == GPIO_AF_I2C1)   || ((AF) == GPIO_AF_I2C2) || \
-                          ((AF) == GPIO_AF_SPI1)   || ((AF) == GPIO_AF_SPI2) || \
-                          ((AF) == GPIO_AF_USART1) || ((AF) == GPIO_AF_USART2) || \
-                          ((AF) == GPIO_AF_USART3) || ((AF) == GPIO_AF_USB) || \
-                          ((AF) == GPIO_AF_LCD)    || ((AF) == GPIO_AF_RI) || \
+#define IS_GPIO_AF(AF)   (((AF) == GPIO_AF_RTC_50Hz) || ((AF) == GPIO_AF_MCO)    || \
+                          ((AF) == GPIO_AF_RTC_AF1)  || ((AF) == GPIO_AF_WKUP)   || \
+                          ((AF) == GPIO_AF_SWJ)      || ((AF) == GPIO_AF_TRACE)  || \
+                          ((AF) == GPIO_AF_TIM2)     || ((AF)== GPIO_AF_TIM3)    || \
+                          ((AF) == GPIO_AF_TIM4)     || ((AF)== GPIO_AF_TIM9)    || \
+                          ((AF) == GPIO_AF_TIM10)    || ((AF)== GPIO_AF_TIM11)   || \
+                          ((AF) == GPIO_AF_I2C1)     || ((AF) == GPIO_AF_I2C2)   || \
+                          ((AF) == GPIO_AF_SPI1)     || ((AF) == GPIO_AF_SPI2)   || \
+                          ((AF) == GPIO_AF_USART1)   || ((AF) == GPIO_AF_USART2) || \
+                          ((AF) == GPIO_AF_USART3)   || ((AF) == GPIO_AF_USB)    || \
+                          ((AF) == GPIO_AF_LCD)      || ((AF) == GPIO_AF_RI)     || \
+                          ((AF) == GPIO_AF_TIM5)     || ((AF) == GPIO_AF_SPI3)   || \
+                          ((AF) == GPIO_AF_UART4)    || ((AF) == GPIO_AF_UART5)  || \
+                          ((AF) == GPIO_AF_FSMC)     || ((AF) == GPIO_AF_SDIO)   || \
                           ((AF) == GPIO_AF_EVENTOUT))
 
 /**
@@ -343,6 +366,7 @@ void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal);
 void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal);
+void GPIO_ToggleBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 
 /* GPIO Alternate functions configuration functions ***************************/
 void GPIO_PinAFConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_PinSource, uint8_t GPIO_AF);
@@ -361,4 +385,4 @@ void GPIO_PinAFConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_PinSource, uint8_t GPIO
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

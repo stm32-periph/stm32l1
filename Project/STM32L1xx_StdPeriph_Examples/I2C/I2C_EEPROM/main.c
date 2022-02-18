@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    I2C/I2C_EEPROM/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval_i2c_ee.h"
+#include "stm32l152d_eval_lcd.h"
+#else
 #include "stm32l152_eval_i2c_ee.h"
 #include "stm32l152_eval_lcd.h"
+#endif
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -50,46 +58,15 @@ typedef enum {FAILED = 0, PASSED = !FAILED} TestStatus;
 
 /* Private variables ---------------------------------------------------------*/
 uint8_t Tx1_Buffer[] = "/* STM32L1xx I2C Firmware Library EEPROM driver example: \
-                        buffer 1 transfer into address sEE_WRITE_ADDRESS1 */ \
-                        Example Description \
                         This firmware provides a basic example of how to use the I2C firmware library and\
-                        an associate I2C EEPROM driver to communicate with an I2C EEPROM device (here the\
-                        example is interfacing with M24C64 EEPROM)\
-                          \
+                        an associate I2C EEPROM driver to communicate with an I2C EEPROM device \
                         I2C peripheral is configured in Master transmitter during write operation and in\
-                        Master receiver during read operation from I2C EEPROM. \
-                          \
-                        The peripheral used is I2C1 but can be configured by modifying the defines values\
-                        in stm32l152_eval.h file. The speed is set to 200kHz and can be configured by \
-                        modifying the relative define in stm32l152_eval_i2c_ee.h file.\
-                         \
-                        For M24C64 devices all the memory is accessible through the two-bytes \
-                        addressing mode and need to define block addresses. In this case, only the physical \
-                        address has to be defined (according to the address pins (E0,E1 and E2) connection).\
-                        This address is defined in stm32l152_eval_i2c_ee.h (default is 0xA0: E0, E1 and E2 tied to ground).\
-                        The EEPROM addresses where the program start the write and the read operations \
-                        is defined in the main.c file. \
-                         \
-                        First, the content of Tx1_Buffer is written to the EEPROM_WriteAddress1 and the\
-                        written data are read. The written and the read buffers data are then compared.\
-                        Following the read operation, the program waits that the EEPROM reverts to its \
-                        Standby state. A second write operation is, then, performed and this time, Tx2_Buffer\
-                        is written to EEPROM_WriteAddress2, which represents the address just after the last \
-                        written one in the first write. After completion of the second write operation, the \
-                        written data are read. The contents of the written and the read buffers are compared.\
-                         \
-                        All transfers are managed in DMA mode (except when 1-byte read/write operation is\
-                        required). Once sEE_ReadBuffer() or sEE_WriteBuffer() function is called, the \
-                        use application may perform other tasks in parallel while Read/Write operation is\
-                        managed by DMA.\
-                          \
-                        This example provides the possibility to use the STM32L152-EVAL LCD screen for\
-                        messages display (transfer status: Ongoing, PASSED, FAILED).\
-                        To enable this option uncomment the define ENABLE_LCD_MSG_DISPLAY in the main.c\
-                        file.                                                                              ";
-uint8_t Tx2_Buffer[] = "/* STM32F1xx I2C Firmware Library EEPROM driver example: \
-                        buffer 2 transfer into address sEE_WRITE_ADDRESS2 */";
-uint8_t Rx1_Buffer[BUFFER_SIZE1], Rx2_Buffer[BUFFER_SIZE2];
+                        Master receiver during read operation from I2C EEPROM.*/";
+
+uint8_t Tx2_Buffer[] = "/* STM32F1xx I2C Firmware Library EEPROM driver example : \
+                        I2C1 interfacing with M24LR64 EEPROM */";
+
+uint8_t Rx1_Buffer[BUFFER_SIZE1], Rx2_Buffer[BUFFER_SIZE2]; 
 volatile TestStatus TransferStatus1 = FAILED, TransferStatus2 = FAILED;
 volatile uint16_t NumDataRead = 0;
 
@@ -100,19 +77,23 @@ TestStatus Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength
   * @brief   Main program
   * @param  None
   * @retval None
-  */
+*/
 int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */    
 
 #ifdef ENABLE_LCD_MSG_DISPLAY
   /* Initialize the LCD screen for information display */
+#ifdef USE_STM32L152D_EVAL
+  STM32L152D_LCD_Init();
+#else
   STM32L152_LCD_Init();
+#endif 
   LCD_Clear(LCD_COLOR_BLUE);  
   LCD_SetBackColor(LCD_COLOR_BLUE);
   LCD_SetTextColor(LCD_COLOR_WHITE);
@@ -215,7 +196,7 @@ int main(void)
   /* TransferStatus2 = FAILED, if the transmitted and received data 
      to/from the EEPROM are different */
 #ifdef ENABLE_LCD_MSG_DISPLAY   
-  if (TransferStatus1 == PASSED)
+  if (TransferStatus2 == PASSED)
   {
     LCD_DisplayStringLine(LCD_LINE_5, " Transfer 2 PASSED  ");
   }
@@ -315,4 +296,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

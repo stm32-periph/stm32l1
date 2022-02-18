@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    PWR/CurrentConsumption/stm32l1xx_ulp_modes.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Header for stm32l1xx_ulp_modes.c module
   ******************************************************************************
   * @attention
@@ -15,9 +15,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_ULP_MODES_H
@@ -25,7 +28,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval.h"
+#else
+#include "stm32l152_eval.h"
+#endif
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -80,4 +88,4 @@ void StandbyRTCLSIMode_Measure(void);
 
 #endif /* __STM32L1xx_ULP_MODES_H */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

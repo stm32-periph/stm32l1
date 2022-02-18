@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    TIM/InputCaptureRouting/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,14 +15,22 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
 #include "stm32l1xx_lcd.h"
+
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval_glass_lcd.h"
+#else
 #include "stm32l152_eval_glass_lcd.h"
+#endif
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -175,7 +183,8 @@ void LCD_GLASS_Config(void)
 uint8_t* DisplayFreqOnLCD(uint32_t TIMx_Freq) 
 {
   uint8_t LCD_Digit[8];
- 
+
+#ifdef USE_STM32L152_EVAL  
   LCD_Digit[0] = (TIMx_Freq / 10000000);
   LCDStringResult[0] =  LCD_Digit[0]+ 0x30;
   
@@ -203,6 +212,35 @@ uint8_t* DisplayFreqOnLCD(uint32_t TIMx_Freq)
   LCD_Digit[7] = (TIMx_Freq -(10000000 * LCD_Digit[0]) - (1000000 * LCD_Digit[1]) - 
                    (100000 * LCD_Digit[2])-(10000 * LCD_Digit[3])-(1000 * LCD_Digit[4])-(100 * LCD_Digit[5])-(10 * LCD_Digit[6]));
   LCDStringResult[7] = LCD_Digit[7]+ 0x30;
+
+#elif defined USE_STM32L152D_EVAL
+  LCD_Digit[0] = (TIMx_Freq / 10000000);
+  
+  LCD_Digit[1] = ((TIMx_Freq -(10000000 * LCD_Digit[0]))/1000000) ;
+  LCDStringResult[0] = LCD_Digit[1]+ 0x30;
+  
+  LCD_Digit[2] = (TIMx_Freq -((10000000 * LCD_Digit[0]) - (1000000 * LCD_Digit[1])))/100000;
+  LCDStringResult[1] =  LCD_Digit[2] + 0x30;
+  
+  LCD_Digit[3] =(TIMx_Freq -(10000000 * LCD_Digit[0]) - (1000000 * LCD_Digit[1]) - (100000 * LCD_Digit[2]))/10000;
+  LCDStringResult[2] = LCD_Digit[3]+ 0x30;
+  
+  LCD_Digit[4] = (TIMx_Freq -(10000000 * LCD_Digit[0]) - (1000000 * LCD_Digit[1]) - 
+                   (100000 * LCD_Digit[2])-(10000 * LCD_Digit[3]))/1000;
+  LCDStringResult[3] = LCD_Digit[4]+ 0x30;
+  
+  LCD_Digit[5] = (TIMx_Freq -(10000000 * LCD_Digit[0]) - (1000000 * LCD_Digit[1]) - 
+                   (100000 * LCD_Digit[2])-(10000 * LCD_Digit[3])-(1000 * LCD_Digit[4]))/100;
+  LCDStringResult[4] = LCD_Digit[5]+ 0x30;
+  
+  LCD_Digit[6] = (TIMx_Freq -(10000000 * LCD_Digit[0]) - (1000000 * LCD_Digit[1]) - 
+                   (100000 * LCD_Digit[2])-(10000 * LCD_Digit[3])-(1000 * LCD_Digit[4])-(100 * LCD_Digit[5]))/10;
+  LCDStringResult[5] = LCD_Digit[6]+ 0x30;
+  
+  LCD_Digit[7] = (TIMx_Freq -(10000000 * LCD_Digit[0]) - (1000000 * LCD_Digit[1]) - 
+                   (100000 * LCD_Digit[2])-(10000 * LCD_Digit[3])-(1000 * LCD_Digit[4])-(100 * LCD_Digit[5])-(10 * LCD_Digit[6]));
+  LCDStringResult[6] = LCD_Digit[7]+ 0x30;
+#endif  
 
  return LCDStringResult;
 }
@@ -247,4 +285,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

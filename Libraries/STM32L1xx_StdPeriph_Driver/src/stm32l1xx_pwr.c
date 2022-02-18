@@ -2,17 +2,17 @@
   ******************************************************************************
   * @file    stm32l1xx_pwr.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the Power Controller (PWR) peripheral:           
-  *           - RTC Domain Access
-  *           - PVD configuration
-  *           - WakeUp pins configuration
-  *           - Ultra Low Power mode configuration
-  *           - Voltage Scaling configuration
-  *           - Low Power modes configuration
-  *           - Flags management
+  *           + RTC Domain Access
+  *           + PVD configuration
+  *           + WakeUp pins configuration
+  *           + Ultra Low Power mode configuration
+  *           + Voltage Scaling configuration
+  *           + Low Power modes configuration
+  *           + Flags management
   *               
   ******************************************************************************
   * @attention
@@ -24,9 +24,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_pwr.h"
@@ -92,13 +95,13 @@
  *  @brief   RTC Domain Access function  
  *
 @verbatim   
- ===============================================================================
-                            RTC Domain Access function 
- ===============================================================================  
+  ============================================================================== 
+                     ##### RTC Domain Access function #####
+  ============================================================================== 
 
- After reset, the RTC Registers (RCC CSR Register, RTC registers and RTC backup 
- registers) are protected against possible stray write accesses.
- To enable access to RTC domain use the PWR_RTCAccessCmd(ENABLE) function.
+    [..] After reset, the RTC Registers (RCC CSR Register, RTC registers and RTC backup 
+         registers) are protected against possible stray write accesses.
+    [..] To enable access to RTC domain use the PWR_RTCAccessCmd(ENABLE) function.
 
 @endverbatim
   * @{
@@ -109,7 +112,7 @@
   * @note   Before calling this function, the VOS[1:0] bits should be configured 
   *         to "10" and the system frequency has to be configured accordingly. 
   *         To configure the VOS[1:0] bits, use the PWR_VoltageScalingConfig()
-  *         function.      
+  *         function.
   * @note   ULP and FWU bits are not reset by this function.    
   * @param  None
   * @retval None
@@ -144,19 +147,19 @@ void PWR_RTCAccessCmd(FunctionalState NewState)
  *  @brief   PVD configuration functions 
  *
 @verbatim   
- ===============================================================================
-                           PVD configuration functions
- ===============================================================================  
-
- - The PVD is used to monitor the VDD power supply by comparing it to a threshold
-   selected by the PVD Level (PLS[2:0] bits in the PWR_CR).
- - The PVD can use an external input analog voltage (PVD_IN) which is compared 
-   internally to VREFINT. The PVD_IN (PB7) has to be configured in Analog mode 
-   when PWR_PVDLevel_7 is selected (PLS[2:0] = 111).
- - A PVDO flag is available to indicate if VDD/VDDA is higher or lower than the 
-   PVD threshold. This event is internally connected to the EXTI line16
-   and can generate an interrupt if enabled through the EXTI registers.
- - The PVD is stopped in Standby mode.
+  ============================================================================== 
+                    ##### PVD configuration functions #####
+  ==============================================================================    
+  [..]
+  (+) The PVD is used to monitor the VDD power supply by comparing it to a threshold
+      selected by the PVD Level (PLS[2:0] bits in the PWR_CR).
+  (+) The PVD can use an external input analog voltage (PVD_IN) which is compared 
+      internally to VREFINT. The PVD_IN (PB7) has to be configured in Analog mode 
+      when PWR_PVDLevel_7 is selected (PLS[2:0] = 111).
+  (+) A PVDO flag is available to indicate if VDD/VDDA is higher or lower than the 
+      PVD threshold. This event is internally connected to the EXTI line16
+      and can generate an interrupt if enabled through the EXTI registers.
+  (+) The PVD is stopped in Standby mode.
 
 @endverbatim
   * @{
@@ -164,16 +167,16 @@ void PWR_RTCAccessCmd(FunctionalState NewState)
 
 /**
   * @brief  Configures the voltage threshold detected by the Power Voltage Detector(PVD).
-  * @param  PWR_PVDLevel: specifies the PVD detection level
+  * @param  PWR_PVDLevel: specifies the PVD detection level.
   *   This parameter can be one of the following values:
-  *     @arg PWR_PVDLevel_0: PVD detection level set to 1.9V
-  *     @arg PWR_PVDLevel_1: PVD detection level set to 2.1V
-  *     @arg PWR_PVDLevel_2: PVD detection level set to 2.3V
-  *     @arg PWR_PVDLevel_3: PVD detection level set to 2.5V
-  *     @arg PWR_PVDLevel_4: PVD detection level set to 2.7V
-  *     @arg PWR_PVDLevel_5: PVD detection level set to 2.9V
-  *     @arg PWR_PVDLevel_6: PVD detection level set to 3.1V
-  *     @arg PWR_PVDLevel_7: External input analog voltage (Compare internally to VREFINT)
+  *     @arg PWR_PVDLevel_0: PVD detection level set to 1.9V.
+  *     @arg PWR_PVDLevel_1: PVD detection level set to 2.1V.
+  *     @arg PWR_PVDLevel_2: PVD detection level set to 2.3V.
+  *     @arg PWR_PVDLevel_3: PVD detection level set to 2.5V.
+  *     @arg PWR_PVDLevel_4: PVD detection level set to 2.7V.
+  *     @arg PWR_PVDLevel_5: PVD detection level set to 2.9V.
+  *     @arg PWR_PVDLevel_6: PVD detection level set to 3.1V.
+  *     @arg PWR_PVDLevel_7: External input analog voltage (Compare internally to VREFINT).
   * @retval None
   */
 void PWR_PVDLevelConfig(uint32_t PWR_PVDLevel)
@@ -217,14 +220,14 @@ void PWR_PVDCmd(FunctionalState NewState)
  *  @brief   WakeUp pins configuration functions 
  *
 @verbatim   
- ===============================================================================
-                    WakeUp pins configuration functions
- ===============================================================================  
+  ============================================================================== 
+               ##### WakeUp pin configuration functions #####
+  ==============================================================================   
 
- - WakeUp pins are used to wakeup the system from Standby mode. These pins are 
-   forced in input pull down configuration and are active on rising edges.
- - There are three WakeUp pins: WakeUp Pin 1 on PA.00, WakeUp Pin 2 on PC.13 and
-   WakeUp Pin 3 on PE.06.
+  (+) WakeUp pins are used to wakeup the system from Standby mode. These pins are 
+      forced in input pull down configuration and are active on rising edges.
+  (+) There are three WakeUp pins: WakeUp Pin 1 on PA.00, WakeUp Pin 2 on PC.13 and
+      WakeUp Pin 3 on PE.06.
 
 @endverbatim
   * @{
@@ -260,20 +263,20 @@ void PWR_WakeUpPinCmd(uint32_t PWR_WakeUpPin, FunctionalState NewState)
  *  @brief   Ultra Low Power mode configuration functions 
  *
 @verbatim   
- ===============================================================================
-                    Ultra Low Power mode configuration functions
- ===============================================================================  
-
- - The internal voltage reference consumption is not negligible, in particular 
-   in Stop and Standby mode. To reduce power consumption, use the PWR_UltraLowPowerCmd()
-   function (ULP bit (Ultra low power) in the PWR_CR register) to disable the 
-   internal voltage reference. However, in this case, when exiting from the 
-   Stop/Standby mode, the functions managed through the internal voltage reference 
-   are not reliable during the internal voltage reference startup time (up to 3 ms).
-   To reduce the wakeup time, the device can exit from Stop/Standby mode without 
-   waiting for the internal voltage reference startup time. This is performed 
-   by using the PWR_FastWakeUpCmd() function (setting the FWU bit (Fast
-   wakeup) in the PWR_CR register) before entering Stop/Standby mode.
+  ============================================================================== 
+             ##### Ultra Low Power mode configuration functions #####
+  ==============================================================================   
+  [..]
+  (+) The internal voltage reference consumption is not negligible, in particular 
+      in Stop and Standby mode. To reduce power consumption, use the PWR_UltraLowPowerCmd()
+      function (ULP bit (Ultra low power) in the PWR_CR register) to disable the 
+      internal voltage reference. However, in this case, when exiting from the 
+      Stop/Standby mode, the functions managed through the internal voltage reference 
+      are not reliable during the internal voltage reference startup time (up to 3 ms).
+      To reduce the wakeup time, the device can exit from Stop/Standby mode without 
+      waiting for the internal voltage reference startup time. This is performed 
+      by using the PWR_FastWakeUpCmd() function (setting the FWU bit (Fast
+      wakeup) in the PWR_CR register) before entering Stop/Standby mode.
 
 @endverbatim
   * @{
@@ -315,17 +318,17 @@ void PWR_UltraLowPowerCmd(FunctionalState NewState)
  *  @brief   Voltage Scaling configuration functions 
  *
 @verbatim   
- ===============================================================================
-                     Voltage Scaling configuration functions
- ===============================================================================  
+  ============================================================================== 
+              ##### Voltage Scaling configuration functions #####
+  ==============================================================================  
 
- - The dynamic voltage scaling is a power management technique which consists in 
-   increasing or decreasing the voltage used for the digital peripherals (VCORE), 
-   according to the circumstances.
+    (+) The dynamic voltage scaling is a power management technique which consists in 
+        increasing or decreasing the voltage used for the digital peripherals (VCORE), 
+        according to the circumstances.
    
-   Depending on the device voltage range, the maximum frequency and FLASH wait
-   state should be adapted accordingly:
-   
+   [..] Depending on the device voltage range, the maximum frequency and FLASH wait
+        state should be adapted accordingly:
+   [..] 
         +------------------------------------------------------------------+     
         |   Wait states   |                HCLK clock frequency (MHz)      |
         |                 |------------------------------------------------|     
@@ -344,38 +347,38 @@ void PWR_UltraLowPowerCmd(FunctionalState NewState)
         |Power Performance|      High      |     Medium    |      Low      |                 
         +------------------------------------------------------------------+    
 
- - To modify the Product voltage range, user application has to:
-   - Check VDD to identify which ranges are allowed (see table above)
-   - Check the PWR_FLAG_VOSF (Voltage Scaling update ongoing) using the PWR_GetFlagStatus() 
-     function and wait until it is  reset.
-   - Configure the Voltage range using the PWR_VoltageScalingConfig() function.
+    (+) To modify the Product voltage range, user application has to:
+        (++) Check VDD to identify which ranges are allowed (see table above).
+        (++) Check the PWR_FLAG_VOSF (Voltage Scaling update ongoing) using the PWR_GetFlagStatus() 
+             function and wait until it is  reset.
+        (++) Configure the Voltage range using the PWR_VoltageScalingConfig() function.
 
- - When VCORE range 1 is selected and VDD drops below 2.0 V, the application must
-   reconfigure the system:
-   - Detect that VDD drops below 2.0 V using the PVD Level 1
-   - Adapt the clock frequency to the voltage range that will be selected at next step
-   - Select the required voltage range
-   - When VCORE range 2 or range 3 is selected and VDD drops below 2.0 V, no system
-     reconfiguration is required.
+    (+) When VCORE range 1 is selected and VDD drops below 2.0 V, the application must
+        reconfigure the system:
+        (++) Detect that VDD drops below 2.0 V using the PVD Level 1.
+        (++) Adapt the clock frequency to the voltage range that will be selected at next step.
+        (++) Select the required voltage range.
+        (++) When VCORE range 2 or range 3 is selected and VDD drops below 2.0 V, no system
+             reconfiguration is required.
  
- - When VDD is above 2.0 V, any of the 3 voltage ranges can be selected
-   - When the voltage range is above the targeted voltage range (e.g. from range 
-     1 to 2):
-     - Adapt the clock frequency to the lower voltage range that will be selected 
-       at next step.
-     - Select the required voltage range.
-   - When the voltage range is below the targeted voltage range (e.g. from range 
-     3 to 1):
-     - Select the required voltage range.
-     - Tune the clock frequency if needed.
+    (+) When VDD is above 2.0 V, any of the 3 voltage ranges can be selected.
+        (++) When the voltage range is above the targeted voltage range (e.g. from range 
+             1 to 2).
+        (++) Adapt the clock frequency to the lower voltage range that will be selected 
+             at next step.
+        (++) Select the required voltage range.
+        (++) When the voltage range is below the targeted voltage range (e.g. from range 
+             3 to 1).
+        (++) Select the required voltage range.
+        (++) Tune the clock frequency if needed.
  
- - When VDD is below 2.0 V, only range 2 and 3 can be selected:
-   - From range 2 to range 3
-     - Adapt the clock frequency to voltage range 3.
-     - Select voltage range 3.
-   - From range 3 to range 2
-     - Select the voltage range 2.
-     - Tune the clock frequency if needed.
+    (+) When VDD is below 2.0 V, only range 2 and 3 can be selected:
+        (++) From range 2 to range 3.
+             (+++) Adapt the clock frequency to voltage range 3.
+             (+++) Select voltage range 3.
+        (++) From range 3 to range 2.
+             (+++) Select the voltage range 2.
+             (+++) Tune the clock frequency if needed.
 
 @endverbatim
   * @{
@@ -391,9 +394,9 @@ void PWR_UltraLowPowerCmd(FunctionalState NewState)
   *             
   * @param  PWR_VoltageScaling: specifies the voltage scaling range.
   *   This parameter can be:
-  *     @arg PWR_VoltageScaling_Range1: Voltage Scaling Range 1 (VCORE = 1.8V)
-  *     @arg PWR_VoltageScaling_Range2: Voltage Scaling Range 2 (VCORE = 1.5V)
-  *     @arg PWR_VoltageScaling_Range3: Voltage Scaling Range 3 (VCORE = 1.2V)     
+  *     @arg PWR_VoltageScaling_Range1: Voltage Scaling Range 1 (VCORE = 1.8V).
+  *     @arg PWR_VoltageScaling_Range2: Voltage Scaling Range 2 (VCORE = 1.5V).
+  *     @arg PWR_VoltageScaling_Range3: Voltage Scaling Range 3 (VCORE = 1.2V) 
   * @retval None
   */
 void PWR_VoltageScalingConfig(uint32_t PWR_VoltageScaling)
@@ -420,148 +423,147 @@ void PWR_VoltageScalingConfig(uint32_t PWR_VoltageScaling)
  *  @brief   Low Power modes configuration functions 
  *
 @verbatim   
- ===============================================================================
-                    Low Power modes configuration functions
- ===============================================================================  
+  ============================================================================== 
+              ##### Low Power modes configuration functions #####
+  ==============================================================================    
 
-  The devices feature five low-power modes:
-   - Low power run mode: regulator in low power mode, limited clock frequency, 
-     limited number of peripherals running.
-   - Sleep mode: Cortex-M3 core stopped, peripherals kept running.
-   - Low power sleep mode: Cortex-M3 core stopped, limited clock frequency, 
-     limited number of peripherals running, regulator in low power mode.
-   - Stop mode: all clocks are stopped, regulator running, regulator in low power mode
-   - Standby mode: VCORE domain powered off
+    [..] The devices feature five low-power modes:
+    (+) Low power run mode: regulator in low power mode, limited clock frequency, 
+        limited number of peripherals running.
+    (+) Sleep mode: Cortex-M3 core stopped, peripherals kept running.
+    (+) Low power sleep mode: Cortex-M3 core stopped, limited clock frequency, 
+        limited number of peripherals running, regulator in low power mode.
+    (+) Stop mode: all clocks are stopped, regulator running, regulator in low power mode.
+    (+) Standby mode: VCORE domain powered off.
    
-   Low power run mode (LP run)
-   ===========================
-    - Entry:
-      - Decrease the system frequency.
-      - The regulator is forced in low power mode using the PWR_EnterLowPowerRunMode()
-        function.
-    - Exit:
-      - The regulator is forced in Main regulator mode sing the PWR_EnterLowPowerRunMode()
-        function.
-      - Increase the system frequency if needed.
+  *** Low power run mode (LP run) *** 
+  ===================================
+      [..]
+    (+) Entry:
+        (++) Decrease the system frequency.
+        (++) The regulator is forced in low power mode using the PWR_EnterLowPowerRunMode()
+             function.
+    (+) Exit:
+        (++) The regulator is forced in Main regulator mode sing the PWR_EnterLowPowerRunMode()
+             function.
+        (++) Increase the system frequency if needed.
 
-   Sleep mode
-   ===========
-    - Entry:
-      - The Sleep mode is entered by using the PWR_EnterSleepMode(PWR_Regulator_ON,) 
-        function with regulator ON.
-    - Exit:
-      - Any peripheral interrupt acknowledged by the nested vectored interrupt 
-        controller (NVIC) can wake up the device from Sleep mode.
+  *** Sleep mode *** 
+  ==================
+  [..] 
+    (+) Entry:
+        (++) The Sleep mode is entered by using the PWR_EnterSleepMode(PWR_Regulator_ON,) 
+             function with regulator ON.
+    (+) Exit:
+        (++) Any peripheral interrupt acknowledged by the nested vectored interrupt 
+             controller (NVIC) can wake up the device from Sleep mode.
 
-   Low power sleep mode (LP sleep)
-   ===============================
-    - Entry:
-      - The Flash memory must be switched off by using the FLASH_SLEEPPowerDownCmd()
-        function.
-      - Decrease the system frequency.
-      - The regulator is forced in low power mode and the WFI or WFE instructions
-        are executed using the PWR_EnterSleepMode(PWR_Regulator_LowPower,) function 
-        with regulator in LowPower.
-    - Exit:
-      - Any peripheral interrupt acknowledged by the nested vectored interrupt 
-        controller (NVIC) can wake up the device from Sleep LP mode.
+  *** Low power sleep mode (LP sleep) *** 
+  =======================================
+  [..] 
+    (+) Entry:
+        (++) The Flash memory must be switched off by using the FLASH_SLEEPPowerDownCmd()
+             function.
+        (++) Decrease the system frequency.
+        (++) The regulator is forced in low power mode and the WFI or WFE instructions
+             are executed using the PWR_EnterSleepMode(PWR_Regulator_LowPower,) function 
+             with regulator in LowPower.
+    (+) Exit:
+        (++) Any peripheral interrupt acknowledged by the nested vectored interrupt 
+             controller (NVIC) can wake up the device from Sleep LP mode.
 
-   Stop mode
-   ==========
-   In Stop mode, all clocks in the VCORE domain are stopped, the PLL, the MSI,
-   the HSI and the HSE RC oscillators are disabled. Internal SRAM and register 
-   contents are preserved.
-   The voltage regulator can be configured either in normal or low-power mode.
-   To minimize the consumption In Stop mode, VREFINT, the BOR, PVD, and temperature
-   sensor can be switched off before entering the Stop mode. They can be switched 
-   on again by software after exiting the Stop mode using the PWR_UltraLowPowerCmd()
-   function. 
+  *** Stop mode *** 
+  =================
+  [..] In Stop mode, all clocks in the VCORE domain are stopped, the PLL, the MSI,
+       the HSI and the HSE RC oscillators are disabled. Internal SRAM and register 
+       contents are preserved.
+       The voltage regulator can be configured either in normal or low-power mode.
+       To minimize the consumption In Stop mode, VREFINT, the BOR, PVD, and temperature
+       sensor can be switched off before entering the Stop mode. They can be switched 
+       on again by software after exiting the Stop mode using the PWR_UltraLowPowerCmd()
+       function. 
    
-    - Entry:
-      - The Stop mode is entered using the PWR_EnterSTOPMode(PWR_Regulator_LowPower,) 
-        function with regulator in LowPower or with Regulator ON.
-    - Exit:
-      - Any EXTI Line (Internal or External) configured in Interrupt/Event mode.
+    (+) Entry:
+        (++) The Stop mode is entered using the PWR_EnterSTOPMode(PWR_Regulator_LowPower,) 
+             function with regulator in LowPower or with Regulator ON.
+    (+) Exit:
+        (++) Any EXTI Line (Internal or External) configured in Interrupt/Event mode.
       
-   Standby mode
-   ============
-   The Standby mode allows to achieve the lowest power consumption. It is based 
-   on the Cortex-M3 deepsleep mode, with the voltage regulator disabled. 
-   The VCORE domain is consequently powered off. The PLL, the MSI, the HSI 
-   oscillator and the HSE oscillator are also switched off. SRAM and register 
-   contents are lost except for the RTC registers, RTC backup registers and 
-   Standby circuitry.
+  *** Standby mode *** 
+  ====================
+  [..] The Standby mode allows to achieve the lowest power consumption. It is based 
+       on the Cortex-M3 deepsleep mode, with the voltage regulator disabled. 
+       The VCORE domain is consequently powered off. The PLL, the MSI, the HSI 
+       oscillator and the HSE oscillator are also switched off. SRAM and register 
+       contents are lost except for the RTC registers, RTC backup registers and 
+       Standby circuitry.
    
-   The voltage regulator is OFF.
+  [..] The voltage regulator is OFF.
    
-   To minimize the consumption In Standby mode, VREFINT, the BOR, PVD, and temperature
-   sensor can be switched off before entering the Standby mode. They can be switched 
-   on again by software after exiting the Standby mode using the PWR_UltraLowPowerCmd()
-   function. 
+  [..] To minimize the consumption In Standby mode, VREFINT, the BOR, PVD, and temperature
+       sensor can be switched off before entering the Standby mode. They can be switched 
+       on again by software after exiting the Standby mode using the PWR_UltraLowPowerCmd()
+       function. 
    
-    - Entry:
-      - The Standby mode is entered using the PWR_EnterSTANDBYMode() function.
-    - Exit:
-      - WKUP pin rising edge, RTC alarm (Alarm A and Alarm B), RTC wakeup,
-        tamper event, time-stamp event, external reset in NRST pin, IWDG reset.              
+    (+) Entry:
+        (++) The Standby mode is entered using the PWR_EnterSTANDBYMode() function.
+    (+) Exit:
+        (++) WKUP pin rising edge, RTC alarm (Alarm A and Alarm B), RTC wakeup,
+            tamper event, time-stamp event, external reset in NRST pin, IWDG reset.
 
-   Auto-wakeup (AWU) from low-power mode
-   =====================================
-   The MCU can be woken up from low-power mode by an RTC Alarm event, an RTC 
-   Wakeup event, a tamper event, a time-stamp event, or a comparator event, 
-   without depending on an external interrupt (Auto-wakeup mode).
+  *** Auto-wakeup (AWU) from low-power mode *** 
+  =============================================
+  [..]The MCU can be woken up from low-power mode by an RTC Alarm event, an RTC 
+      Wakeup event, a tamper event, a time-stamp event, or a comparator event, 
+      without depending on an external interrupt (Auto-wakeup mode).
 
-   - RTC auto-wakeup (AWU) from the Stop mode
-     ----------------------------------------
-     
-     - To wake up from the Stop mode with an RTC alarm event, it is necessary to:
-       - Configure the EXTI Line 17 to be sensitive to rising edges (Interrupt 
-         or Event modes) using the EXTI_Init() function.
-       - Enable the RTC Alarm Interrupt using the RTC_ITConfig() function
-       - Configure the RTC to generate the RTC alarm using the RTC_SetAlarm() 
-         and RTC_AlarmCmd() functions.
-     - To wake up from the Stop mode with an RTC Tamper or time stamp event, it 
-       is necessary to:
-       - Configure the EXTI Line 19 to be sensitive to rising edges (Interrupt 
-         or Event modes) using the EXTI_Init() function.
-       - Enable the RTC Tamper or time stamp Interrupt using the RTC_ITConfig() 
-         function
-       - Configure the RTC to detect the tamper or time stamp event using the
-         RTC_TimeStampConfig(), RTC_TamperTriggerConfig() and RTC_TamperCmd()
-         functions.
-     - To wake up from the Stop mode with an RTC WakeUp event, it is necessary to:
-       - Configure the EXTI Line 20 to be sensitive to rising edges (Interrupt 
-         or Event modes) using the EXTI_Init() function.
-       - Enable the RTC WakeUp Interrupt using the RTC_ITConfig() function
-       - Configure the RTC to generate the RTC WakeUp event using the RTC_WakeUpClockConfig(), 
-         RTC_SetWakeUpCounter() and RTC_WakeUpCmd() functions.
+    (+) RTC auto-wakeup (AWU) from the Stop mode
+        (++) To wake up from the Stop mode with an RTC alarm event, it is necessary to:
+             (+++) Configure the EXTI Line 17 to be sensitive to rising edges (Interrupt 
+                   or Event modes) using the EXTI_Init() function.
+             (+++) Enable the RTC Alarm Interrupt using the RTC_ITConfig() function
+             (+++) Configure the RTC to generate the RTC alarm using the RTC_SetAlarm() 
+                   and RTC_AlarmCmd() functions.
+        (++) To wake up from the Stop mode with an RTC Tamper or time stamp event, it 
+             is necessary to:
+             (+++) Configure the EXTI Line 19 to be sensitive to rising edges (Interrupt 
+                   or Event modes) using the EXTI_Init() function.
+             (+++) Enable the RTC Tamper or time stamp Interrupt using the RTC_ITConfig() 
+                   function.
+             (+++) Configure the RTC to detect the tamper or time stamp event using the
+                   RTC_TimeStampConfig(), RTC_TamperTriggerConfig() and RTC_TamperCmd()
+                   functions.
+        (++) To wake up from the Stop mode with an RTC WakeUp event, it is necessary to:
+             (+++) Configure the EXTI Line 20 to be sensitive to rising edges (Interrupt 
+                   or Event modes) using the EXTI_Init() function.
+             (+++) Enable the RTC WakeUp Interrupt using the RTC_ITConfig() function.
+             (+++) Configure the RTC to generate the RTC WakeUp event using the RTC_WakeUpClockConfig(), 
+                   RTC_SetWakeUpCounter() and RTC_WakeUpCmd() functions.
 
-   - RTC auto-wakeup (AWU) from the Standby mode
-     -------------------------------------------
-     - To wake up from the Standby mode with an RTC alarm event, it is necessary to:
-       - Enable the RTC Alarm Interrupt using the RTC_ITConfig() function
-       - Configure the RTC to generate the RTC alarm using the RTC_SetAlarm() 
-         and RTC_AlarmCmd() functions.
-     - To wake up from the Standby mode with an RTC Tamper or time stamp event, it 
-       is necessary to:
-       - Enable the RTC Tamper or time stamp Interrupt using the RTC_ITConfig() 
-         function
-       - Configure the RTC to detect the tamper or time stamp event using the
-         RTC_TimeStampConfig(), RTC_TamperTriggerConfig() and RTC_TamperCmd()
-         functions.
-     - To wake up from the Standby mode with an RTC WakeUp event, it is necessary to:
-       - Enable the RTC WakeUp Interrupt using the RTC_ITConfig() function
-       - Configure the RTC to generate the RTC WakeUp event using the RTC_WakeUpClockConfig(), 
-         RTC_SetWakeUpCounter() and RTC_WakeUpCmd() functions.
+    (+) RTC auto-wakeup (AWU) from the Standby mode
+        (++) To wake up from the Standby mode with an RTC alarm event, it is necessary to:
+             (+++) Enable the RTC Alarm Interrupt using the RTC_ITConfig() function.
+             (+++) Configure the RTC to generate the RTC alarm using the RTC_SetAlarm() 
+                   and RTC_AlarmCmd() functions.
+        (++) To wake up from the Standby mode with an RTC Tamper or time stamp event, it 
+             is necessary to:
+             (+++) Enable the RTC Tamper or time stamp Interrupt using the RTC_ITConfig() 
+                   function.
+             (+++) Configure the RTC to detect the tamper or time stamp event using the
+                   RTC_TimeStampConfig(), RTC_TamperTriggerConfig() and RTC_TamperCmd()
+                   functions.
+        (++) To wake up from the Standby mode with an RTC WakeUp event, it is necessary to:
+             (+++) Enable the RTC WakeUp Interrupt using the RTC_ITConfig() function
+             (+++) Configure the RTC to generate the RTC WakeUp event using the RTC_WakeUpClockConfig(), 
+                   RTC_SetWakeUpCounter() and RTC_WakeUpCmd() functions.
 
-   - Comparator auto-wakeup (AWU) from the Stop mode
-     -----------------------------------------------
-     - To wake up from the Stop mode with an comparator 1 or comparator 2 wakeup
-       event, it is necessary to:
-       - Configure the EXTI Line 21 for comparator 1 or EXTI Line 22 for comparator 2 
-         to be sensitive to to the selected edges (falling, rising or falling 
-         and rising) (Interrupt or Event modes) using the EXTI_Init() function.
-       - Configure the comparator to generate the event.
+    (+) Comparator auto-wakeup (AWU) from the Stop mode
+        (++) To wake up from the Stop mode with an comparator 1 or comparator 2 wakeup
+             event, it is necessary to:
+             (+++) Configure the EXTI Line 21 for comparator 1 or EXTI Line 22 for comparator 2 
+                   to be sensitive to to the selected edges (falling, rising or falling 
+                   and rising) (Interrupt or Event modes) using the EXTI_Init() function.
+             (+++) Configure the comparator to generate the event.
 
 @endverbatim
   * @{
@@ -574,7 +576,7 @@ void PWR_VoltageScalingConfig(uint32_t PWR_VoltageScaling)
   *         power run mode is selected. Only Stop and Sleep modes with regulator 
   *         configured in Low power mode is allowed when Low power run mode is 
   *         selected.  
-  * @note   In Low power run mode, all I/O pins keep the same state as in Run mode.        
+  * @note   In Low power run mode, all I/O pins keep the same state as in Run mode.
   * @param  NewState: new state of the Low Power Run mode.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -606,7 +608,6 @@ void PWR_EnterLowPowerRunMode(FunctionalState NewState)
   * @note   Low power sleep mode can only be entered when VCORE is in range 2.
   * @note   When the voltage regulator operates in low power mode, an additional 
   *         startup delay is incurred when waking up from Low power sleep mode.
-  *                   
   * @param  PWR_SLEEPEntry: specifies if SLEEP mode in entered with WFI or WFE instruction.
   *   This parameter can be one of the following values:
   *     @arg PWR_SLEEPEntry_WFI: enter SLEEP mode with WFI instruction
@@ -658,15 +659,15 @@ void PWR_EnterSleepMode(uint32_t PWR_Regulator, uint8_t PWR_SLEEPEntry)
   * @note   When the voltage regulator operates in low power mode, an additional 
   *         startup delay is incurred when waking up from Stop mode. 
   *         By keeping the internal regulator ON during Stop mode, the consumption 
-  *         is higher although the startup time is reduced.              
+  *         is higher although the startup time is reduced.
   * @param  PWR_Regulator: specifies the regulator state in STOP mode.
   *   This parameter can be one of the following values:
-  *     @arg PWR_Regulator_ON: STOP mode with regulator ON
-  *     @arg PWR_Regulator_LowPower: STOP mode with regulator in low power mode
+  *     @arg PWR_Regulator_ON: STOP mode with regulator ON.
+  *     @arg PWR_Regulator_LowPower: STOP mode with regulator in low power mode.
   * @param  PWR_STOPEntry: specifies if STOP mode in entered with WFI or WFE instruction.
   *   This parameter can be one of the following values:
-  *     @arg PWR_STOPEntry_WFI: enter STOP mode with WFI instruction
-  *     @arg PWR_STOPEntry_WFE: enter STOP mode with WFE instruction
+  *     @arg PWR_STOPEntry_WFI: enter STOP mode with WFI instruction.
+  *     @arg PWR_STOPEntry_WFE: enter STOP mode with WFE instruction.
   * @retval None
   */
 void PWR_EnterSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
@@ -709,10 +710,10 @@ void PWR_EnterSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
 /**
   * @brief  Enters STANDBY mode.
   * @note   In Standby mode, all I/O pins are high impedance except for:
-  *          - Reset pad (still available) 
-  *          - RTC_AF1 pin (PC13) if configured for Wakeup pin 2 (WKUP2), tamper, 
-  *            time-stamp, RTC Alarm out, or RTC clock calibration out.
-  *          - WKUP pin 1 (PA0) and WKUP pin 3 (PE6), if enabled.       
+  *         Reset pad (still available) 
+  *         RTC_AF1 pin (PC13) if configured for Wakeup pin 2 (WKUP2), tamper, 
+  *         time-stamp, RTC Alarm out, or RTC clock calibration out.
+  *         WKUP pin 1 (PA0) and WKUP pin 3 (PE6), if enabled.       
   * @param  None
   * @retval None
   */
@@ -743,9 +744,9 @@ void PWR_EnterSTANDBYMode(void)
  *  @brief   Flags management functions 
  *
 @verbatim   
- ===============================================================================
-                           Flags management functions
- ===============================================================================  
+  ==============================================================================
+                       ##### Flags management functions #####
+  ==============================================================================   
 
 @endverbatim
   * @{
@@ -826,4 +827,4 @@ void PWR_ClearFlag(uint32_t PWR_FLAG)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    TIM/InputCapture/stm32l1xx_it.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and 
   *          peripherals interrupt service routine.
@@ -17,9 +17,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
@@ -36,10 +39,10 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-__IO uint16_t IC4ReadValue1 = 0, IC4ReadValue2 = 0;
-__IO uint16_t CaptureNumber = 0;
-__IO uint32_t Capture = 0;
-__IO uint32_t TIM4Freq = 0;
+uint16_t IC4ReadValue1 = 0, IC4ReadValue2 = 0;
+uint16_t CaptureNumber = 0;
+uint32_t Capture = 0;
+uint32_t TIM4Freq = 0;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -167,10 +170,15 @@ void TIM4_IRQHandler(void)
       {
         Capture = (IC4ReadValue2 - IC4ReadValue1) - 1; 
       }
-      else
+      else if (IC4ReadValue2 < IC4ReadValue1)
       {
         Capture = ((0xFFFF - IC4ReadValue1) + IC4ReadValue2) - 1; 
       }
+      else
+      {
+        Capture = 0;
+      }
+      
       /* Frequency computation */ 
       TIM4Freq = (uint32_t) SystemCoreClock / Capture;
       CaptureNumber = 0;
@@ -202,4 +210,4 @@ void TIM4_IRQHandler(void)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

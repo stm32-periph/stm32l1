@@ -2,71 +2,62 @@
   ******************************************************************************
   * @file    stm32l1xx_lcd.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
-  *          functionalities of the LCD controller (LCD) peripheral:           
-  *           - Initialization and configuration
-  *           - LCD RAM memory write
-  *           - Interrupts and flags management   
+  *          functionalities of the LCD controller (LCD) peripheral:
+  *           + Initialization and configuration
+  *           + LCD RAM memory write
+  *           + Interrupts and flags management
   *           
   *  @verbatim
-  *      
-  *          ===================================================================      
-  *                                    LCD Clock
-  *          ===================================================================    
-  *          LCDCLK is the same as RTCCLK. 
-  *          To configure the RTCCLK/LCDCLK, proceed as follows:
-  *            - Enable the Power Controller (PWR) APB1 interface clock using the
-  *              RCC_APB1PeriphClockCmd() function.
-  *            - Enable access to RTC domain using the PWR_RTCAccessCmd() function.
-  *            - Select the RTC clock source using the RCC_RTCCLKConfig() function.    
-  *          
-  *          The frequency generator allows you to achieve various LCD frame rates 
-  *          starting from an LCD input clock frequency (LCDCLK) which can vary 
-  *          from 32 kHz up to 1 MHz.
-  *            
-  *          ===================================================================      
-  *                                  LCD and low power modes
-  *          =================================================================== 
-  *          The LCD still active during STOP mode.
-  *              
-  *          ===================================================================
-  *                                 How to use this driver
-  *          =================================================================== 
-  *          1. Enable LCD clock using RCC_APB1PeriphClockCmd(RCC_APB1Periph_LCD, ENABLE) function
-  *            
-  *          2. Configure the LCD prescaler, divider, duty, bias and voltage source
-  *             using LCD_Init() function     
-  *            
-  *          3. Optionally you can enable/configure:
-  *              -  LCD High Drive using the LCD_HighDriveCmd() function
-  *              -  LCD High Drive using the LCD_MuxSegmentCmd() function  
-  *              -  LCD Pulse ON Duration using the LCD_PulseOnDurationConfig() function
-  *              -  LCD Dead Time using the LCD_DeadTimeConfig() function  
-  *              -  The LCD Blink mode and frequency using the LCD_BlinkConfig() function
-  *              -  The LCD Contrast using the LCD_ContrastConfig() function  
-  *
-  *          4. Call the LCD_WaitForSynchro() function to wait for LCD_FCR register
-  *             synchronization.
-  *           
-  *          5. Call the LCD_Cmd() to enable the LCD controller
-  *          
-  *          6. Wait until the LCD Controller status is enabled and the step-up
-  *             converter is ready using the LCD_GetFlagStatus() and
-  *             LCD_FLAG_ENS and LCD_FLAG_RDY flags.               
-  *  
-  *          7. Write to the LCD RAM memory using the LCD_Write() function.
-  *          
-  *          8. Request an update display using the LCD_UpdateDisplayRequest()
-  *             function.
-  *             
-  *          9. Wait until the update display is finished by checking the UDD
-  *             flag status using the LCD_GetFlagStatus(LCD_FLAG_UDD)
-  *                                  
-  *                     
-  *  @endverbatim
-  *           
+  
+ ===============================================================================
+                            ##### LCD Clock #####
+ ===============================================================================
+    [..] LCDCLK is the same as RTCCLK. 
+    [..] To configure the RTCCLK/LCDCLK, proceed as follows:
+         (+) Enable the Power Controller (PWR) APB1 interface clock using the
+             RCC_APB1PeriphClockCmd() function.
+         (+) Enable access to RTC domain using the PWR_RTCAccessCmd() function.
+         (+) Select the RTC clock source using the RCC_RTCCLKConfig() function.
+  
+    [..] The frequency generator allows you to achieve various LCD frame rates
+         starting from an LCD input clock frequency (LCDCLK) which can vary 
+         from 32 kHz up to 1 MHz.
+  
+                      ##### LCD and low power modes #####
+ ===============================================================================
+    [..] The LCD still active during STOP mode.
+  
+                      ##### How to use this driver #####
+ ===============================================================================
+    [..]
+        (#) Enable LCD clock using 
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_LCD, ENABLE) function.
+        (#) Configure the LCD prescaler, divider, duty, bias and voltage source
+            using LCD_Init() function.
+        (#) Optionally you can enable/configure:
+            (++) LCD High Drive using the LCD_HighDriveCmd() function.
+            (++) LCD COM/SEG Mux using the LCD_MuxSegmentCmd() function.
+            (++) LCD Pulse ON Duration using the LCD_PulseOnDurationConfig() function.
+            (++) LCD Dead Time using the LCD_DeadTimeConfig() function  
+            (++) The LCD Blink mode and frequency using the LCD_BlinkConfig() function.
+            (++) The LCD Contrast using the LCD_ContrastConfig() function.
+        (#) Call the LCD_WaitForSynchro() function to wait for LCD_FCR register
+            synchronization.
+        (#) Call the LCD_Cmd() to enable the LCD controller.
+        (#) Wait until the LCD Controller status is enabled and the step-up
+            converter is ready using the LCD_GetFlagStatus() and
+            LCD_FLAG_ENS and LCD_FLAG_RDY flags.
+        (#) Write to the LCD RAM memory using the LCD_Write() function.
+        (#) Request an update display using the LCD_UpdateDisplayRequest()
+            function.
+        (#) Wait until the update display is finished by checking the UDD
+            flag status using the LCD_GetFlagStatus(LCD_FLAG_UDD).
+  
+    @endverbatim
+  
   ******************************************************************************
   * @attention
   *
@@ -77,9 +68,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_lcd.h"
@@ -144,17 +138,17 @@
 /** @defgroup LCD_Group1 Initialization and Configuration functions
  *  @brief   Initialization and Configuration functions 
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                    Initialization and Configuration functions
- ===============================================================================  
+            ##### Initialization and Configuration functions #####
+ ===============================================================================
 
 @endverbatim
   * @{
   */
 
 /**
-  * @brief  Deinitializes the LCD peripheral registers to their default reset 
+  * @brief  Deinitializes the LCD peripheral registers to their default reset
   *         values.
   * @param  None
   * @retval None
@@ -168,10 +162,10 @@ void LCD_DeInit(void)
 }
 
 /**
-  * @brief  Initializes the LCD peripheral according to the specified parameters 
+  * @brief  Initializes the LCD peripheral according to the specified parameters
   *         in the LCD_InitStruct.
-  * @note   This function can be used only when the LCD is disabled.  
-  * @param  LCD_InitStruct: pointer to a LCD_InitTypeDef structure that contains 
+  * @note   This function can be used only when the LCD is disabled.
+  * @param  LCD_InitStruct: pointer to a LCD_InitTypeDef structure that contains
   *         the configuration information for the specified LCD peripheral.
   * @retval None
   */
@@ -181,7 +175,7 @@ void LCD_Init(LCD_InitTypeDef* LCD_InitStruct)
   assert_param(IS_LCD_PRESCALER(LCD_InitStruct->LCD_Prescaler));
   assert_param(IS_LCD_DIVIDER(LCD_InitStruct->LCD_Divider));
   assert_param(IS_LCD_DUTY(LCD_InitStruct->LCD_Duty));
-  assert_param(IS_LCD_BIAS(LCD_InitStruct->LCD_Bias));  
+  assert_param(IS_LCD_BIAS(LCD_InitStruct->LCD_Bias));
   assert_param(IS_LCD_VOLTAGE_SOURCE(LCD_InitStruct->LCD_VoltageSource));
 
   LCD->FCR &= (uint32_t)FCR_MASK;
@@ -197,7 +191,7 @@ void LCD_Init(LCD_InitTypeDef* LCD_InitStruct)
 
 /**
   * @brief  Fills each LCD_InitStruct member with its default value.
-  * @param  LCD_InitStruct: pointer to a LCD_InitTypeDef structure which will 
+  * @param  LCD_InitStruct: pointer to a LCD_InitTypeDef structure which will
   *         be initialized.
   * @retval None
   */
@@ -246,12 +240,12 @@ void LCD_WaitForSynchro(void)
 }
 
 /**
-  * @brief  Enables or disables the low resistance divider. Displays with high 
-  *         internal resistance may need a longer drive time to achieve 
-  *         satisfactory contrast. This function is useful in this case if some 
+  * @brief  Enables or disables the low resistance divider. Displays with high
+  *         internal resistance may need a longer drive time to achieve
+  *         satisfactory contrast. This function is useful in this case if some
   *         additional power consumption can be tolerated.
   * @note   When this mode is enabled, the PulseOn Duration (PON) have to be 
-  *         programmed to 1/CK_PS (LCD_PulseOnDuration_1).    
+  *         programmed to 1/CK_PS (LCD_PulseOnDuration_1).
   * @param  NewState: new state of the low resistance divider.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -266,7 +260,7 @@ void LCD_HighDriveCmd(FunctionalState NewState)
 
 /**
   * @brief  Enables or disables the Mux Segment.
-  * @note   This function can be used only when the LCD is disabled.  
+  * @note   This function can be used only when the LCD is disabled.
   * @param  NewState: new state of the Mux Segment.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -281,7 +275,7 @@ void LCD_MuxSegmentCmd(FunctionalState NewState)
 
 /**
   * @brief  Configures the LCD pulses on duration.
-  * @param  LCD_PulseOnDuration: specifies the LCD pulse on duration in terms of 
+  * @param  LCD_PulseOnDuration: specifies the LCD pulse on duration in terms of
   *         CK_PS (prescaled LCD clock period) pulses.
   *   This parameter can be one of the following values:
   *     @arg LCD_PulseOnDuration_0: 0 pulse
@@ -332,7 +326,7 @@ void LCD_DeadTimeConfig(uint32_t LCD_DeadTime)
   *   This parameter can be one of the following values:
   *     @arg LCD_BlinkMode_Off:           Blink disabled
   *     @arg LCD_BlinkMode_SEG0_COM0:     Blink enabled on SEG[0], COM[0] (1 pixel)
-  *     @arg LCD_BlinkMode_SEG0_AllCOM:   Blink enabled on SEG[0], all COM (up to 8 
+  *     @arg LCD_BlinkMode_SEG0_AllCOM:   Blink enabled on SEG[0], all COM (up to 8
   *                                       pixels according to the programmed duty)
   *     @arg LCD_BlinkMode_AllSEG_AllCOM: Blink enabled on all SEG and all COM 
   *                                       (all pixels)
@@ -341,7 +335,7 @@ void LCD_DeadTimeConfig(uint32_t LCD_DeadTime)
   *     @arg LCD_BlinkFrequency_Div8:    The Blink frequency = fLcd/8
   *     @arg LCD_BlinkFrequency_Div16:   The Blink frequency = fLcd/16
   *     @arg LCD_BlinkFrequency_Div32:   The Blink frequency = fLcd/32
-  *     @arg LCD_BlinkFrequency_Div64:   The Blink frequency = fLcd/64 
+  *     @arg LCD_BlinkFrequency_Div64:   The Blink frequency = fLcd/64
   *     @arg LCD_BlinkFrequency_Div128:  The Blink frequency = fLcd/128
   *     @arg LCD_BlinkFrequency_Div256:  The Blink frequency = fLcd/256
   *     @arg LCD_BlinkFrequency_Div512:  The Blink frequency = fLcd/512
@@ -386,30 +380,36 @@ void LCD_ContrastConfig(uint32_t LCD_Contrast)
   */
 
 /** @defgroup LCD_Group2  LCD RAM memory write functions
- *  @brief    LCD RAM memory write functions 
+ *  @brief    LCD RAM memory write functions
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                           LCD RAM memory write functions
- ===============================================================================  
+                  ##### LCD RAM memory write functions #####
+ ===============================================================================
+    [..] Using its double buffer memory the LCD controller ensures the coherency 
+         of the displayed information without having to use interrupts to control 
+         LCD_RAM modification.
 
- Using its double buffer memory the LCD controller ensures the coherency of the 
- displayed information without having to use interrupts to control LCD_RAM 
- modification.
- The application software can access the first buffer level (LCD_RAM) through 
- the APB interface. Once it has modified the LCD_RAM, it sets the UDR flag in 
- the LCD_SR register using the LCD_UpdateDisplayRequest() function.
- This UDR flag (update display request) requests the updated information to be 
- moved into the second buffer level (LCD_DISPLAY).
- This operation is done synchronously with the frame (at the beginning of the 
- next frame), until the update is completed, the LCD_RAM is write protected and 
- the UDR flag stays high.
- Once the update is completed another flag (UDD - Update Display Done) is set and
- generates an interrupt if the UDDIE bit in the LCD_FCR register is set.
- The time it takes to update LCD_DISPLAY is, in the worst case, one odd and one 
- even frame.
- The update will not occur (UDR = 1 and UDD = 0) until the display is 
- enabled (LCDEN = 1).
+    [..] The application software can access the first buffer level (LCD_RAM) through
+         the APB interface. Once it has modified the LCD_RAM, it sets the UDR flag 
+         in the LCD_SR register using the LCD_UpdateDisplayRequest() function.
+
+    [..] This UDR flag (update display request) requests the updated information 
+         to be moved into the second buffer level (LCD_DISPLAY).
+
+    [..] This operation is done synchronously with the frame (at the beginning of 
+         the next frame), until the update is completed, the LCD_RAM is write 
+         protected and the UDR flag stays high.
+
+    [..] Once the update is completed another flag (UDD - Update Display Done) is 
+         set and generates an interrupt if the UDDIE bit in the LCD_FCR register 
+        is set.
+
+    [..] The time it takes to update LCD_DISPLAY is, in the worst case, one odd 
+         and one even frame.
+
+    [..] The update will not occur (UDR = 1 and UDD = 0) until the display is
+         enabled (LCDEN = 1).
 
 @endverbatim
   * @{
@@ -425,16 +425,16 @@ void LCD_ContrastConfig(uint32_t LCD_Contrast)
   *     @arg LCD_RAMRegister_3: LCD RAM Register 3
   *     @arg LCD_RAMRegister_4: LCD RAM Register 4
   *     @arg LCD_RAMRegister_5: LCD RAM Register 5
-  *     @arg LCD_RAMRegister_6: LCD RAM Register 6 
-  *     @arg LCD_RAMRegister_7: LCD RAM Register 7  
+  *     @arg LCD_RAMRegister_6: LCD RAM Register 6
+  *     @arg LCD_RAMRegister_7: LCD RAM Register 7
   *     @arg LCD_RAMRegister_8: LCD RAM Register 8
   *     @arg LCD_RAMRegister_9: LCD RAM Register 9
   *     @arg LCD_RAMRegister_10: LCD RAM Register 10
   *     @arg LCD_RAMRegister_11: LCD RAM Register 11
-  *     @arg LCD_RAMRegister_12: LCD RAM Register 12 
-  *     @arg LCD_RAMRegister_13: LCD RAM Register 13 
-  *     @arg LCD_RAMRegister_14: LCD RAM Register 14 
-  *     @arg LCD_RAMRegister_15: LCD RAM Register 15 
+  *     @arg LCD_RAMRegister_12: LCD RAM Register 12
+  *     @arg LCD_RAMRegister_13: LCD RAM Register 13
+  *     @arg LCD_RAMRegister_14: LCD RAM Register 14
+  *     @arg LCD_RAMRegister_15: LCD RAM Register 15
   * @param  LCD_Data: specifies LCD Data Value to be written.
   * @retval None
   */
@@ -449,15 +449,15 @@ void LCD_Write(uint32_t LCD_RAMRegister, uint32_t LCD_Data)
 
 /**
   * @brief  Enables the Update Display Request.
-  * @note   Each time software modifies the LCD_RAM it must set the UDR bit to 
-  *         transfer the updated data to the second level buffer. 
-  *         The UDR bit stays set until the end of the update and during this 
-  *         time the LCD_RAM is write protected. 
-  * @note   When the display is disabled, the update is performed for all 
+  * @note   Each time software modifies the LCD_RAM it must set the UDR bit to
+  *         transfer the updated data to the second level buffer.
+  *         The UDR bit stays set until the end of the update and during this
+  *         time the LCD_RAM is write protected.
+  * @note   When the display is disabled, the update is performed for all
   *         LCD_DISPLAY locations.
-  *         When the display is enabled, the update is performed only for locations 
-  *         for which commons are active (depending on DUTY). For example if 
-  *         DUTY = 1/2, only the LCD_DISPLAY of COM0 and COM1 will be updated.    
+  *         When the display is enabled, the update is performed only for locations
+  *         for which commons are active (depending on DUTY). For example if
+  *         DUTY = 1/2, only the LCD_DISPLAY of COM0 and COM1 will be updated.
   * @param  None
   * @retval None
   */
@@ -471,12 +471,12 @@ void LCD_UpdateDisplayRequest(void)
   */
 
 /** @defgroup LCD_Group3 Interrupts and flags management functions
- *  @brief   Interrupts and flags management functions 
+ *  @brief   Interrupts and flags management functions
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                   Interrupts and flags management functions
- ===============================================================================  
+            ##### Interrupts and flags management functions #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -495,7 +495,7 @@ void LCD_UpdateDisplayRequest(void)
 void LCD_ITConfig(uint32_t LCD_IT, FunctionalState NewState)
 {
   /* Check the parameters */
-  assert_param(IS_LCD_IT(LCD_IT));  
+  assert_param(IS_LCD_IT(LCD_IT));
   assert_param(IS_FUNCTIONAL_STATE(NewState));
   
   if (NewState != DISABLE)
@@ -513,19 +513,19 @@ void LCD_ITConfig(uint32_t LCD_IT, FunctionalState NewState)
   * @param  LCD_FLAG: specifies the flag to check.
   *   This parameter can be one of the following values:
   *     @arg LCD_FLAG_ENS: LCD Enabled flag. It indicates the LCD controller status.
-  *      @note  The ENS bit is set immediately when the LCDEN bit in the LCD_CR 
-  *             goes from 0 to 1. On deactivation it reflects the real status of 
-  *             LCD so it becomes 0 at the end of the last displayed frame.  
-  *     @arg LCD_FLAG_SOF: Start of Frame flag. This flag is set by hardware at 
-  *       the beginning of a new frame, at the same time as the display data is 
+  *      @note  The ENS bit is set immediately when the LCDEN bit in the LCD_CR
+  *             goes from 0 to 1. On deactivation it reflects the real status of
+  *             LCD so it becomes 0 at the end of the last displayed frame.
+  *     @arg LCD_FLAG_SOF: Start of Frame flag. This flag is set by hardware at
+  *       the beginning of a new frame, at the same time as the display data is
   *       updated.
   *     @arg LCD_FLAG_UDR: Update Display Request flag.
-  *     @arg LCD_FLAG_UDD: Update Display Done flag. 
-  *     @arg LCD_FLAG_RDY: Step_up converter Ready flag. It indicates the status 
+  *     @arg LCD_FLAG_UDD: Update Display Done flag.
+  *     @arg LCD_FLAG_RDY: Step_up converter Ready flag. It indicates the status
   *                        of the step-up converter.
-  *     @arg LCD_FLAG_FCRSF: LCD Frame Control Register Synchronization Flag. 
-  *       This flag is set by hardware each time the LCD_FCR register is updated 
-  *       in the LCDCLK domain.   
+  *     @arg LCD_FLAG_FCRSF: LCD Frame Control Register Synchronization Flag.
+  *       This flag is set by hardware each time the LCD_FCR register is updated
+  *       in the LCDCLK domain.
   * @retval The new state of LCD_FLAG (SET or RESET).
   */
 FlagStatus LCD_GetFlagStatus(uint32_t LCD_FLAG)
@@ -565,13 +565,13 @@ void LCD_ClearFlag(uint32_t LCD_FLAG)
 
 /**
   * @brief  Checks whether the specified RTC interrupt has occurred or not.
-  * @param  RTC_IT: specifies the RTC interrupts sources to check.
+  * @param  LCD_IT: specifies the LCD interrupts sources to check.
   *   This parameter can be one of the following values:
   *     @arg LCD_IT_SOF: Start of Frame Interrupt
   *     @arg LCD_IT_UDD: Update Display Done Interrupt.
   *     @note If the device is in STOP mode (PCLK not provided) UDD will not 
   *          generate an interrupt even if UDDIE = 1. 
-  *          If the display is not enabled the UDD interrupt will never occur.    
+  *          If the display is not enabled the UDD interrupt will never occur.
   * @retval The new state of the LCD_IT (SET or RESET).
   */
 ITStatus LCD_GetITStatus(uint32_t LCD_IT)
@@ -581,7 +581,7 @@ ITStatus LCD_GetITStatus(uint32_t LCD_IT)
   /* Check the parameters */
   assert_param(IS_LCD_GET_IT(LCD_IT));
     
-  if ((LCD->SR & LCD_IT) != (uint16_t)RESET) 
+  if ((LCD->SR & LCD_IT) != (uint16_t)RESET)
   {
     bitstatus = SET;
   }
@@ -634,4 +634,4 @@ void LCD_ClearITPendingBit(uint32_t LCD_IT)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

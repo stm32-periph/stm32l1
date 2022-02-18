@@ -9,6 +9,8 @@
 
 
 
+
+
   
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
@@ -760,7 +762,7 @@ ul
 Standard Peripherals&nbsp;Library: <i>Peripheral&#8217;s examples</i></span></strong><strong><span style="font-size: 18pt; color: rgb(51, 102, 255);"><o:p></o:p></span></strong></p>
             <p class="MsoNormal" style="text-align: center;" align="center"><span style="font-size: 10pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"><o:p>&nbsp;</o:p></span></p>
             <p class="MsoNormal" style="text-align: center;" align="center"><span style="font-size: 10pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;">Copyright
-2010 STMicroelectronics<o:p></o:p></span></p>
+2012 STMicroelectronics<o:p></o:p></span></p>
             <p style="text-align: center;" class="MsoNormal" align="center"><span style="font-size: 10pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"><img style="border: 0px solid ; width: 86px; height: 65px;" alt="" id="_x0000_i1033" src="../../_htmresc/logo.bmp"></span><span style="font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
             </td>
           </tr>
@@ -783,13 +785,13 @@ Standard Peripherals&nbsp;Library: <i>Peripheral&#8217;s examples</i></span></st
 STM32L1xx Standard Peripherals&nbsp;library provides a rich set of
 examples covering the main features of each peripheral. All the
 examples are independent from the software toolchain.&nbsp;These
-examples run on STMicroelectronics STM32L152-EVAL (Ultra Low Power
-Medium-density) evaluation board and can be easily tailored to any
+examples run on </span><span style="font-size: 10pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;">STMicroelectronics STM32L152D-EVAL (Ultra Low Power High-density) and&nbsp; </span><span style="font-size: 10pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;">STM32L152-EVAL (Ultra Low Power
+Medium-density) evaluations boards and can be easily tailored to any
 other supported device and development board. Only source files are
 provided for each example and user can tailor the provided&nbsp;project
 template to run the selected example with his preferred toolchain.<br>
 <br>
-</span></p>
+                        </span></p>
                         <h2 style="background: rgb(51, 102, 255) none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><span style="font-size: 12pt; color: white;">How to
 proceed?</span><span style=""><o:p></o:p></span></h2>
 
@@ -804,7 +806,7 @@ proceed?</span><span style=""><o:p></o:p></span></h2>
                           </ul>
                         <ul>
                           <li>
-                            <p><small><span style="font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;">Copy the files <span style="font-weight: bold;">main.c</span>, <span style="font-weight: bold;">main.h</span> (if exists), <span style="font-weight: bold;">stm32l1xx_it.c</span>, <span style="font-weight: bold;">system_stm32l1xx.c</span>, <span style="font-weight: bold;">stm32l1xx_it.h</span>, <span style="font-weight: bold;">stm32l1xx_conf.h</span> and any other source files from the specified example to your toolchain folder under <span style="font-weight: bold;">Project\STM32L1xx_StdPeriph_Template</span>. This project folder contains already all toolchain files needed for creating projects for STM32L1xx microcontrollers.</span></small></p>
+                            <p><small><span style="font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;">Copy the files <span style="font-weight: bold;">main.c</span>, <span style="font-weight: bold;">main.h</span> (if exists), <span style="font-weight: bold;">stm32l1xx_it.c</span>, <span style="font-weight: bold;">system_stm32l1xx.c</span>, <span style="font-weight: bold;">stm32l1xx_it.h</span>, <span style="font-weight: bold;">stm32l1xx_conf.h</span> and any other source files from the specified example to your toolchain folder under <span style="font-weight: bold;">Project\STM32L1xx_StdPeriph_Templates</span>. This project folder contains already all toolchain files needed for creating projects for STM32L1xx microcontrollers.</span></small></p>
                           </li>
                         </ul>
                         <ul>
@@ -835,10 +837,10 @@ proceed?</span><span style=""><o:p></o:p></span></h2>
                         <h2 style="background: rgb(51, 102, 255) none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><span class="GramE"><span style="font-size: 12pt; color: white;">STM32L1xx &nbsp;StdPeriph</span></span><span style="font-size: 12pt; color: white;">_Lib Examples</span><span style=""><o:p></o:p></span></h2>
                         <p><span style="font-size: 10pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;">The
 package contains the following examples:</span></p>
-                        <p class="MsoNormal" style="text-align: center;" align="center"><font size="+2"><font size="+3"><a href="#ADC"><span style="font-size: 7.5pt;">A</span><span style="font-size: 7.5pt;">DC</span></a></font><span style="font-size: 7.5pt;"> - <a href="#COMP">COMP</a> - <a href="#CortexM3">CortexM3</a> - <a href="#CRC">CRC</a> - <a href="#DAC">DAC</a> - <a href="#DMA">DMA</a> - <a href="#EXTI">EXTI</a>
-- <a href="#FLASH">FLASH</a> - <a href="#GPIO">GPIO</a> - <a href="#I2C">I2C</a> - <a href="#IWDG">IWDG</a> - <a href="#LCD">LCD</a>
-- <a href="#Lib_DEBUG"><span class="SpellE">Lib_DEBUG</span></a> - <a href="#NVIC">NVIC</a> - <a href="#PWR">PWR</a> - <a href="#RCC">RCC</a>
-- <a href="#RTC">RTC</a> - <a href="#SPI">SPI</a> - <a href="#SysTick">SysTick</a> - <a href="#TIM">TIM</a> - <a href="#USART">USART</a> - <a href="#WWDG">WWDG</a></span><span style="font-size: 10pt;"><o:p></o:p></span></font></p><big><big><big><br>
+                        <p class="MsoNormal" style="text-align: center;" align="center"><font size="+2"><font size="+3"><a href="#ADC"><span style="font-size: 7.5pt;">A</span><span style="font-size: 7.5pt;">DC</span></a></font><span style="font-size: 7.5pt;"> - </span></font><font size="+2"><font size="+3"><a href="Library_Examples.html#AES"><span style="font-size: 7.5pt;">AES</span><span style="font-size: 7.5pt;"></span></a></font><span style="font-size: 7.5pt;"> - </span></font><font size="+2"><span style="font-size: 7.5pt;"> <a href="#COMP">COMP</a> - <a href="#CortexM3">CortexM3</a> - <a href="#CRC">CRC</a> - <a href="#DAC">DAC</a> - <a href="#DMA">DMA</a> - <a href="#EXTI">EXTI</a>
+- <a href="#FLASH">FLASH</a> -</span></font><font size="+2"><span style="font-size: 7.5pt;"> <a href="Library_Examples.html#FSMC">FSMC</a> -</span></font><font size="+2"><span style="font-size: 7.5pt;"> <a href="#GPIO">GPIO</a> - <a href="#I2C">I2C</a> - <a href="#IWDG">IWDG</a> - <a href="#LCD">LCD</a>
+- <a href="#Lib_DEBUG"><span class="SpellE">Lib_DEBUG</span></a> - <a href="#NVIC">NVIC</a> -</span></font><font size="+2"><span style="font-size: 7.5pt;"> <a href="Library_Examples.html#OPAMP">OPAMP</a> -</span></font><font size="+2"><span style="font-size: 7.5pt;"> <a href="#PWR">PWR</a> - <a href="#RCC">RCC</a>
+- <a href="#RTC">RTC</a> -</span></font><font size="+2"><span style="font-size: 7.5pt;"> <a href="Library_Examples.html#SDIO">SDIO</a> -</span></font><font size="+2"><span style="font-size: 7.5pt;"> <a href="#SPI">SPI</a> - <a href="#SysTick">SysTick</a> - <a href="#TIM">TIM</a> - <a href="#USART">USART</a> - <a href="#WWDG">WWDG</a></span><span style="font-size: 10pt;"><o:p></o:p></span></font></p><big><big><big><br>
                         </big></big></big>
                         
                         <div align="center">
@@ -880,7 +882,9 @@ continuously an ADC channel.<o:p></o:p></span></p>
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ADC_DMA<o:p></o:p></span></p>
                               </td>
                               <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 33.6pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
-                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+                              <div style="text-align: justify;">
+                              </div>
+<p style="text-align: justify;" class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example describes how to use the ADC1 and DMA to transfer continuously
 converted data from ADC1 to memory.<o:p></o:p></span></p>
                               </td>
@@ -890,7 +894,9 @@ converted data from ADC1 to memory.<o:p></o:p></span></p>
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ADC_Freeze<o:p></o:p></span></p>
                               </td>
                               <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 70.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
-                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+                              <div style="text-align: justify;">
+                              </div>
+<p style="text-align: left;" class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a short description of how to use the ADC peripheral
 Freeze and PowerDown modes. The System is clocked by a 512kHz frequency
 (<span class="SpellE">fsystem</span>) (see system_stm32l1xx.c file).
@@ -909,14 +915,49 @@ to measure IDD in Run mode. The Measured IDD value is displayed
 continuously on LCD GLASS in mA.<o:p></o:p></span></p>
                               </td>
                             </tr>
-                            <tr style="height: 60pt;">
-                              <td rowspan="5" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 60pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                            <tr>
+                              <td rowspan="3" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">&nbsp;&nbsp;&nbsp; AES</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">AES_MODES<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><a name="AES"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+example provides a short description of how to configure the AES
+hardware accelerator to encrypt then to decrypt text with the different
+modes ECB, CBC et CTR.<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.1pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">AES_TwoBoards<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.1pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+is a typical example of how to use the AES software library to encrypt
+data in master board and decrypt it in slave board using I2C and
+interrupts.<br>
+<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 65.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">EncryptDecrypt<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 65.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This example provides a short description of how to configure the AES hardware accelerator to encrypt then to decrypt text.<br>
+<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+<tr style="height: 60pt;">
+                              <td rowspan="5" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 60pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal" style="text-indent: 11.05pt;"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">COMP<o:p></o:p></span></b></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 60pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 60pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">AnalogVoltageMonitoring<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 60pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 60pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="COMP"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">In this
 example, COMP2 is used to monitor the analog voltage while the MCU is
 in stop mode and to wake-up the system if a predefined threshold is
@@ -925,10 +966,10 @@ powered-off and ADC1 is powered-on to perform continuous conversion.<o:p></o:p><
                               </td>
                             </tr>
                             <tr style="height: 70.95pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 70.95pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 70.95pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">COMP_AnalogWatchdog<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 70.95pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 70.95pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to make an analog watchdog using the STM32L1xx COMPs
 peripherals in window mode: If the input voltage is above the higher
@@ -939,10 +980,10 @@ turned Off.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 70.05pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">COMP_Interrupt<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to configure the COMP peripheral to compare the
 external voltage applied on PB12 with the Internal Voltage Reference.
@@ -953,10 +994,10 @@ toggles LED1.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 43.05pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 43.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 43.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">PulseWidthMeasurement<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 43.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 43.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to configure the COMP2 peripheral to measure pulse
 width. This method (measuring signal pulse using comparator is
@@ -965,34 +1006,34 @@ levels).<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 39pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">PWMSignalControl<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to configure COMP2 peripheral to hold on safe state
 (low level) TIM2 channels as soon as COMP2 output is set at high level.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 38.55pt;">
-                              <td rowspan="3" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <td rowspan="3" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">&nbsp;&nbsp;&nbsp;
 CortexM3</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">BitBand<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="CortexM3"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to use CortexM3 Bit-Band access to perform atomic
 read-modify-write and read operations on a variable in SRAM.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 38.1pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.1pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.1pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Mode_Privilege<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.1pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.1pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to modify CortexM3 Thread mode privilege access and
 stack. CortexM3 Thread mode is entered on Reset, and can be entered as
@@ -1000,10 +1041,10 @@ a result of an exception return.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 65.55pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 65.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 65.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">MPU<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 65.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 65.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example presents the MPU features on STM32L1xx Ultra Low Medium-density
 devices and it can be easily ported to any other STM32 device
@@ -1013,13 +1054,13 @@ read and write operation in different mode.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 39pt;">
-                              <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">CRC</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">CRC_Calculation<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="CRC"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to use CRC (cyclic redundancy check) calculation unit
 to get a CRC code of a given buffer of data word (32-bit), based on a
@@ -1027,13 +1068,13 @@ fixed generator polynomial (0x4C11DB7).<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 48pt;">
-                              <td rowspan="2" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 48pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <td rowspan="2" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 48pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal" style="text-indent: 11.05pt;"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">DAC</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 48pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 48pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">DAC_ADC<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 48pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 48pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="DAC"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example describes how to use the ADC1 and DAC to output on DAC_OUT1
 sampled values of ADC1. The ADC1 is configured to convert continuously
@@ -1042,10 +1083,10 @@ and the conversion is triggered by software.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 43.5pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">DAC_SignalsGeneration<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a short description of how to use the DAC peripheral
 to generate several signals using DMA controller. When the user presses
@@ -1053,13 +1094,13 @@ the KEY push-button, DMA transfers the two selected waveforms to DAC.<o:p></o:p>
                               </td>
                             </tr>
                             <tr style="height: 43.5pt;">
-                              <td rowspan="3" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <td colspan="1" rowspan="4" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">DMA<o:p></o:p></span></b></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ADC_TIM2<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="DMA"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a description of how to use a DMA channel to transfer
 continuously a data from a peripheral (ADC1) to another peripheral
@@ -1067,33 +1108,46 @@ continuously a data from a peripheral (ADC1) to another peripheral
                               </td>
                             </tr>
                             <tr style="height: 38.55pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">FLASH_RAM<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a description of how to use a DMA channel to transfer
 a word data buffer from FLASH memory to embedded SRAM memory.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 39pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">RAM_DAC<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a description of how to use a DMA channel to transfer
 data buffer from RAM memory to DAC.<o:p></o:p></span></p>
                               </td>
                             </tr>
-                            <tr style="height: 60.75pt;">
-                              <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">FSMC<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+example provides a description of how to use two DMA channels to
+transfer a word data buffer from Flash memory to external SRAM memory
+and to recuperate the written data from external SRAM to be stored in
+internal SRAM.<br>
+<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+<tr style="height: 60.75pt;">
+                              <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">EXTI</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Example<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="EXTI"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to configure an external interrupt line. In this
 example, an EXTI line is configured to generate an interrupt on each
@@ -1102,40 +1156,93 @@ GPIO pin is toggled.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 38.55pt;">
-                              <td rowspan="3" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <td colspan="1" rowspan="5" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">&nbsp;&nbsp;
 FLASH</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Data_ Program<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="FLASH"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a description of how to program the STM32L1xx data
 memory.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 42.6pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 42.6pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 42.6pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">HalfPage<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 42.6pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 42.6pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a description of how to program the STM32L1xx FLASH
 program memory using half page write operation. The <span class="SpellE">Halfpage</span> operation is possible only from SRAM.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 38.55pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Write_Protection<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a description of how to enable and disable the write
 protection for the STM32L1xx FLASH.<o:p></o:p></span></p>
                               </td>
                             </tr>
-                            <tr style="height: 43.5pt;">
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ParallelHalfPage<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+example provides a description of how to program the STM32L1xx FLASH
+program memory using parallel page erase and parallel half page write
+operations.&nbsp; The parallel page erase and parallel halfpage write
+operations are possible onlyfrom internal SRAM. <o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Dual_Boot<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This example demonstrates the dual Flash boot capability of STM32L1xx High-density devices: boot from Flash memory Bank1 or Bank2.<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td rowspan="3" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">&nbsp;&nbsp;&nbsp; FSMC</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">NOR<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><a name="FSMC"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+example provides a basic example of how to use the FSMC firmware
+library and an associate driver to perform erase/read/write operations
+on the M29W128GL NORmemory mounted on the STM32L152D-EVAL board. <o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">SRAM<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+example provides a basic example of how to use the FSMC firmware
+library and an associate driver to perform read/write operations on the
+IS61WV51216BLL SRAMmemory mounted on STM32L152D-EVAL board. <o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Data_Memory<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This example shows how to use the external SRAM mounted on STM32L152D-EVAL as program data memory (including heap and stack).<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+<tr style="height: 43.5pt;">
                               <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">GPIO</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
@@ -1323,54 +1430,73 @@ address other than default using the NVIC_SetVectorTable function from
 the misc.h/.c driver.<o:p></o:p></span></p>
                               </td>
                             </tr>
-                            <tr style="height: 34.05pt;">
-                              <td rowspan="5" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                            <tr>
+                              <td colspan="1" rowspan="2" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 34.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">OPAMP</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 34.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">InternalFollower<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 34.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><a name="Lib_DEBUG"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This example provides a short description of how to configure the OPAMP2 in internal follower and how to use OPAMP2 output as ADC input.<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 34.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">OPAMP_NonInverting<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 34.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This example shows how to configure the operational amplifier OPAMP2 built in&nbsp; STM32L1xx devices to make a non inverting ampifier.<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+<tr style="height: 34.05pt;">
+                              <td rowspan="5" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">PWR</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">STANDBY<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="PWR"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to enter the system to STANDBY mode and wake-up from
 this mode using: external RESET, RTC Alarm or WKUP pin.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 34.05pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">STOP<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to enter the system to STOP mode and wake-up using
 EXTI Line interrupts. The EXTI Line sources are PC.13 and RTC Alarm.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 38.55pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">BOR<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to configure the programmable BOR thresholds using
 the FLASH option bytes.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 39pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">CurrentConsumption<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to configure the STM32L1xx system to measure
 different Ultra Low Power modes current consumption.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 60.75pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">PVD<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 60.75pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to configure the programmable voltage detector using
 an external interrupt line. In this example, EXTI line 16 is configured
@@ -1380,26 +1506,26 @@ threshold).<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 39pt;">
-                              <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">RCC</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Example<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="RCC"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example demonstrates how to switch the System clock from one source to
 another.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 70.05pt;">
-                              <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" rowspan="4" width="81">
+                              <td colspan="1" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" rowspan="6" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">RTC</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Calendar<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 70.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><a name="RTC"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a short description of how to use the RTC peripheral.
 By default, the Calendar Time (initialized in main.c file) is displayed
@@ -1410,37 +1536,75 @@ Calendar time and Calendar date, the LED 1 toggle.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 34.05pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">TimeStamp<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 34.05pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example provides a short description of how to use the RTC peripheral
 and the <span class="SpellE">timeStamp</span> Feature.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 38.55pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Tamper<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 38.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example shows how to write/read data to/from RTC Backup data registers
 and demonstrates the Tamper detection feature.<o:p></o:p></span></p>
                               </td>
                             </tr>
                             <tr style="height: 39pt;">
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
                               <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">RTC_LSI<o:p></o:p></span></p>
                               </td>
-                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
                               <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
 example demonstrates and explains how to use the LSI clock source auto
 calibration to get a precise RTC clock.<o:p></o:p></span></p>
                               </td>
                             </tr>
-                            <tr style="height: 47.55pt;">
-                              <td rowspan="3" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 47.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">RTC_StopWatch<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+example illustrates how to use the STM32L1xx new RTC's sub-seconds and
+Tamper feature (Filter, sampling) features. It simulates a precise
+chronometer with 5 record times possibilities stored in the Backup
+registers (5 registers for time (second, minutes and hours) and 5 registers for subsecond).<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">RTC_Timer</span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 39pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+example provides a short description of how to use the RTC peripheral&#8217;s
+with Alarm sub seconds feature to simulate a timer with refresh time
+equal to 250 ms&nbsp; (1 second/ 8) * 2).<o:p></o:p></span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
+                              <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">SDIO</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">uSDCard<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><a name="SDIO"></a><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+example provides a basic example of how to use the SDIO firmware
+library and an associate driver to perform read/write operations on the
+SD Card memory (SD Card V1.0, V1.1, V2.0 and SDHC (High Capacity)
+protocol)that could be mounted on theSTM32L152D-EVAL board. <o:p></o:p></span></p>
+                              </td>
+                            </tr>
+<tr style="height: 47.55pt;">
+                              <td colspan="1" rowspan="4" style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0.75pt 0.75pt 0in; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 60.9pt; height: 47.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal" style="text-indent: 11.05pt;"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">SPI</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
                               <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 47.55pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
@@ -1473,7 +1637,18 @@ example provides a small application in which joystick buttons are used
 to trigger SPI communication and though using SPI firmware library.<o:p></o:p></span></p>
                               </td>
                             </tr>
-                            <tr style="height: 43.5pt;">
+                            <tr>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 134.15pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="179">
+                              <p class="MsoNormal" style="text-align: justify;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">SPI_EEPROM<o:p></o:p></span></p>
+                              </td>
+                              <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; background: rgb(0, 176, 240) none repeat scroll 0% 50%; width: 359.1pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="479">
+                              <p class="MsoNormal"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">This
+firmware provides a basic example of how to use the SPI firmware
+library and an associate SPI EEPROM driver to communicate with an I2C
+EEPROM device (here theexample is interfacing with M95xxx EEPROM) <o:p></o:p></span></p>
+                              </td>
+                            </tr>
+<tr style="height: 43.5pt;">
                               <td style="border-style: none solid solid; border-color: -moz-use-text-color white white; border-width: medium 1.5pt 1.5pt; padding: 0in 0in 0in 9pt; background: rgb(141, 180, 227) none repeat scroll 0% 50%; width: 60.9pt; height: 43.5pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="81">
                               <p class="MsoNormal"><b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">SysTick</span></b><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"><o:p></o:p></span></p>
                               </td>
@@ -1724,6 +1899,8 @@ a programmed time period. <o:p></o:p></span></p>
                               <br>
                               <br>
                               <br>
+                              <br>
+                              <br>
 </td>
                               <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; width: 134.15pt;" width="179">
                               <p class="MsoNormal" style="margin-bottom: 12pt;"><span style="font-size: 10pt; display: none;"><br style="">
@@ -1740,11 +1917,15 @@ a programmed time period. <o:p></o:p></span></p>
                               <br>
                               <br>
                               <br>
+                              <br>
+                              <br>
 </td>
                               <td style="border-style: none solid solid none; border-color: -moz-use-text-color white white -moz-use-text-color; border-width: medium 1.5pt 1.5pt medium; padding: 0in 0in 0in 9pt; width: 359.1pt;" width="479">
                               <p class="MsoNormal" style="margin-bottom: 12pt;"><span style="font-size: 10pt; display: none;"><br style="">
 <!--[if !supportLineBreakNewLine]--><br style="">
 <!--[endif]--><o:p></o:p></span></p>
+                              <br>
+                              <br>
                               <br>
                               <br>
                               <br>

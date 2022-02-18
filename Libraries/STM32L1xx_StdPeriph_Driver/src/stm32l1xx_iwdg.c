@@ -2,67 +2,64 @@
   ******************************************************************************
   * @file    stm32l1xx_iwdg.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the Independent watchdog (IWDG) peripheral:           
-  *           - Prescaler and Counter configuration
-  *           - IWDG activation
-  *           - Flag management
+  *           + Prescaler and Counter configuration
+  *           + IWDG activation
+  *           + Flag management
   *
   *  @verbatim  
   *  
-  *          ===================================================================
-  *                                     IWDG features
-  *          ===================================================================
-  *    
-  *          The IWDG can be started by either software or hardware (configurable
-  *          through option byte).
-  *            
-  *          The IWDG is clocked by its own dedicated low-speed clock (LSI) and
-  *          thus stays active even if the main clock fails.
-  *          Once the IWDG is started, the LSI is forced ON and cannot be disabled
-  *          (LSI cannot be disabled too), and the counter starts counting down from 
-  *          the reset value of 0xFFF. When it reaches the end of count value (0x000)
-  *          a system reset is generated.
-  *          The IWDG counter should be reloaded at regular intervals to prevent
-  *          an MCU reset.
-  *                           
-  *          The IWDG is implemented in the VDD voltage domain that is still functional
-  *          in STOP and STANDBY mode (IWDG reset can wake-up from STANDBY)          
-  *            
-  *          IWDGRST flag in RCC_CSR register can be used to inform when a IWDG
-  *          reset occurs
-  *            
-  *          Min-max timeout value @37KHz (LSI): ~108us / ~28.3s
-  *          The IWDG timeout may vary due to LSI frequency dispersion. STM32L1xx
-  *          devices provide the capability to measure the LSI frequency (LSI clock
-  *          connected internally to TIM10 CH1 input capture). The measured value
-  *          can be used to have an IWDG timeout with an acceptable accuracy. 
-  *          For more information, please refer to the STM32L1xx Reference manual
-  *          
-  *                            
-  *          ===================================================================
-  *                                 How to use this driver
-  *          ===================================================================
-  *          1. Enable write access to IWDG_PR and IWDG_RLR registers using
-  *             IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable) function
-  *               
-  *          2. Configure the IWDG prescaler using IWDG_SetPrescaler() function
-  *            
-  *          3. Configure the IWDG counter value using IWDG_SetReload() function.
-  *             This value will be loaded in the IWDG counter each time the counter
-  *             is reloaded, then the IWDG will start counting down from this value.
-  *            
-  *          4. Start the IWDG using IWDG_Enable() function, when the IWDG is used
-  *             in software mode (no need to enable the LSI, it will be enabled
-  *             by hardware)
-  *             
-  *          5. Then the application program must reload the IWDG counter at regular
-  *             intervals during normal operation to prevent an MCU reset, using
-  *             IWDG_ReloadCounter() function.      
-  *          
-  *  @endverbatim
+  ============================================================================== 
+                          ##### IWDG features #####
+  ============================================================================== 
+    [..] The IWDG can be started by either software or hardware (configurable
+         through option byte).
+             
+    [..] The IWDG is clocked by its own dedicated low-speed clock (LSI) and
+         thus stays active even if the main clock fails.
+         Once the IWDG is started, the LSI is forced ON and cannot be disabled
+         (LSI cannot be disabled too), and the counter starts counting down from 
+         the reset value of 0xFFF. When it reaches the end of count value (0x000)
+         a system reset is generated.
+         The IWDG counter should be reloaded at regular intervals to prevent
+         an MCU reset.
+                             
+    [..] The IWDG is implemented in the VDD voltage domain that is still functional
+         in STOP and STANDBY mode (IWDG reset can wake-up from STANDBY).
+              
+    [..] IWDGRST flag in RCC_CSR register can be used to inform when a IWDG
+         reset occurs.
+              
+    [..] Min-max timeout value @37KHz (LSI): ~108us / ~28.3s
+         The IWDG timeout may vary due to LSI frequency dispersion. STM32L1xx
+         devices provide the capability to measure the LSI frequency (LSI clock
+         connected internally to TIM10 CH1 input capture). The measured value
+         can be used to have an IWDG timeout with an acceptable accuracy. 
+         For more information, please refer to the STM32L1xx Reference manual.
+            
+                          ##### How to use this driver ##### 
+  ============================================================================== 
+    [..]
+    (#) Enable write access to IWDG_PR and IWDG_RLR registers using
+        IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable) function.
+    (#) Configure the IWDG prescaler using IWDG_SetPrescaler() function.
+
+    (#) Configure the IWDG counter value using IWDG_SetReload() function.
+        This value will be loaded in the IWDG counter each time the counter
+        is reloaded, then the IWDG will start counting down from this value.
+
+    (#) Start the IWDG using IWDG_Enable() function, when the IWDG is used
+        in software mode (no need to enable the LSI, it will be enabled
+        by hardware).
+
+    (#) Then the application program must reload the IWDG counter at regular
+        intervals during normal operation to prevent an MCU reset, using
+        IWDG_ReloadCounter() function.
+
+    @endverbatim
   *    
   ******************************************************************************
   * @attention
@@ -74,9 +71,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_iwdg.h"
@@ -110,9 +110,9 @@
  *  @brief   Prescaler and Counter configuration functions
  *
 @verbatim   
- ===============================================================================
-                  Prescaler and Counter configuration functions
- ===============================================================================  
+  ==============================================================================
+            ##### Prescaler and Counter configuration functions #####
+  ==============================================================================  
 
 @endverbatim
   * @{
@@ -185,9 +185,9 @@ void IWDG_ReloadCounter(void)
  *  @brief   IWDG activation function 
  *
 @verbatim   
- ===============================================================================
-                          IWDG activation function
- ===============================================================================  
+  ==============================================================================
+                          ##### IWDG activation function #####
+  ==============================================================================  
 
 @endverbatim
   * @{
@@ -195,8 +195,8 @@ void IWDG_ReloadCounter(void)
 
 /**
   * @brief  Enables IWDG (write access to IWDG_PR and IWDG_RLR registers disabled).
-  * @param  None
-  * @retval None
+  * @param  None.
+  * @retval None.
   */
 void IWDG_Enable(void)
 {
@@ -212,7 +212,7 @@ void IWDG_Enable(void)
  *
 @verbatim   
  ===============================================================================
-                            Flag management function 
+                      ##### Flag management function ##### 
  ===============================================================================  
 
 @endverbatim
@@ -260,4 +260,4 @@ FlagStatus IWDG_GetFlagStatus(uint16_t IWDG_FLAG)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

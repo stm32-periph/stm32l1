@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_comp.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the COMP firmware 
   *          library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_COMP_H
@@ -156,6 +159,7 @@ void COMP_DeInit(void);
 void COMP_Init(COMP_InitTypeDef* COMP_InitStruct);
 void COMP_Cmd(FunctionalState NewState);
 uint8_t COMP_GetOutputLevel(uint32_t COMP_Selection);
+void COMP_SW1SwitchConfig(FunctionalState NewState);
 
 /* Window mode control function ***********************************************/
 void COMP_WindowCmd(FunctionalState NewState);
@@ -177,4 +181,4 @@ void COMP_VrefintOutputCmd(FunctionalState NewState);
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

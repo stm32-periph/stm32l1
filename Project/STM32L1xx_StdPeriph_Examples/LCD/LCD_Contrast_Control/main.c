@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    LCD/LCD_Contrast_Control/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,14 +15,23 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
-#include "stm32l152_eval_glass_lcd.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+  #include "stm32l152d_eval_glass_lcd.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+  #include "stm32l152_eval_glass_lcd.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -63,7 +72,7 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */     
@@ -126,20 +135,33 @@ void ADC_Config(void)
   ADC_InitTypeDef ADC_InitStructure;
   DMA_InitTypeDef DMA_InitStructure;
   
-  /* Enable DMA1 and GPIOB clock */
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1 | RCC_AHBPeriph_GPIOB , ENABLE);
-
   /* Enable ADC1 clock */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 
   /* Enable the HSI */
   RCC_HSICmd(ENABLE);
-    
+
+#ifdef USE_STM32L152D_EVAL 
+ 
+  /* Enable DMA1 and GPIOF clock */
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1 | RCC_AHBPeriph_GPIOF , ENABLE);
+  
+  /* Configure PF.10 (ADC Channel31) as analog input -------------------------*/
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+  GPIO_Init(GPIOF, &GPIO_InitStructure);
+#elif defined USE_STM32L152_EVAL 
+ 
+  /* Enable DMA1 and GPIOB clock */
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1 | RCC_AHBPeriph_GPIOB , ENABLE);
   /* Configure PB.12 (ADC Channel18) as analog input -------------------------*/
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
-
+#endif 
+  
+  
+  
   /* DMA1 channel1 configuration ----------------------------------------------*/
   DMA_DeInit(DMA1_Channel1);
   DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_DR_Address;
@@ -166,10 +188,15 @@ void ADC_Config(void)
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
   ADC_InitStructure.ADC_NbrOfConversion = 1;
   ADC_Init(ADC1, &ADC_InitStructure);
-
+  
+#ifdef USE_STM32L152D_EVAL 
+  /* ADC1 regular channel31 configuration */ 
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_31, 1, ADC_SampleTime_4Cycles);
+#elif defined USE_STM32L152_EVAL 
   /* ADC1 regular channel18 configuration */ 
   ADC_RegularChannelConfig(ADC1, ADC_Channel_18, 1, ADC_SampleTime_4Cycles);
-
+#endif 
+     
   /* Enable the request after last transfer for DMA Circular mode */
   ADC_DMARequestAfterLastTransferCmd(ADC1, ENABLE);
   
@@ -197,35 +224,35 @@ void  LCD_GLASS_DisplayContrast(__IO uint8_t value)
   {
     case 0 :
       /* Display the "CONTR2V6" message on the LCD GLASS */
-      LCD_GLASS_DisplayString("CONTR2V6");
+      LCD_GLASS_DisplayString("CNTR2V6");
       break;
     case 1 :
       /* Display the "CONTR2V7" message on the LCD GLASS */
-      LCD_GLASS_DisplayString("CONTR2V7");
+      LCD_GLASS_DisplayString("CNTR2V7");
       break;
     case 2 :
       /* Display the "CONTR2V8" message on the LCD GLASS */
-      LCD_GLASS_DisplayString("CONTR2V8");
+      LCD_GLASS_DisplayString("CNTR2V8");
       break;
     case 3 :
       /* Display the "CONTR3V0" message on the LCD GLASS */
-      LCD_GLASS_DisplayString("CONTR3V0");
+      LCD_GLASS_DisplayString("CNTR3V0");
       break;
     case 4 :
       /* Display the "CONTR3V1" message on the LCD GLASS */
-      LCD_GLASS_DisplayString("CONTR3V1");
+      LCD_GLASS_DisplayString("CNTR3V1");
       break;
     case 5 :
       /* Display the "CONTR3V2" message on the LCD GLASS */
-      LCD_GLASS_DisplayString("CONTR3V2");
+      LCD_GLASS_DisplayString("CNTR3V2");
       break;
     case 6 :
       /* Display the "CONTR3V4" message on the LCD GLASS */
-      LCD_GLASS_DisplayString("CONTR3V4");
+      LCD_GLASS_DisplayString("CNTR3V4");
       break;
     default :
       /* Display the "CONTR3V5" message on the LCD GLASS */
-      LCD_GLASS_DisplayString("CONTR3V5");
+      LCD_GLASS_DisplayString("CNTR3V5");
       break;
   }
 }
@@ -259,4 +286,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

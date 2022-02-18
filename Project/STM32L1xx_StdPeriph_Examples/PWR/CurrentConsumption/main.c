@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    PWR/CurrentConsumption/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,14 +15,23 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
 #include "stm32l1xx_ulp_modes.h"
+
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval.h"
+#else
+#include "stm32l152_eval.h"
+#endif
+
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -36,7 +45,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-__IO uint32_t i = 0, BOROptionBytes = 0;
+__IO uint32_t Counter = 0, BOROptionBytes = 0;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -51,7 +60,7 @@ int main(void)
   
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */  
@@ -65,7 +74,6 @@ int main(void)
   /* Reset RTC Domain */
   RCC_RTCResetCmd(ENABLE);
   RCC_RTCResetCmd(DISABLE);
-
 #ifdef BOR_MODIFY
   /* Get BOR Option Bytes */
   BOROptionBytes = FLASH_OB_GetBOR();
@@ -97,7 +105,7 @@ int main(void)
       - FLASH switched OFF
       - VDD from 1.65V to 3.6V
       - Current Consumption ~10.5uA
-      - Wakeup using Key Button PA.00      
+      - Wakeup using Key Button PA.00
    */
   LowPowerRunMode_Measure();
 #elif defined (LP_RUN_FLASH_MODE)
@@ -109,7 +117,7 @@ int main(void)
       - All peripherals OFF
       - VDD from 1.65V to 3.6V
       - Current Consumption ~25uA
-      - Wakeup using Key Button PA.00      
+      - Wakeup using Key Button PA.00
    */
   LowPowerRunMode_Measure();  
 #elif defined (SLEEP_MODE)
@@ -197,7 +205,7 @@ int main(void)
     STM_EVAL_LEDToggle(LED1);
 
     /* Inserted Delay */
-    for(i = 0; i < 0x5FF; i++);
+    for(Counter = 0; Counter < 0x5FF; Counter++);
   }
 #endif
 }
@@ -231,4 +239,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

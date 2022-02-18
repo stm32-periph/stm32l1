@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_crc.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides all the CRC firmware functions.
   ******************************************************************************
   * @attention
@@ -15,9 +15,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_crc.h"
@@ -55,7 +58,7 @@ void CRC_ResetDR(void)
 
 /**
   * @brief  Computes the 32-bit CRC of a given data word(32-bit).
-  * @param  Data: data word(32-bit) to compute its CRC
+  * @param  Data: data word(32-bit) to compute its CRC.
   * @retval 32-bit CRC
   */
 uint32_t CRC_CalcCRC(uint32_t Data)
@@ -67,7 +70,7 @@ uint32_t CRC_CalcCRC(uint32_t Data)
 
 /**
   * @brief  Computes the 32-bit CRC of a given buffer of data word(32-bit).
-  * @param  pBuffer: pointer to the buffer containing the data to be computed
+  * @param  pBuffer: pointer to the buffer containing the data to be computed.
   * @param  BufferLength: length of the buffer to be computed					
   * @retval 32-bit CRC
   */
@@ -103,7 +106,7 @@ void CRC_SetIDRegister(uint8_t IDValue)
 }
 
 /**
-  * @brief  Returns the 8-bit data stored in the Independent Data(ID) register
+  * @brief  Returns the 8-bit data stored in the Independent Data(ID) register.
   * @param  None
   * @retval 8-bit value of the ID register 
   */
@@ -124,4 +127,4 @@ uint8_t CRC_GetIDRegister(void)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    USART/Printf/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,22 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+#endif 
+
 #include <stdio.h>
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
@@ -59,10 +68,10 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
-     */     
+     */    
        
   /* USARTx configured as follow:
         - BaudRate = 115200 baud  
@@ -79,7 +88,7 @@ int main(void)
   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
-  STM_EVAL_COMInit(COM2, &USART_InitStructure);
+  STM_EVAL_COMInit(COM1, &USART_InitStructure);
 
   /* Output a message on Hyperterminal using printf function */
   printf("\n\rUSART Printf Example: retarget the C library printf function to the USART\n\r");
@@ -87,7 +96,7 @@ int main(void)
   /* Loop until the end of transmission */
   /* The software must wait until TC=1. The TC flag remains cleared during all data
      transfers and it is set by hardware at the last frame’s end of transmission*/
-  while (USART_GetFlagStatus(EVAL_COM2, USART_FLAG_TC) == RESET)
+  while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_TC) == RESET)
   {}
   
   while (1)
@@ -104,10 +113,10 @@ PUTCHAR_PROTOTYPE
 {
   /* Place your implementation of fputc here */
   /* e.g. write a character to the USART */
-  USART_SendData(EVAL_COM2, (uint8_t) ch);
+  USART_SendData(EVAL_COM1, (uint8_t) ch);
 
   /* Loop until transmit data register is empty */
-  while (USART_GetFlagStatus(EVAL_COM2, USART_FLAG_TXE) == RESET)
+  while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_TXE) == RESET)
   {}
 
   return ch;
@@ -142,4 +151,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

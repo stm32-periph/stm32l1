@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    PWR/CurrentConsumption/stm32l1xx_ulp_modes.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the STM32L1xx Ultra Low Power Modes:           
   *           - Low Power Run Mode from Internal SRAM
@@ -22,13 +22,20 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_ulp_modes.h"
-#include "stm32_eval.h"
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval.h"
+#else
+#include "stm32l152_eval.h"
+#endif
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -126,7 +133,8 @@ void LowPowerRunMode_Measure(void)
   /* Configure all GPIO as analog to reduce current consumption on non used IOs */
   /* Enable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, ENABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, ENABLE);
 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
@@ -136,12 +144,15 @@ void LowPowerRunMode_Measure(void)
   GPIO_Init(GPIOD, &GPIO_InitStructure);
   GPIO_Init(GPIOE, &GPIO_InitStructure);
   GPIO_Init(GPIOH, &GPIO_InitStructure);
+  GPIO_Init(GPIOF, &GPIO_InitStructure);
+  GPIO_Init(GPIOG, &GPIO_InitStructure);  
   GPIO_Init(GPIOA, &GPIO_InitStructure); 
   GPIO_Init(GPIOB, &GPIO_InitStructure);   
 
   /* Disable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, DISABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, DISABLE);
 
   /*  Configure Key Button*/
   STM_EVAL_PBInit(BUTTON_KEY,BUTTON_MODE_GPIO);
@@ -287,7 +298,8 @@ void SleepMode_Measure(void)
   /* Configure all GPIO as analog to reduce current consumption on non used IOs */
   /* Enable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, ENABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, ENABLE);
 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
@@ -297,12 +309,15 @@ void SleepMode_Measure(void)
   GPIO_Init(GPIOD, &GPIO_InitStructure);
   GPIO_Init(GPIOE, &GPIO_InitStructure);
   GPIO_Init(GPIOH, &GPIO_InitStructure);
+  GPIO_Init(GPIOF, &GPIO_InitStructure);
+  GPIO_Init(GPIOG, &GPIO_InitStructure);  
   GPIO_Init(GPIOA, &GPIO_InitStructure); 
   GPIO_Init(GPIOB, &GPIO_InitStructure);   
 
   /* Disable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, DISABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, DISABLE);
 
   /*  Configure Key Button*/
   STM_EVAL_PBInit(BUTTON_KEY,BUTTON_MODE_GPIO);
@@ -403,7 +418,8 @@ void LowPowerSleepMode_Measure(void)
   /* Configure all GPIO as analog to reduce current consumption on non used IOs */  
   /* Enable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, ENABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, ENABLE);
 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
@@ -413,12 +429,15 @@ void LowPowerSleepMode_Measure(void)
   GPIO_Init(GPIOD, &GPIO_InitStructure);
   GPIO_Init(GPIOE, &GPIO_InitStructure);
   GPIO_Init(GPIOH, &GPIO_InitStructure);
+  GPIO_Init(GPIOF, &GPIO_InitStructure);
+  GPIO_Init(GPIOG, &GPIO_InitStructure);  
   GPIO_Init(GPIOA, &GPIO_InitStructure); 
   GPIO_Init(GPIOB, &GPIO_InitStructure);
 
   /* Disable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, DISABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, DISABLE);
 
   /*  Configure Key Button*/
   STM_EVAL_PBInit(BUTTON_KEY,BUTTON_MODE_GPIO);
@@ -477,7 +496,8 @@ void StopMode_Measure(void)
   /* Configure all GPIO as analog to reduce current consumption on non used IOs */
   /* Enable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, ENABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, ENABLE);
 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
@@ -487,15 +507,18 @@ void StopMode_Measure(void)
   GPIO_Init(GPIOD, &GPIO_InitStructure);
   GPIO_Init(GPIOE, &GPIO_InitStructure);
   GPIO_Init(GPIOH, &GPIO_InitStructure);
+  GPIO_Init(GPIOF, &GPIO_InitStructure);
+  GPIO_Init(GPIOG, &GPIO_InitStructure);  
   GPIO_Init(GPIOA, &GPIO_InitStructure); 
   GPIO_Init(GPIOB, &GPIO_InitStructure);   
 
   /* Disable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, DISABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, DISABLE);
   
   /*  Configure Key Button*/
-  STM_EVAL_PBInit(BUTTON_KEY,BUTTON_MODE_GPIO);
+  STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_GPIO);
 
   /* Wait Until Key button pressed */
   while(STM_EVAL_PBGetState(BUTTON_KEY) == RESET)
@@ -507,7 +530,7 @@ void StopMode_Measure(void)
   }
 
   /*  Configure Key Button*/
-  STM_EVAL_PBInit(BUTTON_KEY,BUTTON_MODE_EXTI);
+  STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_EXTI);
     
   /* Enable Ultra low power mode */
   PWR_UltraLowPowerCmd(ENABLE);
@@ -570,7 +593,8 @@ void StopRTCLSEMode_Measure(void)
   /* Configure all GPIO as analog to reduce current consumption on non used IOs */
   /* Enable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, ENABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, ENABLE);
 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
@@ -580,12 +604,15 @@ void StopRTCLSEMode_Measure(void)
   GPIO_Init(GPIOD, &GPIO_InitStructure);
   GPIO_Init(GPIOE, &GPIO_InitStructure);
   GPIO_Init(GPIOH, &GPIO_InitStructure);
+  GPIO_Init(GPIOG, &GPIO_InitStructure); 
+  GPIO_Init(GPIOF, &GPIO_InitStructure);  
   GPIO_Init(GPIOA, &GPIO_InitStructure); 
   GPIO_Init(GPIOB, &GPIO_InitStructure);   
 
   /* Disable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, DISABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, DISABLE);
   
   /*  Configure Key Button*/
   STM_EVAL_PBInit(BUTTON_KEY,BUTTON_MODE_GPIO);
@@ -684,7 +711,8 @@ void StopRTCLSIMode_Measure(void)
   /* Configure all GPIO as analog to reduce current consumption on non used IOs */
   /* Enable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, ENABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, ENABLE);
 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
@@ -694,12 +722,15 @@ void StopRTCLSIMode_Measure(void)
   GPIO_Init(GPIOD, &GPIO_InitStructure);
   GPIO_Init(GPIOE, &GPIO_InitStructure);
   GPIO_Init(GPIOH, &GPIO_InitStructure);
+  GPIO_Init(GPIOG, &GPIO_InitStructure); 
+  GPIO_Init(GPIOF, &GPIO_InitStructure);  
   GPIO_Init(GPIOA, &GPIO_InitStructure); 
   GPIO_Init(GPIOB, &GPIO_InitStructure);
 
   /* Disable GPIOs clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC |
-                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH, DISABLE);
+                        RCC_AHBPeriph_GPIOD | RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOH |
+                        RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, DISABLE);
 
   /*  Configure Key Button*/
   STM_EVAL_PBInit(BUTTON_KEY,BUTTON_MODE_GPIO);
@@ -950,4 +981,4 @@ void StandbyRTCLSIMode_Measure(void)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    CortexM3/MPU/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,14 +15,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32_mpu.h"
 
-#include "main.h"
-#include "stm32_eval.h"
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -39,20 +46,20 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-void MPU_SETUP(void);
+void Delay (uint32_t nCount);
 
 /* Private functions ---------------------------------------------------------*/
+
 /**
   * @brief  Main program.
   * @param  None
   * @retval None
   */
 int main(void)
-{
-  
+{  
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */  
@@ -62,55 +69,38 @@ int main(void)
   STM_EVAL_LEDInit(LED2);
   
   /* Set MPU regions */
-  MPU_SETUP();
+  MPU_Config();
 
-  #ifdef ACCESS_PERMISSION
-    accesspermission();
-  #endif  
+ #ifdef ACCESS_PERMISSION
+  MPU_AccessPermConfig();
+ #endif  
 
   /* Infinite loop */
   while (1)
   {
-    /* Turn On LED1 */
-    STM_EVAL_LEDOn(LED1); 
+    /* Toggle LED1 */
+    STM_EVAL_LEDToggle(LED1); 
+
+    /* Insert a delay */
+    Delay(0x7FFFF);
   }
 }
 
 /**
-  * @brief  Configures the main MPU regions.
-  * @param  None
+  * @brief  Inserts a delay time.
+  * @param  nCount: specifies the delay time length.
   * @retval None
   */
-void MPU_SETUP(void)
+void Delay(__IO uint32_t nCount)
 {
-  /* Disable MPU */
-  MPU->CTRL &= ~MPU_CTRL_ENABLE_Msk;
-  
-  /* Configure RAM region as Region N°0, 8kB of size and R/W region */
-  MPU->RNR  = RAM_REGION_NUMBER;
-  MPU->RBAR = RAM_ADDRESS_START;
-  MPU->RASR = RAM_SIZE | portMPU_REGION_READ_WRITE;
-  
-  /* Configure FLASH region as REGION N°1, 1MB of size and R/W region */
-  MPU->RNR  = FLASH_REGION_NUMBER;
-  MPU->RBAR = FLASH_ADDRESS_START;
-  MPU->RASR = FLASH_SIZE | portMPU_REGION_READ_WRITE;
-  
-  /* Configure Peripheral region as REGION N°2, 0.5GB of size, R/W and Execute
-  Never region */
-  MPU->RNR  = PERIPH_REGION_NUMBER;  
-  MPU->RBAR = PERIPH_ADDRESS_START;
-  MPU->RASR = PERIPH_SIZE |portMPU_REGION_READ_WRITE | MPU_RASR_XN_Msk;
-  
-  /* Enable the memory fault exception */
-  SCB->SHCSR |= SCB_SHCSR_MEMFAULTENA_Msk;
-   
-  /* Enable MPU */
-  MPU->CTRL |= MPU_CTRL_PRIVDEFENA_Msk | MPU_CTRL_ENABLE_Msk;
+  /* Decrement nCount value */
+  while (nCount != 0)
+  {
+    nCount--;
+  }
 }
 
 #ifdef  USE_FULL_ASSERT
-
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
@@ -138,4 +128,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

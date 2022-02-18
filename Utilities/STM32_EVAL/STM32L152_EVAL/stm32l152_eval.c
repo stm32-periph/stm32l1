@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l152_eval.c
   * @author  MCD Application Team
-  * @version V4.4.0
-  * @date    31-December-2010
+  * @version V5.0.1
+  * @date    24-January-2012
   * @brief   This file provides:
   *            - set of firmware functions to manage Leds, push-button and COM ports
   *            - low level initialization functions for SD card (on SPI) and
@@ -19,9 +19,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
   
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l152_eval.h"
@@ -100,23 +103,23 @@ const uint16_t BUTTON_EXTI_LINE[BUTTONn] = {KEY_BUTTON_EXTI_LINE,
                                             DOWN_BUTTON_EXTI_LINE,
                                             SEL_BUTTON_EXTI_LINE};
 
-const uint16_t BUTTON_PORT_SOURCE[BUTTONn] = {KEY_BUTTON_EXTI_PORT_SOURCE,
-                                              RIGHT_BUTTON_EXTI_PORT_SOURCE,
-                                              LEFT_BUTTON_EXTI_PORT_SOURCE,
-                                              UP_BUTTON_EXTI_PORT_SOURCE,
-                                              DOWN_BUTTON_EXTI_PORT_SOURCE,
-                                              SEL_BUTTON_EXTI_PORT_SOURCE};
+const uint8_t BUTTON_PORT_SOURCE[BUTTONn] = {KEY_BUTTON_EXTI_PORT_SOURCE,
+                                             RIGHT_BUTTON_EXTI_PORT_SOURCE,
+                                             LEFT_BUTTON_EXTI_PORT_SOURCE,
+                                             UP_BUTTON_EXTI_PORT_SOURCE,
+                                             DOWN_BUTTON_EXTI_PORT_SOURCE,
+                                             SEL_BUTTON_EXTI_PORT_SOURCE};
 								 
-const uint16_t BUTTON_PIN_SOURCE[BUTTONn] = {KEY_BUTTON_EXTI_PIN_SOURCE,
-                                             RIGHT_BUTTON_EXTI_PIN_SOURCE,
-                                             LEFT_BUTTON_EXTI_PIN_SOURCE,
-                                             UP_BUTTON_EXTI_PIN_SOURCE,
-                                             DOWN_BUTTON_EXTI_PIN_SOURCE,
-                                             SEL_BUTTON_EXTI_PIN_SOURCE}; 
+const uint8_t BUTTON_PIN_SOURCE[BUTTONn] = {KEY_BUTTON_EXTI_PIN_SOURCE,
+                                            RIGHT_BUTTON_EXTI_PIN_SOURCE,
+                                            LEFT_BUTTON_EXTI_PIN_SOURCE,
+                                            UP_BUTTON_EXTI_PIN_SOURCE,
+                                            DOWN_BUTTON_EXTI_PIN_SOURCE,
+                                            SEL_BUTTON_EXTI_PIN_SOURCE}; 
                                              
-const uint16_t BUTTON_IRQn[BUTTONn] = {KEY_BUTTON_EXTI_IRQn, RIGHT_BUTTON_EXTI_IRQn,
-                                       LEFT_BUTTON_EXTI_IRQn, UP_BUTTON_EXTI_IRQn,
-                                       DOWN_BUTTON_EXTI_IRQn, SEL_BUTTON_EXTI_IRQn};
+const uint8_t BUTTON_IRQn[BUTTONn] = {KEY_BUTTON_EXTI_IRQn, RIGHT_BUTTON_EXTI_IRQn,
+                                      LEFT_BUTTON_EXTI_IRQn, UP_BUTTON_EXTI_IRQn,
+                                      DOWN_BUTTON_EXTI_IRQn, SEL_BUTTON_EXTI_IRQn};
 
 USART_TypeDef* COM_USART[COMn] = {EVAL_COM1, EVAL_COM2}; 
 
@@ -134,13 +137,13 @@ const uint16_t COM_TX_PIN[COMn] = {EVAL_COM1_TX_PIN, EVAL_COM2_TX_PIN};
 
 const uint16_t COM_RX_PIN[COMn] = {EVAL_COM1_RX_PIN, EVAL_COM2_RX_PIN};
  
-const uint16_t COM_TX_PIN_SOURCE[COMn] = {EVAL_COM1_TX_SOURCE, EVAL_COM2_TX_SOURCE};
+const uint8_t COM_TX_PIN_SOURCE[COMn] = {EVAL_COM1_TX_SOURCE, EVAL_COM2_TX_SOURCE};
 
-const uint16_t COM_RX_PIN_SOURCE[COMn] = {EVAL_COM1_RX_SOURCE, EVAL_COM2_RX_SOURCE};
+const uint8_t COM_RX_PIN_SOURCE[COMn] = {EVAL_COM1_RX_SOURCE, EVAL_COM2_RX_SOURCE};
  
-const uint16_t COM_TX_AF[COMn] = {EVAL_COM1_TX_AF, EVAL_COM2_TX_AF};
+const uint8_t COM_TX_AF[COMn] = {EVAL_COM1_TX_AF, EVAL_COM2_TX_AF};
  
-const uint16_t COM_RX_AF[COMn] = {EVAL_COM1_RX_AF, EVAL_COM2_RX_AF};
+const uint8_t COM_RX_AF[COMn] = {EVAL_COM1_RX_AF, EVAL_COM2_RX_AF};
 
 DMA_InitTypeDef   sEEDMA_InitStructure;
 
@@ -256,51 +259,44 @@ void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
   EXTI_InitTypeDef EXTI_InitStructure;
   NVIC_InitTypeDef NVIC_InitStructure;
 
-  /* There is no Wakeup and Tamper buttons on STM32L152-EVAL, the Button value should
-     be greater than 1. */
-  if(Button > 1)
+  /* There is no Wakeup and Tamper buttons on STM32L152-EVAL. */
+   
+  /* Enable the BUTTON Clock */
+  RCC_AHBPeriphClockCmd(BUTTON_CLK[Button], ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+  /* Configure Button pin as input */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Pin = BUTTON_PIN[Button];
+  GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStructure);
+
+  if (Button_Mode == BUTTON_MODE_EXTI)
   {
-    Button = (Button_TypeDef) (Button - 2);
+    /* Connect Button EXTI Line to Button GPIO Pin */
+    SYSCFG_EXTILineConfig(BUTTON_PORT_SOURCE[Button], BUTTON_PIN_SOURCE[Button]);
+    /* Configure Button EXTI line */
+    EXTI_InitStructure.EXTI_Line = BUTTON_EXTI_LINE[Button];
+    EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
     
-    /* Enable the BUTTON Clock */
-    RCC_AHBPeriphClockCmd(BUTTON_CLK[Button], ENABLE);
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-
-    /* Configure Button pin as input */
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-    GPIO_InitStructure.GPIO_Pin = BUTTON_PIN[Button];
-    GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStructure);
-
-
-    if (Button_Mode == BUTTON_MODE_EXTI)
+    if(Button != BUTTON_KEY) 
     {
-      /* Connect Button EXTI Line to Button GPIO Pin */
-      SYSCFG_EXTILineConfig(BUTTON_PORT_SOURCE[Button], BUTTON_PIN_SOURCE[Button]);
-
-      /* Configure Button EXTI line */
-      EXTI_InitStructure.EXTI_Line = BUTTON_EXTI_LINE[Button];
-      EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-    
-      if(Button != BUTTON_KEY) 
-      {
-        EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
-      }
-      else
-      {
-        EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
-      }
-      EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-      EXTI_Init(&EXTI_InitStructure);
-
-      /* Enable and set Button EXTI Interrupt to the lowest priority */
-      NVIC_InitStructure.NVIC_IRQChannel = BUTTON_IRQn[Button];
-      NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
-      NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
-      NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-
-      NVIC_Init(&NVIC_InitStructure); 
+      EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
     }
+    else
+    {
+      EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+    }
+    EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+    EXTI_Init(&EXTI_InitStructure);
+
+    /* Enable and set Button EXTI Interrupt to the lowest priority */
+    NVIC_InitStructure.NVIC_IRQChannel = BUTTON_IRQn[Button];
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+
+    NVIC_Init(&NVIC_InitStructure); 
   }
 }
 
@@ -314,22 +310,13 @@ void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
   *     @arg BUTTON_UP: Joystick Up Push Button 
   *     @arg BUTTON_DOWN: Joystick Down Push Button
   *     @arg BUTTON_SEL: Joystick Sel Push Button    
-  * @retval - When Button > 1, the Button GPIO pin value is returned.
-  *         - When Button = 0 or 1, error code (0xFF) is returned.   
+  * @retval Button GPIO pin value is returned. 
   */
 uint32_t STM_EVAL_PBGetState(Button_TypeDef Button)
 {
-  /* There is no Wakeup and Tamper pins on STM32L152-EVAL, the Button value should
-     be greater than 1. */
-  if(Button > 1)
-  {
-    Button = (Button_TypeDef) (Button - 2);
-    return GPIO_ReadInputDataBit(BUTTON_PORT[Button], BUTTON_PIN[Button]);
-  }
-  else
-  {
-    return 0xFF; /* Error Code */
-  }
+  /* There is no Wakeup and Tamper pins on STM32L152-EVAL. */
+  
+  return GPIO_ReadInputDataBit(BUTTON_PORT[Button], BUTTON_PIN[Button]);
 }
 
 /**
@@ -747,4 +734,4 @@ void sEE_LowLevel_DMAConfig(uint32_t pBuffer, uint32_t BufferSize, uint32_t Dire
   * @}
   */ 
     
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

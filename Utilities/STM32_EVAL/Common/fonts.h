@@ -2,9 +2,9 @@
   ******************************************************************************
   * @file    fonts.h
   * @author  MCD Application Team
-  * @version V4.4.0
-  * @date    31-December-2010
-  * @brief   Header for fonts.c
+  * @version V5.0.1
+  * @date    28-December-2011
+  * @brief   Header for fonts.c file
   ******************************************************************************
   * @attention
   *
@@ -15,9 +15,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __FONTS_H
@@ -115,4 +118,4 @@ extern sFONT Font8x8;
   * @}
   */      
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

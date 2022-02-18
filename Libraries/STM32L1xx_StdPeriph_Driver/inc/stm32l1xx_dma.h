@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_dma.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the DMA firmware 
   *          library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_DMA_H
@@ -71,7 +74,7 @@ typedef struct
                                         This parameter can be a value of @ref DMA_memory_data_size */
 
   uint32_t DMA_Mode;               /*!< Specifies the operation mode of the DMAy Channelx.
-                                        This parameter can be a value of @ref DMA_circular_normal_mode.
+                                        This parameter can be a value of @ref DMA_circular_normal_mode
                                         @note: The circular buffer mode cannot be used if the memory-to-memory
                                               data transfer is configured on the selected Channel */
 
@@ -94,7 +97,12 @@ typedef struct
                                    ((PERIPH) == DMA1_Channel4) || \
                                    ((PERIPH) == DMA1_Channel5) || \
                                    ((PERIPH) == DMA1_Channel6) || \
-                                   ((PERIPH) == DMA1_Channel7))
+                                   ((PERIPH) == DMA1_Channel7) || \
+                                   ((PERIPH) == DMA2_Channel1) || \
+                                   ((PERIPH) == DMA2_Channel2) || \
+                                   ((PERIPH) == DMA2_Channel3) || \
+                                   ((PERIPH) == DMA2_Channel4) || \
+                                   ((PERIPH) == DMA2_Channel5))
 
 /** @defgroup DMA_data_transfer_direction 
   * @{
@@ -237,7 +245,28 @@ typedef struct
 #define DMA1_IT_HT7                        ((uint32_t)0x04000000)
 #define DMA1_IT_TE7                        ((uint32_t)0x08000000)
 
-#define IS_DMA_CLEAR_IT(IT) ((((IT) & 0xF0000000) == 0x00) && ((IT) != 0x00))
+#define DMA2_IT_GL1                        ((uint32_t)0x10000001)
+#define DMA2_IT_TC1                        ((uint32_t)0x10000002)
+#define DMA2_IT_HT1                        ((uint32_t)0x10000004)
+#define DMA2_IT_TE1                        ((uint32_t)0x10000008)
+#define DMA2_IT_GL2                        ((uint32_t)0x10000010)
+#define DMA2_IT_TC2                        ((uint32_t)0x10000020)
+#define DMA2_IT_HT2                        ((uint32_t)0x10000040)
+#define DMA2_IT_TE2                        ((uint32_t)0x10000080)
+#define DMA2_IT_GL3                        ((uint32_t)0x10000100)
+#define DMA2_IT_TC3                        ((uint32_t)0x10000200)
+#define DMA2_IT_HT3                        ((uint32_t)0x10000400)
+#define DMA2_IT_TE3                        ((uint32_t)0x10000800)
+#define DMA2_IT_GL4                        ((uint32_t)0x10001000)
+#define DMA2_IT_TC4                        ((uint32_t)0x10002000)
+#define DMA2_IT_HT4                        ((uint32_t)0x10004000)
+#define DMA2_IT_TE4                        ((uint32_t)0x10008000)
+#define DMA2_IT_GL5                        ((uint32_t)0x10010000)
+#define DMA2_IT_TC5                        ((uint32_t)0x10020000)
+#define DMA2_IT_HT5                        ((uint32_t)0x10040000)
+#define DMA2_IT_TE5                        ((uint32_t)0x10080000)
+
+#define IS_DMA_CLEAR_IT(IT) (((((IT) & 0xF0000000) == 0x00) || (((IT) & 0xEFF00000) == 0x00)) && ((IT) != 0x00))
 
 #define IS_DMA_GET_IT(IT) (((IT) == DMA1_IT_GL1) || ((IT) == DMA1_IT_TC1) || \
                            ((IT) == DMA1_IT_HT1) || ((IT) == DMA1_IT_TE1) || \
@@ -252,8 +281,17 @@ typedef struct
                            ((IT) == DMA1_IT_GL6) || ((IT) == DMA1_IT_TC6) || \
                            ((IT) == DMA1_IT_HT6) || ((IT) == DMA1_IT_TE6) || \
                            ((IT) == DMA1_IT_GL7) || ((IT) == DMA1_IT_TC7) || \
-                           ((IT) == DMA1_IT_HT7) || ((IT) == DMA1_IT_TE7))
-
+                           ((IT) == DMA1_IT_HT7) || ((IT) == DMA1_IT_TE7) || \
+                           ((IT) == DMA2_IT_GL1) || ((IT) == DMA2_IT_TC1) || \
+                           ((IT) == DMA2_IT_HT1) || ((IT) == DMA2_IT_TE1) || \
+                           ((IT) == DMA2_IT_GL2) || ((IT) == DMA2_IT_TC2) || \
+                           ((IT) == DMA2_IT_HT2) || ((IT) == DMA2_IT_TE2) || \
+                           ((IT) == DMA2_IT_GL3) || ((IT) == DMA2_IT_TC3) || \
+                           ((IT) == DMA2_IT_HT3) || ((IT) == DMA2_IT_TE3) || \
+                           ((IT) == DMA2_IT_GL4) || ((IT) == DMA2_IT_TC4) || \
+                           ((IT) == DMA2_IT_HT4) || ((IT) == DMA2_IT_TE4) || \
+                           ((IT) == DMA2_IT_GL5) || ((IT) == DMA2_IT_TC5) || \
+                           ((IT) == DMA2_IT_HT5) || ((IT) == DMA2_IT_TE5))
 /**
   * @}
   */
@@ -290,7 +328,28 @@ typedef struct
 #define DMA1_FLAG_HT7                      ((uint32_t)0x04000000)
 #define DMA1_FLAG_TE7                      ((uint32_t)0x08000000)
 
-#define IS_DMA_CLEAR_FLAG(FLAG) ((((FLAG) & 0xF0000000) == 0x00) && ((FLAG) != 0x00))
+#define DMA2_FLAG_GL1                      ((uint32_t)0x10000001)
+#define DMA2_FLAG_TC1                      ((uint32_t)0x10000002)
+#define DMA2_FLAG_HT1                      ((uint32_t)0x10000004)
+#define DMA2_FLAG_TE1                      ((uint32_t)0x10000008)
+#define DMA2_FLAG_GL2                      ((uint32_t)0x10000010)
+#define DMA2_FLAG_TC2                      ((uint32_t)0x10000020)
+#define DMA2_FLAG_HT2                      ((uint32_t)0x10000040)
+#define DMA2_FLAG_TE2                      ((uint32_t)0x10000080)
+#define DMA2_FLAG_GL3                      ((uint32_t)0x10000100)
+#define DMA2_FLAG_TC3                      ((uint32_t)0x10000200)
+#define DMA2_FLAG_HT3                      ((uint32_t)0x10000400)
+#define DMA2_FLAG_TE3                      ((uint32_t)0x10000800)
+#define DMA2_FLAG_GL4                      ((uint32_t)0x10001000)
+#define DMA2_FLAG_TC4                      ((uint32_t)0x10002000)
+#define DMA2_FLAG_HT4                      ((uint32_t)0x10004000)
+#define DMA2_FLAG_TE4                      ((uint32_t)0x10008000)
+#define DMA2_FLAG_GL5                      ((uint32_t)0x10010000)
+#define DMA2_FLAG_TC5                      ((uint32_t)0x10020000)
+#define DMA2_FLAG_HT5                      ((uint32_t)0x10040000)
+#define DMA2_FLAG_TE5                      ((uint32_t)0x10080000)
+
+#define IS_DMA_CLEAR_FLAG(FLAG) (((((FLAG) & 0xF0000000) == 0x00) || (((FLAG) & 0xEFF00000) == 0x00)) && ((FLAG) != 0x00))
 
 #define IS_DMA_GET_FLAG(FLAG) (((FLAG) == DMA1_FLAG_GL1) || ((FLAG) == DMA1_FLAG_TC1) || \
                                ((FLAG) == DMA1_FLAG_HT1) || ((FLAG) == DMA1_FLAG_TE1) || \
@@ -305,7 +364,17 @@ typedef struct
                                ((FLAG) == DMA1_FLAG_GL6) || ((FLAG) == DMA1_FLAG_TC6) || \
                                ((FLAG) == DMA1_FLAG_HT6) || ((FLAG) == DMA1_FLAG_TE6) || \
                                ((FLAG) == DMA1_FLAG_GL7) || ((FLAG) == DMA1_FLAG_TC7) || \
-                               ((FLAG) == DMA1_FLAG_HT7) || ((FLAG) == DMA1_FLAG_TE7))
+                               ((FLAG) == DMA1_FLAG_HT7) || ((FLAG) == DMA1_FLAG_TE7) || \
+                               ((FLAG) == DMA2_FLAG_GL1) || ((FLAG) == DMA2_FLAG_TC1) || \
+                               ((FLAG) == DMA2_FLAG_HT1) || ((FLAG) == DMA2_FLAG_TE1) || \
+                               ((FLAG) == DMA2_FLAG_GL2) || ((FLAG) == DMA2_FLAG_TC2) || \
+                               ((FLAG) == DMA2_FLAG_HT2) || ((FLAG) == DMA2_FLAG_TE2) || \
+                               ((FLAG) == DMA2_FLAG_GL3) || ((FLAG) == DMA2_FLAG_TC3) || \
+                               ((FLAG) == DMA2_FLAG_HT3) || ((FLAG) == DMA2_FLAG_TE3) || \
+                               ((FLAG) == DMA2_FLAG_GL4) || ((FLAG) == DMA2_FLAG_TC4) || \
+                               ((FLAG) == DMA2_FLAG_HT4) || ((FLAG) == DMA2_FLAG_TE4) || \
+                               ((FLAG) == DMA2_FLAG_GL5) || ((FLAG) == DMA2_FLAG_TC5) || \
+                               ((FLAG) == DMA2_FLAG_HT5) || ((FLAG) == DMA2_FLAG_TE5))
 /**
   * @}
   */
@@ -341,10 +410,10 @@ uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx);
 
 /* Interrupts and flags management functions **********************************/
 void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
-FlagStatus DMA_GetFlagStatus(uint32_t DMA_FLAG);
-void DMA_ClearFlag(uint32_t DMA_FLAG);
-ITStatus DMA_GetITStatus(uint32_t DMA_IT);
-void DMA_ClearITPendingBit(uint32_t DMA_IT);
+FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
+void DMA_ClearFlag(uint32_t DMAy_FLAG);
+ITStatus DMA_GetITStatus(uint32_t DMAy_IT);
+void DMA_ClearITPendingBit(uint32_t DMAy_IT);
 
 #ifdef __cplusplus
 }
@@ -360,4 +429,4 @@ void DMA_ClearITPendingBit(uint32_t DMA_IT);
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

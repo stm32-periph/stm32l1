@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    LCD/LCD_Blink_Frequency/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,22 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32_eval.h"
-#include "stm32l152_eval_glass_lcd.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+  #include "stm32l152d_eval_glass_lcd.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+  #include "stm32l152_eval_glass_lcd.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -49,7 +58,7 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */     
@@ -60,14 +69,22 @@ int main(void)
   /* LCD GLASS Initialization */
   LCD_GLASS_Init();
   
-  /* Configure the STM32L152-EVAL KEY Push button */
+  /* Configure the STM32L1xx-EVAL KEY Push button */
   STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_EXTI);
-
+  
+#ifdef USE_STM32L152D_EVAL 
+  /* Configure all LCD segments and Coms to blink at frequency LCDCLK/32 */
+  LCD_BlinkConfig(LCD_BlinkMode_AllSEG_AllCOM, LCD_BlinkFrequency_Div32); 
+  
+  /* Display the "BLF0032" message on the LCD GLASS */
+  LCD_GLASS_DisplayString("BLF0032");
+#elif defined USE_STM32L152_EVAL 
   /* Configure all LCD segments and Coms to blink at frequency LCDCLK/16 */
   LCD_BlinkConfig(LCD_BlinkMode_AllSEG_AllCOM, LCD_BlinkFrequency_Div16); 
   
   /* Display the "BLF0016" message on the LCD GLASS */
   LCD_GLASS_DisplayString("BLF0016");
+#endif 
   
   /* Infinite loop */
   while (1)
@@ -132,4 +149,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

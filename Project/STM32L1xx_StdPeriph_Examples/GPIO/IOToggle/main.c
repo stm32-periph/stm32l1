@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    GPIO/IOToggle/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,27 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+  #define GPIO_PIN_X GPIO_Pin_3
+  #define GPIO_PIN_Y GPIO_Pin_7
+  #define BSRR_VAL 0x88
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+  #define GPIO_PIN_X GPIO_Pin_0
+  #define GPIO_PIN_Y GPIO_Pin_1
+  #define BSRR_VAL 0x03
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -49,7 +63,7 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */
@@ -57,8 +71,8 @@ int main(void)
   /* GPIOD Periph clock enable */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
 
-  /* Configure PD0 and PD2 in output pushpull mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_2;
+  /* Configure PD0 and PD1 or PD3 and PD7 in output pushpull mode */
+  GPIO_InitStructure.GPIO_Pin = GPIO_PIN_X | GPIO_PIN_Y;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
@@ -66,61 +80,61 @@ int main(void)
   GPIO_Init(GPIOD, &GPIO_InitStructure);
 
   /* To achieve GPIO toggling maximum frequency, the following  sequence is mandatory. 
-     You can monitor PD0 or PD2 on the scope to measure the output signal. 
+     You can monitor PD0 and  PD1 or PD3 and PD7 on the scope to measure the output signal. 
      If you need to fine tune this frequency, you can add more GPIO set/reset 
      cycles to minimize more the infinite loop timing.
      This code needs to be compiled with high speed optimization option.  */
   while (1)
   {
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
 
-    /* Set PD0 and PD2 */
-    GPIOD->BSRRL = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BSRRH = 0x00000005;
+    /* Set PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRL = BSRR_VAL;
+    /* Reset PD0 and PD2 or PD3 and PD7 */
+    GPIOD->BSRRH = BSRR_VAL;
   }
 }
 
@@ -165,4 +179,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

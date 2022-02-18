@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    ADC/ADC1_IDDmeas/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32l152_eval_glass_lcd.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval_glass_lcd.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval_glass_lcd.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -33,11 +41,30 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define EVAL_RESISTOR_R36      130    /* value of resistor R36 is 1.3 Ohm 
-                                         EVAL_RESISTOR_RATIO * 1.3 = 130  */
+#ifdef USE_STM32L152D_EVAL 
+  #define  EVAL_RESISTOR_R62      110   /* For EVAL REVA ALPHA1 540 */ 
+  #define  IDD_MEASUREMENT_PIN       GPIO_Pin_11
+  #define  IDD_MEASUREMENT_GPIO_CLK  RCC_AHBPeriph_GPIOF
+  #define  IDD_MEASUREMENT_GPIO      GPIOF
+  #define  IDD_MEASUREMENT_ADC_CHANNEL  ADC_Channel_1b
+  #define  APOSTROPHE_OFF DOUBLEPOINT_OFF
+
+#elif defined USE_STM32L152_EVAL 
+  #define  EVAL_RESISTOR_R36      130    /* value of resistor R36 is 1.3 Ohm 
+                                           EVAL_RESISTOR_RATIO * 1.3 = 130  */ 
+  #define  IDD_MEASUREMENT_PIN       GPIO_Pin_5
+  #define  IDD_MEASUREMENT_GPIO_CLK  RCC_AHBPeriph_GPIOA
+  #define  IDD_MEASUREMENT_GPIO      GPIOA
+  #define  IDD_MEASUREMENT_ADC_CHANNEL  ADC_Channel_5
+  #define APOSTROPHE_OFF APOSTROPHE_OFF
+#endif 
+
 #define EVAL_RESISTOR_RATIO    100    /* R36 is multiplied by 100 */
 #define EVAL_MAX9938_GAIN      50     /* Ampli-op gain = 50 */
 #define ADC_CONVERT_RATIO      806    /* (3300mV / 4095)* 1000 */
+
+
+
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -63,7 +90,7 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */
@@ -71,7 +98,12 @@ int main(void)
   /* LCD GLASS Configuration */
   LCD_Glass_Config();
 
-  /* ADC1 channel5 configuration */
+#ifdef USE_STM32L152D_EVAL 
+  /* Set VALUEUNIT_MILLIAMPERE */
+  LCD_GLASS_ValueUnitConfig(VALUEUNIT_MILLIAMPERE);
+#endif
+
+  /* ADC1 channel 5 or 1 configuration */
   ADC_Config();
 
   while(1)
@@ -80,11 +112,18 @@ int main(void)
     ADCdata = ADC_GetConversionValue(ADC1);
 
     /* Calculate voltage value*/
-    VDDmV = (uint32_t)((uint32_t)ADCdata * (uint32_t)ADC_CONVERT_RATIO) / 1000;
-
+    VDDmV = (uint32_t)((uint32_t)ADCdata * (uint32_t)ADC_CONVERT_RATIO);
+    
+#ifdef USE_STM32L152_EVAL 
     /* Calculate the current consumption */
-    IDDrunuA = (uint32_t) ((uint32_t)(((VDDmV * 1000 * EVAL_RESISTOR_RATIO) / EVAL_MAX9938_GAIN))\
+    IDDrunuA = (uint32_t) ((uint32_t)(((VDDmV * EVAL_RESISTOR_RATIO) / EVAL_MAX9938_GAIN))\
                            / (uint32_t)(EVAL_RESISTOR_R36));
+#elif defined USE_STM32L152D_EVAL
+    /* Calculate the current consumption */
+    IDDrunuA = (uint32_t) ((uint32_t)(((VDDmV * EVAL_RESISTOR_RATIO) / EVAL_MAX9938_GAIN))\
+                           / (uint32_t)(EVAL_RESISTOR_R62));
+
+#endif    
 
     /* Display the IDD measured Value On the LCD Glass (mA) */
     DisplayIDDrunmA(IDDrunuA);
@@ -101,32 +140,45 @@ void ADC_Config(void)
   /* Enable The HSI (16Mhz) */
   RCC_HSICmd(ENABLE);
 
-  /* Enable the GPIOA Clock */
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-  /* Configure PA.5 (ADC Channel5) in analog mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+  /* Enable the GPIOF or GPIOA Clock */
+  RCC_AHBPeriphClockCmd(IDD_MEASUREMENT_GPIO_CLK, ENABLE);
+  /* Configure PF.11 (ADC Channel11) or PA.05 (ADC Channe5) in analog mode */
+  GPIO_InitStructure.GPIO_Pin =  IDD_MEASUREMENT_PIN;
   GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+  GPIO_Init(IDD_MEASUREMENT_GPIO, &GPIO_InitStructure);
 
   /* Check that HSI oscillator is ready */
   while(RCC_GetFlagStatus(RCC_FLAG_HSIRDY) == RESET);
 
   /* ADC1 Configuration ------------------------------------------------------*/
+  
   /* Enable ADC1 clock */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+  
+#ifdef USE_STM32L152D_EVAL
+  /* Select ADC Bank channel */
+  ADC_BankSelection(ADC1, ADC_Bank_B);
+#endif
+  
   ADC_StructInit(&ADC_InitStructure);
   ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
-  ADC_InitStructure.ADC_ScanConvMode = ENABLE;
+  ADC_InitStructure.ADC_ScanConvMode = DISABLE;
   ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
   ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
   ADC_InitStructure.ADC_NbrOfConversion = 1;
   ADC_Init(ADC1, &ADC_InitStructure);
 
-  /* ADC1 regular channel5 configuration */
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 1, ADC_SampleTime_4Cycles);
+  /* ADC1 regular channel5 or channel1 configuration */
+  ADC_RegularChannelConfig(ADC1, IDD_MEASUREMENT_ADC_CHANNEL, 1, ADC_SampleTime_192Cycles);
 
+  /* Define delay between ADC1 conversions */
+  ADC_DelaySelectionConfig(ADC1, ADC_DelayLength_Freeze);
+  
+  /* Enable ADC1 Power Down during Delay */
+  ADC_PowerDownCmd(ADC1, ADC_PowerDown_Idle_Delay, ENABLE);
+  
   /* Enable ADC1 */
   ADC_Cmd(ADC1, ENABLE);
 
@@ -138,7 +190,7 @@ void ADC_Config(void)
   /* Start ADC1 Software Conversion */
   ADC_SoftwareStartConv(ADC1);
 
-  /* Wait until ADC Channel 5 end of conversion */
+  /* Wait until ADC Channel 5 or 1 end of conversion */
   while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET)
   {
   }
@@ -199,8 +251,10 @@ void DisplayIDDrunmA(uint32_t IDDmeas)
   
   /* 0.01 mA current value */
   LCDString[5] = ((uint8_t)(IDDrunuA % 10)) + 0x30;
+
   
-  /* Display one character on LCD */
+#ifdef USE_STM32L152_EVAL 
+    /* Display one character on LCD */
   LCD_GLASS_WriteChar(&LCDString[0], POINT_OFF, APOSTROPHE_OFF, 0);
   
   /* Display one character on LCD */
@@ -223,6 +277,33 @@ void DisplayIDDrunmA(uint32_t IDDmeas)
   
   /* Display one character on LCD */
   LCD_GLASS_WriteChar("A", POINT_OFF, APOSTROPHE_OFF, 7);
+  
+#elif defined USE_STM32L152D_EVAL
+    /* Display one character on LCD */
+  LCD_GLASS_WriteChar(&LCDString[0], POINT_OFF, APOSTROPHE_OFF, 0);
+  
+  /* Display one character on LCD */
+  LCD_GLASS_WriteChar(&LCDString[1], POINT_OFF, APOSTROPHE_OFF, 1);
+  
+  /* Display one character on LCD */
+  LCD_GLASS_WriteChar(&LCDString[2], POINT_OFF, APOSTROPHE_OFF, 2);
+  
+  /* Display one character on LCD */
+  LCD_GLASS_WriteChar(&LCDString[3], POINT_ON, APOSTROPHE_OFF, 3);
+  
+  /* Display one character on LCD */
+  LCD_GLASS_WriteChar(&LCDString[4], POINT_OFF, APOSTROPHE_OFF, 4);
+  
+  /* Display one character on LCD */
+  LCD_GLASS_WriteChar(&LCDString[5], POINT_OFF, APOSTROPHE_OFF, 5);
+  
+    /* Display one character on LCD */
+  LCD_GLASS_WriteChar("", POINT_OFF, APOSTROPHE_OFF, 6);
+  
+  /* Display one character on LCD */
+  LCD_GLASS_WriteChar("", POINT_OFF, APOSTROPHE_OFF, 7);
+
+#endif 
   
   /*!< Request LCD RAM update */
   LCD_UpdateDisplayRequest();
@@ -257,4 +338,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

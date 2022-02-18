@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    FLASH/HalfPage/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body.
   ******************************************************************************
   * @attention
@@ -15,13 +15,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32l152_eval.h"
+
+#if defined USE_STM32L152D_EVAL
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL
+  #include "stm32l152_eval.h"
+#endif
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -35,9 +43,33 @@
 typedef enum {FAILED = 0, PASSED = !FAILED} TestStatus;
 
 /* Private define ------------------------------------------------------------*/
+#if defined (STM32L1XX_HD)
+#define CODE_IN_SRAM
+/* #define CODE_IN_FLASH_BANK1 */
+/* #define CODE_IN_FLASH_BANK2 */
+#endif /* STM32L1XX_HD */
+
 #define FLASH_PAGE_SIZE        0x100
-#define FLASH_START_ADDR       0x08004000
-#define FLASH_END_ADDR         0x08006000
+
+#if defined (STM32L1XX_MD)
+  #define FLASH_START_ADDR                0x08004000
+  #define FLASH_END_ADDR                  0x08006000
+#elif defined (STM32L1XX_HD)
+  #if defined (CODE_IN_SRAM)
+    #define FLASH_START_ADDR              0x08014000
+    #define FLASH_END_ADDR                0x08036000
+  #elif defined (CODE_IN_FLASH_BANK1)
+    #define FLASH_START_ADDR              0x08034000
+    #define FLASH_END_ADDR                0x08036000
+  #elif defined (CODE_IN_FLASH_BANK2)
+    #define FLASH_START_ADDR              0x08004000
+    #define FLASH_END_ADDR                0x08006000
+  #endif /* CODE_IN_SRAM */
+#endif /* STM32L1XX_MD */
+
+#if !defined (FLASH_START_ADDR) && !defined (FLASH_END_ADDR)
+  #error "Please select first the FLASH Start and End addresses in main.c file..."
+#endif 
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -60,6 +92,13 @@ uint32_t Data[32] = {0x11223344,0x11223344,0x11223344,0x11223344,0x11223344,0x11
   */
 int main(void)
 {  
+  /*!< At this stage the microcontroller clock setting is already configured, 
+       this is done through SystemInit() function which is called from startup
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
+       To reconfigure the default setting of SystemInit() function, refer to
+       system_stm32l1xx.c file
+     */
+
   STM_EVAL_LEDInit(LED1);
   STM_EVAL_LEDInit(LED2); 
 
@@ -68,7 +107,7 @@ int main(void)
 
   /* Clear all pending flags */      
   FLASH_ClearFlag(FLASH_FLAG_EOP|FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR
-                  | FLASH_FLAG_SIZERR | FLASH_FLAG_OPTVERR);
+                  | FLASH_FLAG_SIZERR | FLASH_FLAG_OPTVERR | FLASH_FLAG_OPTVERRUSR);
 
   Address = FLASH_START_ADDR;
   NbrOfPage = ((FLASH_END_ADDR - Address) + 1 ) >> 8; 
@@ -85,7 +124,7 @@ int main(void)
     else
     {
       FLASH_ClearFlag(FLASH_FLAG_EOP|FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR
-                           | FLASH_FLAG_SIZERR | FLASH_FLAG_OPTVERR);
+                      | FLASH_FLAG_SIZERR | FLASH_FLAG_OPTVERR | FLASH_FLAG_OPTVERRUSR);
     }     
   }
    
@@ -103,7 +142,7 @@ int main(void)
     else
     {
       FLASH_ClearFlag(FLASH_FLAG_EOP|FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR
-                           | FLASH_FLAG_SIZERR | FLASH_FLAG_OPTVERR);
+                      | FLASH_FLAG_SIZERR | FLASH_FLAG_OPTVERR | FLASH_FLAG_OPTVERRUSR);
     } 
   }
   
@@ -165,4 +204,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

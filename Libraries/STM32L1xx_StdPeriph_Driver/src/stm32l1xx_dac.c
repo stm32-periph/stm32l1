@@ -2,86 +2,83 @@
   ******************************************************************************
   * @file    stm32l1xx_dac.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the Digital-to-Analog Converter (DAC) peripheral: 
-  *           - DAC channels configuration: trigger, output buffer, data format
-  *           - DMA management      
-  *           - Interrupts and flags management
-  *
-  *  @verbatim
-  *    
-  *          ===================================================================
-  *                             DAC Peripheral features
-  *          ===================================================================
-  *          The device integrates two 12-bit Digital Analog Converters that can 
-  *          be used independently or simultaneously (dual mode):
-  *            1- DAC channel1 with DAC_OUT1 (PA4) as output
-  *            1- DAC channel2 with DAC_OUT2 (PA5) as output
-  *
-  *          Digital to Analog conversion can be non-triggered using DAC_Trigger_None
-  *          and DAC_OUT1/DAC_OUT2 is available once writing to DHRx register using 
-  *          DAC_SetChannel1Data()/DAC_SetChannel2Data.
+  *          + DAC channels configuration: trigger, output buffer, data format
+  *          + DMA management      
+  *          + Interrupts and flags management
+
+  * @verbatim      
   *   
-  *         Digital to Analog conversion can be triggered by:
-  *             1- External event: EXTI Line 9 (any GPIOx_Pin9) using DAC_Trigger_Ext_IT9.
-  *                The used pin (GPIOx_Pin9) must be configured in input mode.
-  *
-  *             2- Timers TRGO: TIM2, TIM4, TIM6, TIM7 and TIM9 
-  *                (DAC_Trigger_T2_TRGO, DAC_Trigger_T4_TRGO...)
-  *                The timer TRGO event should be selected using TIM_SelectOutputTrigger()
-  *
-  *             3- Software using DAC_Trigger_Software
-  *
-  *          Each DAC channel integrates an output buffer that can be used to 
-  *          reduce the output impedance, and to drive external loads directly
-  *          without having to add an external operational amplifier.
-  *          To enable, the output buffer use  
-  *              DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;
-  *          
-  *          Refer to the device datasheet for more details about output impedance
-  *          value with and without output buffer.
-  *
-  *          Both DAC channels can be used to generate
-  *             1- Noise wave using DAC_WaveGeneration_Noise
-  *             2- Triangle wave using DAC_WaveGeneration_Triangle
-  *        
-  *          Wave generation can be disabled using DAC_WaveGeneration_None
-  *
-  *          The DAC data format can be:
-  *             1- 8-bit right alignment using DAC_Align_8b_R
-  *             2- 12-bit left alignment using DAC_Align_12b_L
-  *             3- 12-bit right alignment using DAC_Align_12b_R
-  *
-  *          The analog output voltage on each DAC channel pin is determined
-  *          by the following equation: DAC_OUTx = VREF+ * DOR / 4095
-  *             with  DOR is the Data Output Register
-  *                   VEF+ is the input voltage reference (refer to the device datasheet)
-  *          e.g. To set DAC_OUT1 to 0.7V, use
-  *            DAC_SetChannel1Data(DAC_Align_12b_R, 868);
-  *          Assuming that VREF+ = 3.3, DAC_OUT1 = (3.3 * 868) / 4095 = 0.7V
-  *
-  *          A DMA1 request can be generated when an external trigger (but not
-  *          a software trigger) occurs if DMA1 requests are enabled using
-  *          DAC_DMACmd()
-  *          DMA1 requests are mapped as following:
-  *             1- DAC channel1 is mapped on DMA1 channel3 which must be already 
-  *                configured
-  *             2- DAC channel2 is mapped on DMA1 channel4 which must be already 
-  *                configured
-  *
-  *          ===================================================================      
-  *                              How to use this driver 
-  *          ===================================================================          
-  *            - DAC APB clock must be enabled to get write access to DAC
-  *              registers using
-  *              RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE)
-  *            - Configure DAC_OUTx (DAC_OUT1: PA4, DAC_OUT2: PA5) in analog mode.
-  *            - Configure the DAC channel using DAC_Init()
-  *            - Enable the DAC channel using DAC_Cmd()
-  * 
-  *  @endverbatim
+ ===============================================================================
+                        ##### DAC Peripheral features #####
+ ===============================================================================
+    [..] The device integrates two 12-bit Digital Analog Converters that can 
+         be used independently or simultaneously (dual mode):
+         (#) DAC channel1 with DAC_OUT1 (PA4) as output.
+         (#) DAC channel2 with DAC_OUT2 (PA5) as output.
+  
+    [..] Digital to Analog conversion can be non-triggered using DAC_Trigger_None
+         and DAC_OUT1/DAC_OUT2 is available once writing to DHRx register using 
+         DAC_SetChannel1Data()/DAC_SetChannel2Data.
+  
+    [..] Digital to Analog conversion can be triggered by:
+         (#) External event: EXTI Line 9 (any GPIOx_Pin9) using DAC_Trigger_Ext_IT9.
+             The used pin (GPIOx_Pin9) must be configured in input mode.
+         (#) Timers TRGO: TIM2, TIM4, TIM6, TIM7 and TIM9 
+             (DAC_Trigger_T2_TRGO, DAC_Trigger_T4_TRGO...).
+             The timer TRGO event should be selected using TIM_SelectOutputTrigger()
+         (#) Software using DAC_Trigger_Software.
+  
+    [..] Each DAC channel integrates an output buffer that can be used to 
+         reduce the output impedance, and to drive external loads directly
+         without having to add an external operational amplifier.
+         To enable, the output buffer use  
+         DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;
+            
+    [..] Refer to the device datasheet for more details about output impedance
+         value with and without output buffer.
+  
+    [..] Both DAC channels can be used to generate:
+         (#) Noise wave using DAC_WaveGeneration_Noise
+         (#) Triangle wave using DAC_WaveGeneration_Triangle
+  
+    [..] Wave generation can be disabled using DAC_WaveGeneration_None.
+  
+    [..] The DAC data format can be:
+         (#) 8-bit right alignment using DAC_Align_8b_R
+         (#) 12-bit left alignment using DAC_Align_12b_L
+         (#) 12-bit right alignment using DAC_Align_12b_R
+  
+    [..] The analog output voltage on each DAC channel pin is determined
+         by the following equation: DAC_OUTx = VREF+ * DOR / 4095
+         with  DOR is the Data Output Register.
+         VEF+ is the input voltage reference (refer to the device datasheet)
+         e.g. To set DAC_OUT1 to 0.7V, use
+         DAC_SetChannel1Data(DAC_Align_12b_R, 868);
+         Assuming that VREF+ = 3.3, DAC_OUT1 = (3.3 * 868) / 4095 = 0.7V.
+  
+    [..] A DMA1 request can be generated when an external trigger (but not
+         a software trigger) occurs if DMA1 requests are enabled using
+         DAC_DMACmd()
+    [..] DMA1 requests are mapped as following:
+         (#) DAC channel1 is mapped on DMA1 channel3 which must be already 
+             configured.
+         (#) DAC channel2 is mapped on DMA1 channel4 which must be already 
+             configured.
+  
+                      ##### How to use this driver #####
+ ===============================================================================
+    [..]
+        (+) DAC APB clock must be enabled to get write access to DAC registers using
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE)
+        (+) Configure DAC_OUTx (DAC_OUT1: PA4, DAC_OUT2: PA5) in analog mode.
+        (+) Configure the DAC channel using DAC_Init()
+        (+) Enable the DAC channel using DAC_Cmd()
+
+   @endverbatim
   *    
   ******************************************************************************
   * @attention
@@ -93,9 +90,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_dac.h"
@@ -137,12 +137,12 @@
   */ 
 
 /** @defgroup DAC_Group1 DAC channels configuration
- *  @brief   DAC channels configuration: trigger, output buffer, data format 
+ *  @brief   DAC channels configuration: trigger, output buffer, data format.
  *
-@verbatim   
+@verbatim
  ===============================================================================
-          DAC channels configuration: trigger, output buffer, data format
- ===============================================================================  
+  ##### DAC channels configuration: trigger, output buffer, data format #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -164,19 +164,12 @@ void DAC_DeInit(void)
 /**
   * @brief  Initializes the DAC peripheral according to the specified 
   *         parameters in the DAC_InitStruct.
-  * @param  DAC_Channel: the selected DAC channel. 
+  * @param  DAC_Channel: the selected DAC channel.
   *   This parameter can be one of the following values:
-  *     @arg DAC_Channel_1: DAC Channel1 selected
-  *     @arg DAC_Channel_2: DAC Channel2 selected
+  *     @arg DAC_Channel_1: DAC Channel1 selected.
+  *     @arg DAC_Channel_2: DAC Channel2 selected.
   * @param  DAC_InitStruct: pointer to a DAC_InitTypeDef structure that
   *         contains the configuration information for the specified DAC channel.
-  *         DAC_Trigger selects the trigger source: EXTI Line 9, TIM2, TIM4....
-  *         DAC_WaveGeneration selects the waveform to be generated: noise, triangle
-  *         DAC_LFSRUnmask_TriangleAmplitude 
-  *             defines the LFSR when noise waveform is selected by DAC_WaveGeneration
-  *             or defines the amplitude of the triangle waveform when it is 
-  *             selected by DAC_WaveGeneration
-  *         DAC_OutputBuffer enables/disables the output buffer on DAC_OUTx
   * @retval None
   */
 void DAC_Init(uint32_t DAC_Channel, DAC_InitTypeDef* DAC_InitStruct)
@@ -184,6 +177,7 @@ void DAC_Init(uint32_t DAC_Channel, DAC_InitTypeDef* DAC_InitStruct)
   uint32_t tmpreg1 = 0, tmpreg2 = 0;
 
   /* Check the DAC parameters */
+  assert_param(IS_DAC_CHANNEL(DAC_Channel));
   assert_param(IS_DAC_TRIGGER(DAC_InitStruct->DAC_Trigger));
   assert_param(IS_DAC_GENERATE_WAVE(DAC_InitStruct->DAC_WaveGeneration));
   assert_param(IS_DAC_LFSR_UNMASK_TRIANGLE_AMPLITUDE(DAC_InitStruct->DAC_LFSRUnmask_TriangleAmplitude));
@@ -210,7 +204,7 @@ void DAC_Init(uint32_t DAC_Channel, DAC_InitTypeDef* DAC_InitStruct)
 
 /**
   * @brief  Fills each DAC_InitStruct member with its default value.
-  * @param  DAC_InitStruct : pointer to a DAC_InitTypeDef structure which will 
+  * @param  DAC_InitStruct: pointer to a DAC_InitTypeDef structure which will 
   *         be initialized.
   * @retval None
   */
@@ -259,7 +253,7 @@ void DAC_Cmd(uint32_t DAC_Channel, FunctionalState NewState)
 
 /**
   * @brief  Enables or disables the selected DAC channel software trigger.
-  * @param  DAC_Channel: the selected DAC channel. 
+  * @param  DAC_Channel: the selected DAC channel.
   *   This parameter can be one of the following values:
   *     @arg DAC_Channel_1: DAC Channel1 selected
   *     @arg DAC_Channel_2: DAC Channel2 selected
@@ -311,7 +305,7 @@ void DAC_DualSoftwareTriggerCmd(FunctionalState NewState)
 
 /**
   * @brief  Enables or disables the selected DAC channel wave generation.
-  * @param  DAC_Channel: the selected DAC channel. 
+  * @param  DAC_Channel: the selected DAC channel.
   *   This parameter can be one of the following values:
   *     @arg DAC_Channel_1: DAC Channel1 selected
   *     @arg DAC_Channel_2: DAC Channel2 selected
@@ -463,10 +457,10 @@ uint16_t DAC_GetDataOutputValue(uint32_t DAC_Channel)
 /** @defgroup DAC_Group2 DMA management functions
  *  @brief   DMA management functions
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                          DMA management functions
- ===============================================================================  
+                    ##### DMA management functions #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -475,14 +469,14 @@ uint16_t DAC_GetDataOutputValue(uint32_t DAC_Channel)
 /**
   * @brief  Enables or disables the specified DAC channel DMA request.
   *         When enabled DMA1 is generated when an external trigger (EXTI Line9,
-  *         TIM2, TIM4, TIM6, TIM7 or TIM9  but not a software trigger) occurs
+  *         TIM2, TIM4, TIM6, TIM7 or TIM9  but not a software trigger) occurs.
   * @param  DAC_Channel: the selected DAC channel.
   *   This parameter can be one of the following values:
   *     @arg DAC_Channel_1: DAC Channel1 selected
   *     @arg DAC_Channel_2: DAC Channel2 selected
   * @param  NewState: new state of the selected DAC channel DMA request.
-  *   This parameter can be: ENABLE or DISABLE.
-  *  The DAC channel1 (channel2) is mapped on DMA1 channel3 (channel4) which 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @note The DAC channel1 (channel2) is mapped on DMA1 channel3 (channel4) which 
   *  must be already configured. 
   * @retval None
   */
@@ -511,10 +505,10 @@ void DAC_DMACmd(uint32_t DAC_Channel, FunctionalState NewState)
 /** @defgroup DAC_Group3 Interrupts and flags management functions
  *  @brief   Interrupts and flags management functions
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                   Interrupts and flags management functions
- ===============================================================================  
+            ##### Interrupts and flags management functions #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -527,12 +521,12 @@ void DAC_DMACmd(uint32_t DAC_Channel, FunctionalState NewState)
   *     @arg DAC_Channel_1: DAC Channel1 selected
   *     @arg DAC_Channel_2: DAC Channel2 selected
   * @param  DAC_IT: specifies the DAC interrupt sources to be enabled or disabled. 
-  *   This parameter can be the following values:
+  *   This parameter can be the following value:
   *     @arg DAC_IT_DMAUDR: DMA underrun interrupt mask
   * @note The DMA underrun occurs when a second external trigger arrives before
   *       the acknowledgement for the first external trigger is received (first request).
   * @param  NewState: new state of the specified DAC interrupts.
-  *   This parameter can be: ENABLE or DISABLE.
+  *         This parameter can be: ENABLE or DISABLE.
   * @retval None
   */ 
 void DAC_ITConfig(uint32_t DAC_Channel, uint32_t DAC_IT, FunctionalState NewState)  
@@ -596,8 +590,8 @@ FlagStatus DAC_GetFlagStatus(uint32_t DAC_Channel, uint32_t DAC_FLAG)
   *     @arg DAC_Channel_1: DAC Channel1 selected
   *     @arg DAC_Channel_2: DAC Channel2 selected
   * @param  DAC_FLAG: specifies the flag to clear. 
-  *   This parameter can be of the following value:
-  *     @arg DAC_FLAG_DMAUDR: DMA underrun flag                          
+  *   This parameter can be the following value:
+  *     @arg DAC_FLAG_DMAUDR: DMA underrun flag
   * @retval None
   */
 void DAC_ClearFlag(uint32_t DAC_Channel, uint32_t DAC_FLAG)
@@ -651,14 +645,14 @@ ITStatus DAC_GetITStatus(uint32_t DAC_Channel, uint32_t DAC_IT)
 }
 
 /**
-  * @brief  Clears the DAC channel’s interrupt pending bits.
+  * @brief  Clears the DAC channel's interrupt pending bits.
   * @param  DAC_Channel: the selected DAC channel. 
   *   This parameter can be one of the following values:
   *     @arg DAC_Channel_1: DAC Channel1 selected
   *     @arg DAC_Channel_2: DAC Channel2 selected
   * @param  DAC_IT: specifies the DAC interrupt pending bit to clear.
   *   This parameter can be the following values:
-  *     @arg DAC_IT_DMAUDR: DMA underrun interrupt mask                         
+  *     @arg DAC_IT_DMAUDR: DMA underrun interrupt mask
   * @retval None
   */
 void DAC_ClearITPendingBit(uint32_t DAC_Channel, uint32_t DAC_IT)
@@ -687,4 +681,4 @@ void DAC_ClearITPendingBit(uint32_t DAC_Channel, uint32_t DAC_IT)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

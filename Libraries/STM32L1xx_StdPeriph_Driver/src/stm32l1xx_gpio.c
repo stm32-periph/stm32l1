@@ -2,63 +2,55 @@
   ******************************************************************************
   * @file    stm32l1xx_gpio.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the GPIO peripheral:           
-  *           - Initialization and Configuration
-  *           - GPIO Read and Write
-  *           - GPIO Alternate functions configuration
+  *           + Initialization and Configuration
+  *           + GPIO Read and Write
+  *           + GPIO Alternate functions configuration
   * 
   *  @verbatim
-  *
-  *          ===================================================================
-  *                                 How to use this driver
-  *          ===================================================================       
-  *           1. Enable the GPIO AHB clock using RCC_AHBPeriphClockCmd()
-  *             
-  *           2. Configure the GPIO pin(s) using GPIO_Init()
-  *              Four possible configuration are available for each pin:
-  *                - Input: Floating, Pull-up, Pull-down.
-  *                - Output: Push-Pull (Pull-up, Pull-down or no Pull)
-  *                          Open Drain (Pull-up, Pull-down or no Pull).
-  *                  In output mode, the speed is configurable: Very Low, Low,
-  *                  Medium or High.
-  *                - Alternate Function: Push-Pull (Pull-up, Pull-down or no Pull)
-  *                                      Open Drain (Pull-up, Pull-down or no Pull).
-  *                - Analog: required mode when a pin is to be used as ADC channel,
-  *                          DAC output or comparator input.
-  * 
-  *          3- Peripherals alternate function:
-  *              - For ADC, DAC and comparators, configure the desired pin in 
-  *                analog mode using GPIO_InitStruct->GPIO_Mode = GPIO_Mode_AN
-  *              - For other peripherals (TIM, USART...):
-  *                 - Connect the pin to the desired peripherals' Alternate 
-  *                   Function (AF) using GPIO_PinAFConfig() function
-  *                 - Configure the desired pin in alternate function mode using
-  *                   GPIO_InitStruct->GPIO_Mode = GPIO_Mode_AF
-  *                 - Select the type, pull-up/pull-down and output speed via 
-  *                   GPIO_PuPd, GPIO_OType and GPIO_Speed members
-  *                 - Call GPIO_Init() function
-  *        
-  *          4. To get the level of a pin configured in input mode use GPIO_ReadInputDataBit()
-  *          
-  *          5. To set/reset the level of a pin configured in output mode use
-  *             GPIO_SetBits()/GPIO_ResetBits()
-  *               
-  *          6. During and just after reset, the alternate functions are not 
-  *             active and the GPIO pins are configured in input floating mode
-  *             (except JTAG pins).
-  *
-  *          7. The LSE oscillator pins OSC32_IN and OSC32_OUT can be used as 
-  *             general-purpose (PC14 and PC15, respectively) when the LSE
-  *             oscillator is off. The LSE has priority over the GPIO function.
-  *
-  *          8. The HSE oscillator pins OSC_IN/OSC_OUT can be used as 
-  *             general-purpose PH0 and PH1, respectively, when the HSE 
-  *             oscillator is off. The HSE has priority over the GPIO function.
-  *             
-  *  @endverbatim        
+    ===========================================================================
+                         ##### How to use this driver #####
+    ===========================================================================
+      [..]
+      (#) Enable the GPIO AHB clock using RCC_AHBPeriphClockCmd()
+      (#) Configure the GPIO pin(s) using GPIO_Init()
+          Four possible configuration are available for each pin:
+         (++) Input: Floating, Pull-up, Pull-down.
+         (++) Output: Push-Pull (Pull-up, Pull-down or no Pull)
+              Open Drain (Pull-up, Pull-down or no Pull).
+              In output mode, the speed is configurable: Very Low, Low,
+              Medium or High.
+         (++) Alternate Function: Push-Pull (Pull-up, Pull-down or no Pull)
+              Open Drain (Pull-up, Pull-down or no Pull).
+         (++) Analog: required mode when a pin is to be used as ADC channel,
+              DAC output or comparator input.
+      (#) Peripherals alternate function:
+          (++) For ADC, DAC and comparators, configure the desired pin in 
+               analog mode using GPIO_InitStruct->GPIO_Mode = GPIO_Mode_AN
+          (++) For other peripherals (TIM, USART...):
+              (+++) Connect the pin to the desired peripherals' Alternate 
+                    Function (AF) using GPIO_PinAFConfig() function.
+              (+++) Configure the desired pin in alternate function mode using
+                    GPIO_InitStruct->GPIO_Mode = GPIO_Mode_AF
+              (+++) Select the type, pull-up/pull-down and output speed via 
+                    GPIO_PuPd, GPIO_OType and GPIO_Speed members.
+              (+++) Call GPIO_Init() function.
+      (#) To get the level of a pin configured in input mode use GPIO_ReadInputDataBit()
+      (#) To set/reset the level of a pin configured in output mode use
+          GPIO_SetBits()/GPIO_ResetBits()
+      (#) During and just after reset, the alternate functions are not 
+          active and the GPIO pins are configured in input floating mode
+          (except JTAG pins).
+      (#) The LSE oscillator pins OSC32_IN and OSC32_OUT can be used as 
+          general-purpose (PC14 and PC15, respectively) when the LSE
+          oscillator is off. The LSE has priority over the GPIO function.
+      (#) The HSE oscillator pins OSC_IN/OSC_OUT can be used as 
+          general-purpose PH0 and PH1, respectively, when the HSE 
+          oscillator is off. The HSE has priority over the GPIO function.
+    @endverbatim
   *
   ******************************************************************************
   * @attention
@@ -70,9 +62,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_gpio.h"
@@ -103,8 +98,8 @@
  *
 @verbatim   
  ===============================================================================
-                        Initialization and Configuration
- ===============================================================================  
+                    ##### Initialization and Configuration #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -115,7 +110,7 @@
   *         values.
   *         By default, The GPIO pins are configured in input floating mode
   *         (except JTAG pins).
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @retval None
   */
 void GPIO_DeInit(GPIO_TypeDef* GPIOx)
@@ -145,9 +140,19 @@ void GPIO_DeInit(GPIO_TypeDef* GPIOx)
   }
   else if(GPIOx == GPIOE)
   {
-      RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOE, ENABLE);
-      RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOE, DISABLE);
+    RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOE, ENABLE);
+    RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOE, DISABLE);
   }
+  else if(GPIOx == GPIOF)
+  {
+    RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOF, ENABLE);
+    RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOF, DISABLE);
+  }
+  else if(GPIOx == GPIOG)
+  {
+    RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOG, ENABLE);
+    RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOG, DISABLE);
+  }   
   else
   {
     if(GPIOx == GPIOH)
@@ -161,28 +166,11 @@ void GPIO_DeInit(GPIO_TypeDef* GPIOx)
 /**
   * @brief  Initializes the GPIOx peripheral according to the specified 
   *         parameters in the GPIO_InitStruct.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  GPIO_InitStruct: pointer to a GPIO_InitTypeDef structure that 
   *         contains the configuration information for the specified GPIO
   *         peripheral.
-  *         GPIO_Pin: selects the pin to be configured: GPIO_Pin_0 -> GPIO_Pin_15
-  *         GPIO_Mode: selects the mode of the pin: 
-  *                      - Input mode: GPIO_Mode_IN
-  *                      - Output mode: GPIO_Mode_OUT
-  *                      - Alternate Function mode: GPIO_Mode_AF
-  *                      - Analog mode: GPIO_Mode_AN
-  *         GPIO_Speed: selects the speed of the pin if configured in Output:
-  *                      - Very Low: GPIO_Speed_400KHz
-  *                      - Low: GPIO_Speed_2MHz
-  *                      - Medium: GPIO_Speed_10MHz
-  *                      - High: GPIO_Speed_40MHz
-  *         GPIO_OType: selects the Output type (if the selected mode is output):
-  *                      - Push-pull: GPIO_OType_PP
-  *                      - Open Drain: GPIO_OType_OD
-  *         GPIO_PuPd: configures the Pull-up/Pull-down resistor on the pin:
-  *                      - pull-up: GPIO_PuPd_UP
-  *                      - pull-down: GPIO_PuPd_DOWN
-  *                      - Neither pull-up nor Pull-down: GPIO_PuPd_NOPULL
+
   * @retval None
   */
 void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct)
@@ -256,14 +244,14 @@ void GPIO_StructInit(GPIO_InitTypeDef* GPIO_InitStruct)
   *         GPIOx_PUPDR, GPIOx_AFRL and GPIOx_AFRH.
   *         The configuration of the locked GPIO pins can no longer be modified
   *         until the next reset.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  GPIO_Pin: specifies the port bit to be written.
   *   This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
   * @retval None
   */
 void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
-  uint32_t tmp = 0x00010000;
+  __IO uint32_t tmp = 0x00010000;
   
   /* Check the parameters */
   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
@@ -291,7 +279,7 @@ void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
  *
 @verbatim   
  ===============================================================================
-                              GPIO Read and Write
+                      ##### GPIO Read and Write #####
  ===============================================================================  
 
 @endverbatim
@@ -300,7 +288,7 @@ void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 
 /**
   * @brief  Reads the specified input port pin.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  GPIO_Pin: specifies the port bit to read.
   *   This parameter can be GPIO_Pin_x where x can be (0..15).
   * @retval The input port pin value.
@@ -326,7 +314,7 @@ uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 
 /**
   * @brief  Reads the specified GPIO input data port.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @retval GPIO input data port value.
   */
 uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx)
@@ -339,7 +327,7 @@ uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx)
 
 /**
   * @brief  Reads the specified output data port bit.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  GPIO_Pin: Specifies the port bit to read.
   *   This parameter can be GPIO_Pin_x where x can be (0..15).
   * @retval The output port pin value.
@@ -365,7 +353,7 @@ uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 
 /**
   * @brief  Reads the specified GPIO output data port.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @retval GPIO output data port value.
   */
 uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx)
@@ -378,7 +366,7 @@ uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx)
 
 /**
   * @brief  Sets the selected data port bits.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  GPIO_Pin: specifies the port bits to be written.
   *   This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
   * @note  This functions uses GPIOx_BSRR register to allow atomic read/modify 
@@ -397,7 +385,7 @@ void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 
 /**
   * @brief  Clears the selected data port bits.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  GPIO_Pin: specifies the port bits to be written.
   *   This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
   * @note  This functions uses GPIOx_BSRR register to allow atomic read/modify 
@@ -416,7 +404,7 @@ void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 
 /**
   * @brief  Sets or clears the selected data port bit.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  GPIO_Pin: specifies the port bit to be written.
   *   This parameter can be one of GPIO_Pin_x where x can be (0..15).
   * @param  BitVal: specifies the value to be written to the selected bit.
@@ -444,7 +432,7 @@ void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal)
 
 /**
   * @brief  Writes data to the specified GPIO data port.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  PortVal: specifies the value to be written to the port output data 
   *                  register.
   * @retval None
@@ -458,6 +446,20 @@ void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)
 }
 
 /**
+  * @brief  Toggles the specified GPIO pins..
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
+  * @param  GPIO_Pin: Specifies the pins to be toggled.
+  * @retval None
+  */
+void GPIO_ToggleBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+
+  GPIOx->ODR ^= GPIO_Pin;
+}
+
+/**
   * @}
   */
 
@@ -466,7 +468,7 @@ void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)
  *
 @verbatim   
  ===============================================================================
-               GPIO Alternate functions configuration functions
+          ##### GPIO Alternate functions configuration functions #####
  ===============================================================================  
 
 @endverbatim
@@ -475,7 +477,7 @@ void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)
 
 /**
   * @brief  Changes the mapping of the specified pin.
-  * @param  GPIOx: where x can be (A, B, C, D, E or H) to select the GPIO peripheral.
+  * @param  GPIOx: where x can be (A..H) to select the GPIO peripheral.
   * @param  GPIO_PinSource: specifies the pin for the Alternate function.
   *   This parameter can be GPIO_PinSourcex where x can be (0..15).
   * @param  GPIO_AFSelection: selects the pin to used as Alternat function.
@@ -486,30 +488,36 @@ void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)
   *                           512 Hz clock output (with an LSE oscillator of 32.768 kHz)
   *     @arg GPIO_AF_WKUP: wakeup
   *     @arg GPIO_AF_SWJ: SWJ (SW and JTAG)
-  *     @arg GPIO_AF_TRACE
-  *     @arg GPIO_AF_TIM2
-  *     @arg GPIO_AF_TIM3
-  *     @arg GPIO_AF_TIM4
-  *     @arg GPIO_AF_TIM9
-  *     @arg GPIO_AF_TIM10
-  *     @arg GPIO_AF_TIM11
-  *     @arg GPIO_AF_I2C1
-  *     @arg GPIO_AF_I2C2
-  *     @arg GPIO_AF_SPI1
-  *     @arg GPIO_AF_SPI2
-  *     @arg GPIO_AF_USART1
-  *     @arg GPIO_AF_USART2
-  *     @arg GPIO_AF_USART3
-  *     @arg GPIO_AF_USB
-  *     @arg GPIO_AF_LCD
-  *     @arg GPIO_AF_RI
+  *     @arg GPIO_AF_TRACE: Connect TRACE pins to AF0 (default after reset)
+  *     @arg GPIO_AF_TIM2c: Connect TIM2 pins to AF1
+  *     @arg GPIO_AF_TIM3: Connect TIM3 pins to AF2
+  *     @arg GPIO_AF_TIM4: Connect TIM4 pins to AF2
+  *     @arg GPIO_AF_TIM5: Connect TIM5 pins to AF2
+  *     @arg GPIO_AF_TIM9: Connect TIM9 pins to AF3
+  *     @arg GPIO_AF_TIM10: Connect TIM10 pins to AF3
+  *     @arg GPIO_AF_TIM11: Connect TIM11 pins to AF3
+  *     @arg GPIO_AF_I2C1: Connect I2C1 pins to AF4
+  *     @arg GPIO_AF_I2C2: Connect I2C2 pins to AF4
+  *     @arg GPIO_AF_SPI1: Connect SPI1 pins to AF5
+  *     @arg GPIO_AF_SPI2: Connect SPI2/I2S2 pins to AF5
+  *     @arg GPIO_AF_SPI3: Connect SPI3/I2S3 pins to AF6
+  *     @arg GPIO_AF_USART1: Connect USART1 pins to AF7
+  *     @arg GPIO_AF_USART2: Connect USART2 pins to AF7
+  *     @arg GPIO_AF_USART3: Connect USART3 pins to AF7
+  *     @arg GPIO_AF_UART4: Connect UART4 pins to AF8
+  *     @arg GPIO_AF_UART5: Connect UART5 pins to AF8
+  *     @arg GPIO_AF_USB: Connect USB pins to AF10
+  *     @arg GPIO_AF_LCD: Connect LCD pins to AF11
+  *     @arg GPIO_AF_FSMC: Connect FSMC pins to AF12
+  *     @arg GPIO_AF_SDIO: Connect SDIO pins to AF12
+  *     @arg GPIO_AF_RI: Connect RI pins to AF14
   *     @arg GPIO_AF_EVENTOUT: Cortex-M3 EVENTOUT signal
-  * @note: The pin should already been configured in Alternate Function mode(AF)
+  * @note The pin should already been configured in Alternate Function mode(AF)
   *        using GPIO_InitStruct->GPIO_Mode = GPIO_Mode_AF
-  * @note: Please refer to the Alternate function mapping table in the device 
-  *        datasheet for the detailed mapping of the system and peripherals’
+  * @note Please refer to the Alternate function mapping table in the device 
+  *        datasheet for the detailed mapping of the system and peripherals'
   *        alternate function I/O pins.  
-  * @note: EVENTOUT is not mapped on PH0, PH1 and PH2.  
+  * @note EVENTOUT is not mapped on PH0, PH1 and PH2.  
   * @retval None
   */
 void GPIO_PinAFConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_PinSource, uint8_t GPIO_AF)
@@ -543,4 +551,4 @@ void GPIO_PinAFConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_PinSource, uint8_t GPIO
 /**
   * @}
   */
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

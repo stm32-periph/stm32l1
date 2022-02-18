@@ -2,46 +2,44 @@
   ******************************************************************************
   * @file    stm32l1xx_exti.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the EXTI peripheral:           
-  *           - Initialization and Configuration
-  *           - Interrupts and flags management
+  *           + Initialization and Configuration
+  *           + Interrupts and flags management
   *
   *  @verbatim  
-  *  
-  *          ===================================================================
-  *                                     EXTI features
-  *          ===================================================================
-  *    
-  *          External interrupt/event lines are mapped as following:
-  *            1- All available GPIO pins are connected to the 16 external 
-  *               interrupt/event lines from EXTI0 to EXTI15.
-  *            2- EXTI line 16 is connected to the PVD output
-  *            3- EXTI line 17 is connected to the RTC Alarm event
-  *            4- EXTI line 18 is connected to the USB Device FS wakeup event
-  *            5- EXTI line 19 is connected to the RTC Tamper and TimeStamp events
-  *            6- EXTI line 20 is connected to the RTC Wakeup event
-  *            7- EXTI line 21 is connected to the Comparator 1 wakeup event 
-  *            8- EXTI line 22 is connected to the Comparator 2 wakeup event
-  *
-  *          ===================================================================
-  *                                 How to use this driver
-  *          ===================================================================  
-  *              
-  *          In order to use an I/O pin as an external interrupt source, follow
-  *          steps below:
-  *            1- Configure the I/O in input mode using GPIO_Init()
-  *            2- Select the input source pin for the EXTI line using 
-  *               SYSCFG_EXTILineConfig()
-  *            3- Select the mode(interrupt, event) and configure the trigger 
-  *               selection (Rising, falling or both) using EXTI_Init()
-  *            4- Configure NVIC IRQ channel mapped to the EXTI line using NVIC_Init()
-  *   
-  *@note     SYSCFG APB clock must be enabled to get write access to SYSCFG_EXTICRx
-  *          registers using RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-  *          
+  ============================================================================== 
+                            ##### EXTI features ##### 
+  ============================================================================== 
+    [..] External interrupt/event lines are mapped as following:
+         (#) All available GPIO pins are connected to the 16 external 
+             interrupt/event lines from EXTI0 to EXTI15.
+         (#) EXTI line 16 is connected to the PVD output.
+         (#) EXTI line 17 is connected to the RTC Alarm event.
+         (#) EXTI line 18 is connected to the USB Device FS wakeup event.
+         (#) EXTI line 19 is connected to the RTC Tamper and TimeStamp events.
+         (#) EXTI line 20 is connected to the RTC Wakeup event.
+         (#) EXTI line 21 is connected to the Comparator 1 wakeup event.
+         (#) EXTI line 22 is connected to the Comparator 2 wakeup event.
+         (#) EXTI line 23 is connected to the Comparator channel acquisition wakeup event.
+         
+            
+                       ##### How to use this driver ##### 
+  ==============================================================================   
+    [..] In order to use an I/O pin as an external interrupt source, follow
+         steps below:
+    (#) Configure the I/O in input mode using GPIO_Init()
+    (#) Select the input source pin for the EXTI line using 
+        SYSCFG_EXTILineConfig()
+    (#) Select the mode(interrupt, event) and configure the trigger 
+        selection (Rising, falling or both) using EXTI_Init()
+    (#) Configure NVIC IRQ channel mapped to the EXTI line using NVIC_Init()
+    [..]
+	(@) SYSCFG APB clock must be enabled to get write access to SYSCFG_EXTICRx
+      registers using RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+            
   *  @endverbatim                  
   *
   ******************************************************************************
@@ -54,9 +52,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_exti.h"
@@ -87,9 +88,9 @@
  *  @brief   Initialization and Configuration functions 
  *
 @verbatim   
- ===============================================================================
-                  Initialization and Configuration functions
- ===============================================================================  
+  ==============================================================================
+            ##### Initialization and Configuration functions #####
+  ==============================================================================  
 
 @endverbatim
   * @{
@@ -106,17 +107,17 @@ void EXTI_DeInit(void)
   EXTI->EMR = 0x00000000;
   EXTI->RTSR = 0x00000000; 
   EXTI->FTSR = 0x00000000; 
-  EXTI->PR = 0x007FFFFF;
+  EXTI->PR = 0x00FFFFFF;
 }
 
 /**
   * @brief  Initializes the EXTI peripheral according to the specified
   *   parameters in the EXTI_InitStruct.
-  *    EXTI_Line specifies the EXTI line (EXTI0....EXTI22)  
-  *    EXTI_Mode specifies which EXTI line is used as interrupt or an event
+  *    EXTI_Line specifies the EXTI line (EXTI0....EXTI23).
+  *    EXTI_Mode specifies which EXTI line is used as interrupt or an event.
   *    EXTI_Trigger selects the trigger. When the trigger occurs, interrupt
-  *                 pending bit will be set
-  *    EXTI_LineCmd controls (Enable/Disable) the EXTI line
+  *                 pending bit will be set.
+  *    EXTI_LineCmd controls (Enable/Disable) the EXTI line.
   * @param  EXTI_InitStruct: pointer to a EXTI_InitTypeDef structure
   *   that contains the configuration information for the EXTI peripheral.
   * @retval None
@@ -189,7 +190,7 @@ void EXTI_StructInit(EXTI_InitTypeDef* EXTI_InitStruct)
   * @brief  Generates a Software interrupt on selected EXTI line.
   * @param  EXTI_Line: specifies the EXTI line on which the software interrupt
   *         will be generated.
-  *   This parameter can be any combination of EXTI_Linex where x can be (0..22).
+  *   This parameter can be any combination of EXTI_Linex where x can be (0..23).
   * @retval None
   */
 void EXTI_GenerateSWInterrupt(uint32_t EXTI_Line)
@@ -208,10 +209,10 @@ void EXTI_GenerateSWInterrupt(uint32_t EXTI_Line)
  *  @brief   Interrupts and flags management functions 
  *
 @verbatim   
- ===============================================================================
-                  Interrupts and flags management functions
- ===============================================================================  
-
+  ==============================================================================
+             ##### Interrupts and flags management functions #####
+  ============================================================================== 
+  
 @endverbatim
   * @{
   */
@@ -220,7 +221,7 @@ void EXTI_GenerateSWInterrupt(uint32_t EXTI_Line)
   * @brief  Checks whether the specified EXTI line flag is set or not.
   * @param  EXTI_Line: specifies the EXTI line flag to check.
   *   This parameter can be:
-  *     @arg EXTI_Linex: External interrupt line x where x(0..22)
+  *   EXTI_Linex: External interrupt line x where x(0..23).
   * @retval The new state of EXTI_Line (SET or RESET).
   */
 FlagStatus EXTI_GetFlagStatus(uint32_t EXTI_Line)
@@ -241,9 +242,9 @@ FlagStatus EXTI_GetFlagStatus(uint32_t EXTI_Line)
 }
 
 /**
-  * @brief  Clears the EXTI’s line pending flags.
+  * @brief  Clears the EXTI's line pending flags.
   * @param  EXTI_Line: specifies the EXTI lines flags to clear.
-  *   This parameter can be any combination of EXTI_Linex where x can be (0..22).
+  *   This parameter can be any combination of EXTI_Linex where x can be (0..23).
   * @retval None
   */
 void EXTI_ClearFlag(uint32_t EXTI_Line)
@@ -258,7 +259,7 @@ void EXTI_ClearFlag(uint32_t EXTI_Line)
   * @brief  Checks whether the specified EXTI line is asserted or not.
   * @param  EXTI_Line: specifies the EXTI line to check.
   *   This parameter can be:
-  *     @arg EXTI_Linex: External interrupt line x where x(0..22)
+  *   EXTI_Linex: External interrupt line x where x(0..23).
   * @retval The new state of EXTI_Line (SET or RESET).
   */
 ITStatus EXTI_GetITStatus(uint32_t EXTI_Line)
@@ -281,9 +282,9 @@ ITStatus EXTI_GetITStatus(uint32_t EXTI_Line)
 }
 
 /**
-  * @brief  Clears the EXTI’s line pending bits.
+  * @brief  Clears the EXTI's line pending bits.
   * @param  EXTI_Line: specifies the EXTI lines to clear.
-  *   This parameter can be any combination of EXTI_Linex where x can be (0..22).
+  *   This parameter can be any combination of EXTI_Linex where x can be (0..23).
   * @retval None
   */
 void EXTI_ClearITPendingBit(uint32_t EXTI_Line)
@@ -310,4 +311,4 @@ void EXTI_ClearITPendingBit(uint32_t EXTI_Line)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

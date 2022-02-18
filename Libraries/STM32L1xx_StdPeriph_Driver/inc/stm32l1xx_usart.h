@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_usart.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the USART 
   *          firmware library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_USART_H
@@ -49,8 +52,9 @@ typedef struct
 {
   uint32_t USART_BaudRate;            /*!< This member configures the USART communication baud rate.
                                            The baud rate is computed using the following formula:
-                                            - IntegerDivider = ((PCLKx) / (16 * (USART_InitStruct->USART_BaudRate)))
-                                            - FractionalDivider = ((IntegerDivider - ((u32) IntegerDivider)) * 16) + 0.5 */
+                                            - IntegerDivider = ((PCLKx) / (8 * (OVR8+1) * (USART_InitStruct->USART_BaudRate)))
+                                            - FractionalDivider = ((IntegerDivider - ((u32) IntegerDivider)) * 8 * (OVR8+1)) + 0.5 
+                                           Where OVR8 is the "oversampling by 8 mode" configuration bit in the CR1 register. */
 
   uint16_t USART_WordLength;          /*!< Specifies the number of data bits transmitted or received in a frame.
                                            This parameter can be a value of @ref USART_Word_Length */
@@ -83,7 +87,7 @@ typedef struct
   uint16_t USART_Clock;   /*!< Specifies whether the USART clock is enabled or disabled.
                                This parameter can be a value of @ref USART_Clock */
 
-  uint16_t USART_CPOL;    /*!< Specifies the steady state value of the serial clock.
+  uint16_t USART_CPOL;    /*!< Specifies the steady state of the serial clock.
                                This parameter can be a value of @ref USART_Clock_Polarity */
 
   uint16_t USART_CPHA;    /*!< Specifies the clock transition on which the bit capture is made.
@@ -101,6 +105,12 @@ typedef struct
   */ 
   
 #define IS_USART_ALL_PERIPH(PERIPH) (((PERIPH) == USART1) || \
+                                     ((PERIPH) == USART2) || \
+                                     ((PERIPH) == USART3) || \
+                                     ((PERIPH) == UART4) || \
+                                     ((PERIPH) == UART5))
+
+#define IS_USART_123_PERIPH(PERIPH) (((PERIPH) == USART1) || \
                                      ((PERIPH) == USART2) || \
                                      ((PERIPH) == USART3))
 
@@ -231,11 +241,21 @@ typedef struct
 #define USART_IT_RXNE                        ((uint16_t)0x0525)
 #define USART_IT_IDLE                        ((uint16_t)0x0424)
 #define USART_IT_LBD                         ((uint16_t)0x0846)
+#define USART_IT_ORE_RX                      ((uint16_t)0x0325) /* In case interrupt is generated if the RXNEIE bit is set */
 #define USART_IT_CTS                         ((uint16_t)0x096A)
 #define USART_IT_ERR                         ((uint16_t)0x0060)
-#define USART_IT_ORE                         ((uint16_t)0x0360)
+#define USART_IT_ORE_ER                      ((uint16_t)0x0360) /* In case interrupt is generated if the EIE bit is set */
 #define USART_IT_NE                          ((uint16_t)0x0260)
 #define USART_IT_FE                          ((uint16_t)0x0160)
+
+/** @defgroup USART_Legacy 
+  * @{
+  */
+#define USART_IT_ORE                          USART_IT_ORE_ER               
+/**
+  * @}
+  */
+
 #define IS_USART_CONFIG_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TXE) || \
                                 ((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) || \
                                 ((IT) == USART_IT_IDLE) || ((IT) == USART_IT_LBD) || \
@@ -243,8 +263,9 @@ typedef struct
 #define IS_USART_GET_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TXE) || \
                              ((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) || \
                              ((IT) == USART_IT_IDLE) || ((IT) == USART_IT_LBD) || \
-                             ((IT) == USART_IT_CTS) || ((IT) == USART_IT_ORE) || \
-                             ((IT) == USART_IT_NE) || ((IT) == USART_IT_FE))
+                             ((IT) == USART_IT_CTS) || ((IT) == USART_IT_ORE_RX) || \
+                             ((IT) == USART_IT_ORE_ER) || ((IT) == USART_IT_NE) || \
+                             ((IT) == USART_IT_FE))
 #define IS_USART_CLEAR_IT(IT) (((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) || \
                                ((IT) == USART_IT_LBD) || ((IT) == USART_IT_CTS))
 /**
@@ -400,4 +421,4 @@ void USART_ClearITPendingBit(USART_TypeDef* USARTx, uint16_t USART_IT);
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

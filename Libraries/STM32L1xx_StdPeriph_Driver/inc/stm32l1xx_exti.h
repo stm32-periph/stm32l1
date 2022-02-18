@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_exti.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the EXTI firmware
   *          library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_EXTI_H
@@ -80,7 +83,7 @@ typedef struct
                                          This parameter can be a value of @ref EXTIMode_TypeDef */
 
   EXTITrigger_TypeDef EXTI_Trigger; /*!< Specifies the trigger signal active edge for the EXTI lines.
-                                         This parameter can be a value of @ref EXTIMode_TypeDef */
+                                         This parameter can be a value of @ref EXTITrigger_TypeDef */
 
   FunctionalState EXTI_LineCmd;     /*!< Specifies the new state of the selected EXTI lines.
                                          This parameter can be set either to ENABLE or DISABLE */ 
@@ -133,8 +136,11 @@ typedef struct
 #define EXTI_Line22      ((uint32_t)0x00400000)  /*!< External interrupt line 22 
                                                       Connected to the Comparator 2
                                                       event */
-                                                                                                  
-#define IS_EXTI_LINE(LINE) ((((LINE) & (uint32_t)0xFF800000) == 0x00) && ((LINE) != (uint16_t)0x00))
+
+#define EXTI_Line23      ((uint32_t)0x00800000)  /*!< External interrupt line 23 
+                                                      Comparator channel acquisition event */
+
+#define IS_EXTI_LINE(LINE) ((((LINE) & (uint32_t)0xFF000000) == 0x00) && ((LINE) != (uint16_t)0x00))
 
 #define IS_GET_EXTI_LINE(LINE) (((LINE) == EXTI_Line0) || ((LINE) == EXTI_Line1) || \
                                 ((LINE) == EXTI_Line2) || ((LINE) == EXTI_Line3) || \
@@ -147,7 +153,7 @@ typedef struct
                                 ((LINE) == EXTI_Line16) || ((LINE) == EXTI_Line17) || \
                                 ((LINE) == EXTI_Line18) || ((LINE) == EXTI_Line19) || \
                                 ((LINE) == EXTI_Line20) || ((LINE) == EXTI_Line21) || \
-                                ((LINE) == EXTI_Line22))
+                                ((LINE) == EXTI_Line22) || ((LINE) == EXTI_Line23))
 
 /**
   * @}
@@ -187,4 +193,4 @@ void EXTI_ClearITPendingBit(uint32_t EXTI_Line);
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

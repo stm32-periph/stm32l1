@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    COMP/AnalogVoltageMonitoring/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body.
   ******************************************************************************
   * @attention
@@ -15,9 +15,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -36,6 +39,7 @@
 /* Private variables ---------------------------------------------------------*/
 uint32_t ADCVal = 0;
 uint8_t LCD_String[8]= " WXYZ V ";
+static uint8_t VoltageDisplay[]     = "  .   V ADCVoltage  ";
 __IO uint32_t State = STATE_OVER_THRESHOLD;
 
 /* Init Structure definition */
@@ -62,15 +66,34 @@ void SetSysClock(void);
   */
 int main(void)
 {
+  /*!< At this stage the microcontroller clock setting is already configured, 
+       this is done through SystemInit() function which is called from startup
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
+       To reconfigure the default setting of SystemInit() function, refer to
+       system_stm32l1xx.c file
+     */
+
+  uint32_t index = 0;
+  
   /* Configure all GPIO pins in Analog mode for lowsest consumption */
   GPIO_Config();
 
-  /* ADC configuration: Channel 18 (PB12) is used, End Of Conversion (EOC) interrupt is enabled */
+  /* ADC configuration: Channel 18 or 31 (PB12 or PF10) is used, End Of Conversion (EOC) interrupt is enabled */
   ADC_Config();
 
+#ifdef USE_STM32L152_EVAL
   /* LCD GLASS Configuration: LSI as LCD clock source */
   LCD_Glass_Config();
-
+  /* Initialize the TFT-LCD */
+  STM32L152_LCD_Init();
+#elif defined USE_STM32L152D_EVAL 
+  /* Initialize the TFT-LCD */
+  STM32L152D_LCD_Init();
+#endif 
+  
+  /* Clear the TFT-LCD */
+  LCD_Clear(LCD_COLOR_WHITE);
+  
   while(1)
   {
     if (State == STATE_OVER_THRESHOLD) /* Input voltage is over the threshold */
@@ -103,8 +126,15 @@ int main(void)
 
       while(State == STATE_OVER_THRESHOLD)
       {
+        
         /* Display measured value on Glass LCD */
         DisplayVoltage(ADCVal);
+        
+        /* Display measured value on LCD */
+        for (index = 0; index < 20; index++)
+        {
+          LCD_DisplayChar(LCD_LINE_3, (319 - (16 * index)), VoltageDisplay[index]);
+        }
         /* Check if the measured value is below the threshold VREFINT: 1.22 V */
         if (ADCVal <= 0x000005EA)
         {
@@ -152,7 +182,7 @@ void ADC_Config(void)
   /* ADC1 Peripheral clock enable */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 
-  /* Channel 18 is already configured in Analog mode using GPIO registers */
+  /* Channel 18 or 31 are already configured in Analog mode using GPIO registers */
 
   /* ADC1 Configuration */
   ADC_InitStructure.ADC_ScanConvMode = DISABLE;
@@ -163,8 +193,13 @@ void ADC_Config(void)
   ADC_InitStructure.ADC_NbrOfConversion = 1;
   ADC_Init(ADC1, &ADC_InitStructure);
 
-  /* ADC1 regular channel 18 configuration */
+#ifdef USE_STM32L152D_EVAL
+   /* ADC1 regular channel 31 configuration for STM32L152D*/
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_31, 1, ADC_SampleTime_384Cycles);
+#elif USE_STM32L152_EVAL  
+  /* ADC1 regular channel 18 configuration for STM32L152*/
   ADC_RegularChannelConfig(ADC1, ADC_Channel_18, 1, ADC_SampleTime_384Cycles);
+#endif  
 
   /* Enable EOC interrupt */
   ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
@@ -180,6 +215,12 @@ void COMP_Config(void)
   /* COMP Peripheral clock enable */
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_COMP, ENABLE);
 
+  /* SYSCFG Peripheral clock enable */
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+  
+  /* Close the I/O analog switch number n */
+  SYSCFG_RIIOSwitchConfig(RI_IOSwitch_GR6_2, ENABLE);
+  
   /* COMP2 Init: COMP2 is enabled as soon as inverting input is selected */
   COMP_InitStructure.COMP_InvertingInput = COMP_InvertingInput_VREFINT;
   COMP_InitStructure.COMP_OutputSelect = COMP_OutputSelect_None;
@@ -228,10 +269,12 @@ void LCD_Glass_Config(void)
 
   /* LCD Clock Source Selection: LSI */
   RCC_RTCCLKConfig(RCC_RTCCLKSource_LSI);
-
+#ifdef USE_STM32L152_EVAL
   /* LCD GLASS Initialization */
   LCD_GLASS_Init();
+#endif  
 }
+
 
 /**
   * @brief  Set the system clock at 32MHz.
@@ -264,7 +307,7 @@ void SetSysClock(void)
   else
   {
     /* If HSE fails to start-up, the application will have wrong clock 
-       configuration. User can add here some code to deal with this error */    
+       configuration. User can add here some code to deal with this error */
   } 
 }
 
@@ -308,6 +351,13 @@ void GPIO_Config(void)
   GPIO_Init(GPIOD, &GPIO_InitStructure);
   GPIO_Init(GPIOE, &GPIO_InitStructure);
   GPIO_Init(GPIOH, &GPIO_InitStructure);
+
+#ifdef USE_STM32L152D_EVAL
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF | RCC_AHBPeriph_GPIOG, ENABLE);
+  GPIO_Init(GPIOF, &GPIO_InitStructure);
+  GPIO_Init(GPIOG, &GPIO_InitStructure);
+#endif
+ 
 }
 
 /**
@@ -323,18 +373,22 @@ void DisplayVoltage(uint32_t ADCVoltage)
   ADCVoltage = ADCVoltage / 4095; 
   Digit1 = ADCVoltage / 1000;
   LCD_String[1] = Digit1 + 0x30;
+  VoltageDisplay[1] = Digit1 + 0x30;
   Digit2 = (ADCVoltage - (Digit1 * 1000)) / 100;
   LCD_String[2] = Digit2 + 0x30;
+  VoltageDisplay[3] = Digit2 + 0x30;
   Digit3 = ((ADCVoltage - ((Digit1 * 1000) + (Digit2 * 100))) / 10);
   LCD_String[3] = Digit3 + 0x30;
+  VoltageDisplay[4] = Digit3 + 0x30;
   Digit4 = (ADCVoltage - ((Digit1 * 1000) + (Digit2 * 100) + (Digit3 * 10)));
   LCD_String[4] = Digit4 + 0x30;
+  VoltageDisplay[5] = Digit4 + 0x30;
 
   /*!< Wait Until the last LCD RAM update finish */
   while(LCD_GetFlagStatus(LCD_FLAG_UDR) != RESET)
   {
   }
-
+#ifdef USE_STM32L152_EVAL
   /* Display one character on LCD */
   LCD_GLASS_WriteChar(&LCD_String[1], POINT_ON, APOSTROPHE_OFF, 1);
   /* Display one character on LCD */
@@ -347,7 +401,8 @@ void DisplayVoltage(uint32_t ADCVoltage)
   LCD_GLASS_WriteChar(&LCD_String[5], POINT_OFF, APOSTROPHE_OFF, 5);
   /* Display one character on LCD */
   LCD_GLASS_WriteChar(&LCD_String[6], POINT_OFF, APOSTROPHE_OFF, 6);
-
+#endif
+  
   /*!< Request LCD RAM update */
   LCD_UpdateDisplayRequest();
 }
@@ -381,4 +436,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

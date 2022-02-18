@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    RTC/TimeStamp/stm32l1xx_it.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and peripherals
   *          interrupt service routine.
@@ -17,13 +17,16 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
-#include "stm32_eval.h"
+#include "main.h"
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -31,24 +34,19 @@
 
 /** @addtogroup RTC_TimeStamp
   * @{
-  */ 
+  */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-extern __IO uint32_t DisplayTimeDate;
-extern __IO uint32_t DisplayTimeDateStamp;
-
-/* Private function prototypes -----------------------------------------------*/
-/* Private functions ---------------------------------------------------------*/
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Exceptions Handlers                         */
 /******************************************************************************/
 
 /**
-  * @brief  This function handles NMI exception.
+  * @brief   This function handles NMI exception.
   * @param  None
   * @retval None
   */
@@ -127,7 +125,7 @@ void DebugMon_Handler(void)
 }
 
 /**
-  * @brief  This function handles PendSV_Handler exception.
+  * @brief  This function handles PendSVC exception.
   * @param  None
   * @retval None
   */
@@ -147,28 +145,7 @@ void SysTick_Handler(void)
 /******************************************************************************/
 /*            STM32L1xx Peripherals Interrupt Handlers                        */
 /******************************************************************************/
-/**
-  * @brief  This function handles External line 0 interrupt request.
-  * @param  None
-  * @retval None
-  */
-void EXTI0_IRQHandler(void)
-{
-  /* Clear the TimeStamp registers */
-  if(EXTI_GetITStatus(KEY_BUTTON_EXTI_LINE) != RESET)
-  {
-    /* Turn LED1 ON and LED2 OFF */
-    STM_EVAL_LEDOn(LED1);
-    STM_EVAL_LEDOff(LED2);
-
-    /* Clear The TSF Flag (Clear TimeStamp Registers) */
-    RTC_ClearFlag(RTC_FLAG_TSF);
-        
-    /* Clear the Key Button EXTI line pending bit */
-    EXTI_ClearITPendingBit(KEY_BUTTON_EXTI_LINE);  
-  }
-}
- 
+#ifdef USE_STM32L152_EVAL 
 /**
   * @brief  This function handles External lines 9 to 5 interrupt request.
   * @param  None
@@ -176,78 +153,94 @@ void EXTI0_IRQHandler(void)
   */
 void EXTI9_5_IRQHandler(void)
 {
-  /* TimeStamp event detected */
-  if(EXTI_GetITStatus(SEL_BUTTON_EXTI_LINE) != RESET)
-  {
-    /* Turn LED1 OFF and LED2 ON */
-    STM_EVAL_LEDOn(LED2);
-    STM_EVAL_LEDOff(LED1);
-        
-    /* Clear the SEL Button EXTI line pending bit */
-    EXTI_ClearITPendingBit(SEL_BUTTON_EXTI_LINE);
-  }
-  
-  /* To display Time (Current or TimeStamp) */
+  /* Clear the TimeStamp registers */
   if(EXTI_GetITStatus(UP_BUTTON_EXTI_LINE) != RESET)
   {
-    /* Turn the LED3 OFF */
-    STM_EVAL_LEDOff(LED3);
+    /* Turn LED1 ON */
+    STM_EVAL_LEDOn(LED1);
 
-    /* Clear the UP Button EXTI line pending bit */
+    /* Clear The TSF Flag (Clear TimeStamp Registers) */
+    RTC_ClearFlag(RTC_FLAG_TSF);
+    printf("\r\n******************** TimeStamp Event Cleared ********************");
+    
+    /* Clear the Wakeup Button EXTI line pending bit */
     EXTI_ClearITPendingBit(UP_BUTTON_EXTI_LINE);
-    DisplayTimeDate = 0;
-  } 
+  }
+    /* TimeStamp Event detected */
+  if((EXTI_GetITStatus(SEL_BUTTON_EXTI_LINE) != RESET))
+  {
+    printf("\r\n******************** TimeStamp Event Occurred ********************");
+   
+  /* Clear the TAMPER Button EXTI line pending bit */
+  EXTI_ClearITPendingBit(SEL_BUTTON_EXTI_LINE); 
+  }
+  
 }
-
+#elif defined USE_STM32L152D_EVAL
 /**
   * @brief  This function handles External lines 15 to 10 interrupt request.
   * @param  None
   * @retval None
   */
 void EXTI15_10_IRQHandler(void)
-{  
-  /* To display Current RTC Time and Date Calendar */
-  if(EXTI_GetITStatus(LEFT_BUTTON_EXTI_LINE) != RESET)
-  {
-    /* Turn LED4 ON */
-    STM_EVAL_LEDOn(LED4);
-    
-    /* Clear the LEFT Button EXTI line pending bit */
-    EXTI_ClearITPendingBit(LEFT_BUTTON_EXTI_LINE); 
-    
-    DisplayTimeDateStamp = 0;	
-  }
-  
-  /* To display TimeStamp RTC Time and Date Calendar */
-  if(EXTI_GetITStatus(RIGHT_BUTTON_EXTI_LINE) != RESET)
-  {
-    /* Turn LED4 OFF */
-    STM_EVAL_LEDOff(LED4);
-
-    /* Clear the RIGHT Button EXTI line pending bit */
-    EXTI_ClearITPendingBit(RIGHT_BUTTON_EXTI_LINE); 
-    
-    DisplayTimeDateStamp = 1;
-  }
-  
-  /* To display Date (Current or TimeStamp) */
-  if(EXTI_GetITStatus(DOWN_BUTTON_EXTI_LINE) != RESET)
+{
+  /* Clear the TimeStamp registers */
+  if(EXTI_GetITStatus(UP_BUTTON_EXTI_LINE) != RESET)
   {
     /* Turn LED1 ON */
-    STM_EVAL_LEDOn(LED3);
+    STM_EVAL_LEDOn(LED1);
 
-    /* Clear the DOWN Button EXTI line pending bit */
-    EXTI_ClearITPendingBit(DOWN_BUTTON_EXTI_LINE); 
+    /* Clear The TSF Flag (Clear TimeStamp Registers) */
+    RTC_ClearFlag(RTC_FLAG_TSF);
+    printf("\r\n******************** TimeStamp Event Cleared ********************");
     
-    DisplayTimeDate = 1;
+    /* Clear the Wakeup Button EXTI line pending bit */
+    EXTI_ClearITPendingBit(UP_BUTTON_EXTI_LINE);
+  }
+    /* TimeStamp Event detected */
+  if((STM_EVAL_PBGetState(BUTTON_SEL) == RESET) && (EXTI_GetITStatus(EXTI_Line13) != RESET))
+  {
+    printf("\r\n******************** TimeStamp Event Occurred ********************");
+
+  }
+  
+  /* Clear the TAMPER Button EXTI line pending bit */
+  EXTI_ClearITPendingBit(EXTI_Line13); 
+  
+}
+#endif
+
+/**
+  * @brief  This function handles External line 0 interrupt request.
+  * @param  None
+  * @retval None
+  */
+
+void EXTI0_IRQHandler(void)
+{
+  /* To display Current RTC Time and Date Calendar */
+  if(EXTI_GetITStatus(KEY_BUTTON_EXTI_LINE) != RESET)
+  {
+
+    /* Clear the KEY Button EXTI line pending bit */
+    EXTI_ClearITPendingBit(KEY_BUTTON_EXTI_LINE); 
+
+    /* Display the Time */
+    RTC_TimeShow();
+    /* Display the date */
+    RTC_DateShow();
+        
+    /* Display the TimeStamp */
+    RTC_TimeStampShow();
+
   }
 }
 
 /******************************************************************************/
-/*                 STM32L1xx Peripherals Interrupt Handlers                   */
+/*                 STM32F2xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
 /*  available peripheral interrupt handler's name please refer to the startup */
-/*  file (startup_stm32l1xx_md.s).                                            */
+/*  file (startup_stm32f2xx.s).                                               */
 /******************************************************************************/
 
 /**
@@ -259,12 +252,13 @@ void EXTI15_10_IRQHandler(void)
 {
 }*/
 
-/**
-  * @}
-  */ 
 
 /**
   * @}
-  */ 
+  */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/**
+  * @}
+  */
+
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

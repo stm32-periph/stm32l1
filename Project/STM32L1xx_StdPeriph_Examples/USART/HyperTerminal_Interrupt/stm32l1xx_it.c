@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    USART/HyperTerminal_Interrupt/stm32l1xx_it.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and 
   *          peripherals interrupt service routine.
@@ -17,13 +17,23 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+  #define EVAL_COMX EVAL_COM1
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+  #define EVAL_COMX EVAL_COM2
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -35,7 +45,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define USARTx_IRQHANDLER   USART3_IRQHandler
+#define USARTx_IRQHANDLER   USART1_IRQHandler
 
 #define TXBUFFERSIZE   (countof(TxBuffer) - 1)
 #define RXBUFFERSIZE   0x20
@@ -166,27 +176,27 @@ void SysTick_Handler(void)
   */
 void USARTx_IRQHANDLER(void)
 {
-  if(USART_GetITStatus(EVAL_COM2, USART_IT_RXNE) != RESET)
+  if(USART_GetITStatus(EVAL_COMX, USART_IT_RXNE) != RESET)
   {
     /* Read one byte from the receive data register */
-    RxBuffer[RxCounter++] = (USART_ReceiveData(EVAL_COM2) & 0x7F);
+    RxBuffer[RxCounter++] = (USART_ReceiveData(EVAL_COMX) & 0x7F);
 
     if(RxCounter == NbrOfDataToRead)
     {
-      /* Disable the EVAL_COM2 Receive interrupt */
-      USART_ITConfig(EVAL_COM2, USART_IT_RXNE, DISABLE);
+      /* Disable the EVAL_COMX Receive interrupt */
+      USART_ITConfig(EVAL_COMX, USART_IT_RXNE, DISABLE);
     }
   }
 
-  if(USART_GetITStatus(EVAL_COM2, USART_IT_TXE) != RESET)
+  if(USART_GetITStatus(EVAL_COMX, USART_IT_TXE) != RESET)
   {   
     /* Write one byte to the transmit data register */
-    USART_SendData(EVAL_COM2, TxBuffer[TxCounter++]);
+    USART_SendData(EVAL_COMX, TxBuffer[TxCounter++]);
 
     if(TxCounter == NbrOfDataToTransfer)
     {
-      /* Disable the EVAL_COM2 Transmit interrupt */
-      USART_ITConfig(EVAL_COM2, USART_IT_TXE, DISABLE);
+      /* Disable the EVAL_COMX Transmit interrupt */
+      USART_ITConfig(EVAL_COMX, USART_IT_TXE, DISABLE);
     }
   }
 }
@@ -195,7 +205,7 @@ void USARTx_IRQHANDLER(void)
 /*                 stm32l1xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
 /*  available peripheral interrupt handler's name please refer to the startup */
-/*  file (startup_stm32l1xx_md.s).                                            */
+/*  file (startup_stm32l1xx_xx.s).                                            */
 /******************************************************************************/
 
 /**
@@ -215,4 +225,4 @@ void USARTx_IRQHANDLER(void)
   * @}
   */ 
   
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

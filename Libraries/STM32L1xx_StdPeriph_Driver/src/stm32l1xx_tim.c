@@ -2,92 +2,90 @@
   ******************************************************************************
   * @file    stm32l1xx_tim.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the TIM peripheral:
-  *            - TimeBase management
-  *            - Output Compare management
-  *            - Input Capture management
-  *            - Interrupts, DMA and flags management
-  *            - Clocks management
-  *            - Synchronization management
-  *            - Specific interface management
-  *            - Specific remapping management      
+  *            + TimeBase management
+  *            + Output Compare management
+  *            + Input Capture management
+  *            + Interrupts, DMA and flags management
+  *            + Clocks management
+  *            + Synchronization management
+  *            + Specific interface management
+  *            + Specific remapping management      
   *              
-  *  @verbatim
-  *  
-  *          ===================================================================
-  *                                 How to use this driver
-  *          ===================================================================
-  *          This driver provides functions to configure and program the TIM 
-  *          of all STM32L1xx devices
-  *          These functions are split in 8 groups: 
-  *   
-  *          1. TIM TimeBase management: this group includes all needed functions 
-  *             to configure the TM Timebase unit:
-  *                   - Set/Get Prescaler
-  *                   - Set/Get Autoreload  
-  *                   - Counter modes configuration
-  *                   - Set Clock division  
-  *                   - Select the One Pulse mode
-  *                   - Update Request Configuration
-  *                   - Update Disable Configuration
-  *                   - Auto-Preload Configuration 
-  *                   - Enable/Disable the counter     
-  *                 
-  *          2. TIM Output Compare management: this group includes all needed 
-  *             functions to configure the Capture/Compare unit used in Output 
-  *             compare mode: 
-  *                   - Configure each channel, independently, in Output Compare mode
-  *                   - Select the output compare modes
-  *                   - Select the Polarities of each channel
-  *                   - Set/Get the Capture/Compare register values
-  *                   - Select the Output Compare Fast mode 
-  *                   - Select the Output Compare Forced mode  
-  *                   - Output Compare-Preload Configuration 
-  *                   - Clear Output Compare Reference
-  *                   - Select the OCREF Clear signal
-  *                   - Enable/Disable the Capture/Compare Channels    
-  *                   
-  *          3. TIM Input Capture management: this group includes all needed 
-  *             functions to configure the Capture/Compare unit used in 
-  *             Input Capture mode:
-  *                   - Configure each channel in input capture mode
-  *                   - Configure Channel1/2 in PWM Input mode
-  *                   - Set the Input Capture Prescaler
-  *                   - Get the Capture/Compare values      
-  *        
-  *          4. TIM interrupts, DMA and flags management
-  *                   - Enable/Disable interrupt sources
-  *                   - Get flags status
-  *                   - Clear flags/ Pending bits
-  *                   - Enable/Disable DMA requests 
-  *                   - Configure DMA burst mode
-  *                   - Select CaptureCompare DMA request  
-  *              
-  *          5. TIM clocks management: this group includes all needed functions 
-  *             to configure the clock controller unit:
-  *                   - Select internal/External clock
-  *                   - Select the external clock mode: ETR(Mode1/Mode2), TIx or ITRx
-  *         
-  *          6. TIM synchronization management: this group includes all needed 
-  *             functions to configure the Synchronization unit:
-  *                   - Select Input Trigger  
-  *                   - Select Output Trigger  
-  *                   - Select Master Slave Mode 
-  *                   - ETR Configuration when used as external trigger   
-  *     
-  *          7. TIM specific interface management, this group includes all 
-  *             needed functions to use the specific TIM interface:
-  *                   - Encoder Interface Configuration
-  *                   - Select Hall Sensor   
-  *         
-  *          8. TIM specific remapping management includes the Remapping 
-  *             configuration of specific timers               
-  *   
-  *  @endverbatim
-  *    
+*  @verbatim
+  
+ ===============================================================================
+                    ##### How to use this driver #####
+ ===============================================================================
+    [..] This driver provides functions to configure and program the TIM 
+         of all STM32L1xx devices These functions are split in 8 groups: 
+         (#) TIM TimeBase management: this group includes all needed functions 
+             to configure the TM Timebase unit:
+             (++) Set/Get Prescaler.
+             (++) Set/Get Autoreload.
+             (++) Counter modes configuration.
+             (++) Set Clock division.
+             (++) Select the One Pulse mode.
+             (++) Update Request Configuration.
+             (++) Update Disable Configuration.
+             (++) Auto-Preload Configuration.
+             (++) Enable/Disable the counter.
+  
+         (#) TIM Output Compare management: this group includes all needed 
+             functions to configure the Capture/Compare unit used in Output 
+             compare mode: 
+             (++) Configure each channel, independently, in Output Compare mode.
+             (++) Select the output compare modes.
+             (++) Select the Polarities of each channel.
+             (++) Set/Get the Capture/Compare register values.
+             (++) Select the Output Compare Fast mode. 
+             (++) Select the Output Compare Forced mode.  
+             (++) Output Compare-Preload Configuration. 
+             (++) Clear Output Compare Reference.
+             (++) Select the OCREF Clear signal.
+             (++) Enable/Disable the Capture/Compare Channels.    
+  
+         (#) TIM Input Capture management: this group includes all needed 
+             functions to configure the Capture/Compare unit used in 
+             Input Capture mode:
+             (++) Configure each channel in input capture mode.
+             (++) Configure Channel1/2 in PWM Input mode.
+             (++) Set the Input Capture Prescaler.
+             (++) Get the Capture/Compare values.      
+  
+         (#) TIM interrupts, DMA and flags management.
+             (++) Enable/Disable interrupt sources.
+             (++) Get flags status.
+             (++) Clear flags/ Pending bits.
+             (++) Enable/Disable DMA requests. 
+             (++) Configure DMA burst mode.
+             (++) Select CaptureCompare DMA request.  
+  
+         (#) TIM clocks management: this group includes all needed functions 
+             to configure the clock controller unit:
+             (++) Select internal/External clock.
+             (++) Select the external clock mode: ETR(Mode1/Mode2), TIx or ITRx.
+  
+         (#) TIM synchronization management: this group includes all needed. 
+             functions to configure the Synchronization unit:
+             (++) Select Input Trigger.  
+             (++) Select Output Trigger.  
+             (++) Select Master Slave Mode. 
+             (++) ETR Configuration when used as external trigger.   
+  
+         (#) TIM specific interface management, this group includes all 
+             needed functions to use the specific TIM interface:
+             (++) Encoder Interface Configuration.
+             (++) Select Hall Sensor.   
+  
+         (#) TIM specific remapping management includes the Remapping 
+             configuration of specific timers
+  
+@endverbatim
+  
   ******************************************************************************
   * @attention
   *
@@ -98,9 +96,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_tim.h"
@@ -144,31 +145,27 @@ static void TI4_Config(TIM_TypeDef* TIMx, uint16_t TIM_ICPolarity, uint16_t TIM_
 /** @defgroup TIM_Group1 TimeBase management functions
  *  @brief   TimeBase management functions 
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                       TimeBase management functions
- ===============================================================================  
+                 ##### TimeBase management functions #####
+ ===============================================================================
   
-       ===================================================================      
-              TIM Driver: how to use it in Timing(Time base) Mode
-       =================================================================== 
-       To use the Timer in Timing(Time base) mode, the following steps are mandatory:
-       
-       1. Enable TIM clock using RCC_APBxPeriphClockCmd(RCC_APBxPeriph_TIMx, ENABLE) function
-                    
-       2. Fill the TIM_TimeBaseInitStruct with the desired parameters.
-       
-       3. Call TIM_TimeBaseInit(TIMx, &TIM_TimeBaseInitStruct) to configure the Time Base unit
-          with the corresponding configuration
-          
-       4. Enable the NVIC if you need to generate the update interrupt. 
-          
-       5. Enable the corresponding interrupt using the function TIM_ITConfig(TIMx, TIM_IT_Update) 
-       
-       6. Call the TIM_Cmd(ENABLE) function to enable the TIM counter.
-             
-       Note1: All other functions can be used seperatly to modify, if needed,
-          a specific feature of the Timer. 
+        *** TIM Driver: how to use it in Timing(Time base) Mode ***
+ ===============================================================================
+    [..] To use the Timer in Timing(Time base) mode, the following steps are 
+         mandatory:
+         (#) Enable TIM clock using 
+             RCC_APBxPeriphClockCmd(RCC_APBxPeriph_TIMx, ENABLE) function.
+         (#) Fill the TIM_TimeBaseInitStruct with the desired parameters.
+         (#) Call TIM_TimeBaseInit(TIMx, &TIM_TimeBaseInitStruct) to configure 
+             the Time Base unit with the corresponding configuration.
+         (#) Enable the NVIC if you need to generate the update interrupt. 
+         (#) Enable the corresponding interrupt using the function 
+             TIM_ITConfig(TIMx, TIM_IT_Update). 
+         (#) Call the TIM_Cmd(ENABLE) function to enable the TIM counter.
+    [..]
+        (@) All other functions can be used seperatly to modify, if needed,
+            a specific feature of the Timer. 
 
 @endverbatim
   * @{
@@ -200,7 +197,11 @@ void TIM_DeInit(TIM_TypeDef* TIMx)
     RCC_APB1PeriphResetCmd(RCC_APB1Periph_TIM4, ENABLE);
     RCC_APB1PeriphResetCmd(RCC_APB1Periph_TIM4, DISABLE);
   } 
-
+  else if (TIMx == TIM5)
+  {
+    RCC_APB1PeriphResetCmd(RCC_APB1Periph_TIM5, ENABLE);
+    RCC_APB1PeriphResetCmd(RCC_APB1Periph_TIM5, DISABLE);
+  } 
   else if (TIMx == TIM6)
   {
     RCC_APB1PeriphResetCmd(RCC_APB1Periph_TIM6, ENABLE);
@@ -253,7 +254,7 @@ void TIM_TimeBaseInit(TIM_TypeDef* TIMx, TIM_TimeBaseInitTypeDef* TIM_TimeBaseIn
 
   tmpcr1 = TIMx->CR1;  
 
-  if(((TIMx) == TIM2) || ((TIMx) == TIM3) || ((TIMx) == TIM4))
+  if(((TIMx) == TIM2) || ((TIMx) == TIM3) || ((TIMx) == TIM4) || ((TIMx) == TIM5))
   {											
     /* Select the Counter Mode */
     tmpcr1 &= (uint16_t)(~((uint16_t)(TIM_CR1_DIR | TIM_CR1_CMS)));
@@ -288,7 +289,7 @@ void TIM_TimeBaseInit(TIM_TypeDef* TIMx, TIM_TimeBaseInitTypeDef* TIM_TimeBaseIn
 void TIM_TimeBaseStructInit(TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct)
 {
   /* Set the default configuration */
-  TIM_TimeBaseInitStruct->TIM_Period = 0xFFFF;
+  TIM_TimeBaseInitStruct->TIM_Period = 0xFFFFFFFF;
   TIM_TimeBaseInitStruct->TIM_Prescaler = 0x0000;
   TIM_TimeBaseInitStruct->TIM_ClockDivision = TIM_CKD_DIV1;
   TIM_TimeBaseInitStruct->TIM_CounterMode = TIM_CounterMode_Up;
@@ -297,7 +298,7 @@ void TIM_TimeBaseStructInit(TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct)
 /**
   * @brief  Configures the TIMx Prescaler.
   * @param  TIMx: where x can be 2 to 11 to select the TIM peripheral.
-  * @param  Prescaler: specifies the Prescaler Register value
+  * @param  Prescaler: specifies the Prescaler Register value.
   * @param  TIM_PSCReloadMode: specifies the TIM Prescaler Reload mode
   *   This parameter can be one of the following values:
   *     @arg TIM_PSCReloadMode_Update: The Prescaler is loaded at the update event.
@@ -318,14 +319,14 @@ void TIM_PrescalerConfig(TIM_TypeDef* TIMx, uint16_t Prescaler, uint16_t TIM_PSC
 
 /**
   * @brief  Specifies the TIMx Counter Mode to be used.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_CounterMode: specifies the Counter Mode to be used
   *   This parameter can be one of the following values:
-  *     @arg TIM_CounterMode_Up: TIM Up Counting Mode
-  *     @arg TIM_CounterMode_Down: TIM Down Counting Mode
-  *     @arg TIM_CounterMode_CenterAligned1: TIM Center Aligned Mode1
-  *     @arg TIM_CounterMode_CenterAligned2: TIM Center Aligned Mode2
-  *     @arg TIM_CounterMode_CenterAligned3: TIM Center Aligned Mode3
+  *     @arg TIM_CounterMode_Up: TIM Up Counting Mode.
+  *     @arg TIM_CounterMode_Down: TIM Down Counting Mode.
+  *     @arg TIM_CounterMode_CenterAligned1: TIM Center Aligned Mode1.
+  *     @arg TIM_CounterMode_CenterAligned2: TIM Center Aligned Mode2.
+  *     @arg TIM_CounterMode_CenterAligned3: TIM Center Aligned Mode3.
   * @retval None
   */
 void TIM_CounterModeConfig(TIM_TypeDef* TIMx, uint16_t TIM_CounterMode)
@@ -433,10 +434,10 @@ void TIM_UpdateDisableConfig(TIM_TypeDef* TIMx, FunctionalState NewState)
   * @param  TIMx: where x can be 2 to 11 to select the TIM peripheral.
   * @param  TIM_UpdateSource: specifies the Update source.
   *   This parameter can be one of the following values:
-  *     @arg TIM_UpdateSource_Regular: Source of update is the counter overflow/underflow
+  *     @arg TIM_UpdateSource_Global: Source of update is the counter overflow/underflow
                                        or the setting of UG bit, or an update generation
                                        through the slave mode controller.
-  *     @arg TIM_UpdateSource_Global: Source of update is counter overflow/underflow.
+  *     @arg TIM_UpdateSource_Regular: Source of update is counter overflow/underflow.
   * @retval None
   */
 void TIM_UpdateRequestConfig(TIM_TypeDef* TIMx, uint16_t TIM_UpdateSource)
@@ -483,12 +484,14 @@ void TIM_ARRPreloadConfig(TIM_TypeDef* TIMx, FunctionalState NewState)
 }
 
 /**
-  * @brief  Selects the TIMx’s One Pulse Mode.
+  * @brief  Selects the TIMx's One Pulse Mode.
   * @param  TIMx: where x can be 2 to 11 to select the TIM peripheral.
   * @param  TIM_OPMode: specifies the OPM Mode to be used.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OPMode_Single
-  *     @arg TIM_OPMode_Repetitive
+  *     @arg TIM_OPMode_Single:: TIM One Pulse Single Mode (Counter stops counting 
+  *                              at the next update event (clearing the bit CEN)).
+  *     @arg TIM_OPMode_Repetitive: TIM One Pulse Repetitive Mode 
+  *                                 (Counter is not stopped at update event).
   * @retval None
   */
 void TIM_SelectOnePulseMode(TIM_TypeDef* TIMx, uint16_t TIM_OPMode)
@@ -505,12 +508,12 @@ void TIM_SelectOnePulseMode(TIM_TypeDef* TIMx, uint16_t TIM_OPMode)
 
 /**
   * @brief  Sets the TIMx Clock Division value.
-  * @param  TIMx: where x can be  2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be  2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_CKD: specifies the clock division value.
   *   This parameter can be one of the following value:
-  *     @arg TIM_CKD_DIV1: TDTS = Tck_tim
-  *     @arg TIM_CKD_DIV2: TDTS = 2*Tck_tim
-  *     @arg TIM_CKD_DIV4: TDTS = 4*Tck_tim
+  *     @arg TIM_CKD_DIV1: TDTS = Tck_tim.
+  *     @arg TIM_CKD_DIV2: TDTS = 2*Tck_tim.
+  *     @arg TIM_CKD_DIV4: TDTS = 4*Tck_tim.
   * @retval None
   */
 void TIM_SetClockDivision(TIM_TypeDef* TIMx, uint16_t TIM_CKD)
@@ -557,48 +560,40 @@ void TIM_Cmd(TIM_TypeDef* TIMx, FunctionalState NewState)
 /** @defgroup TIM_Group2 Output Compare management functions
  *  @brief    Output Compare management functions 
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                        Output Compare management functions
- ===============================================================================  
-   
-       ===================================================================      
-              TIM Driver: how to use it in Output Compare Mode
-       =================================================================== 
-       To use the Timer in Output Compare mode, the following steps are mandatory:
-       
-       1. Enable TIM clock using RCC_APBxPeriphClockCmd(RCC_APBxPeriph_TIMx, ENABLE) function
-       
-       2. Configure the TIM pins by configuring the corresponding GPIO pins
-       
-       2. Configure the Time base unit as described in the first part of this driver, if needed,
-          else the Timer will run with the default configuration:
-          - Autoreload value = 0xFFFF
-          - Prescaler value = 0x0000
-          - Counter mode = Up counting
-          - Clock Division = TIM_CKD_DIV1
-          
-       3. Fill the TIM_OCInitStruct with the desired parameters including:
-          - The TIM Output Compare mode: TIM_OCMode
-          - TIM Output State: TIM_OutputState
-          - TIM Pulse value: TIM_Pulse
-          - TIM Output Compare Polarity : TIM_OCPolarity
-       
-       4. Call TIM_OCxInit(TIMx, &TIM_OCInitStruct) to configure the desired channel with the 
-          corresponding configuration
-       
-       5. Call the TIM_Cmd(ENABLE) function to enable the TIM counter.
-       
-       Note1: All other functions can be used separately to modify, if needed,
-          a specific feature of the Timer. 
-          
-       Note2: In case of PWM mode, this function is mandatory:
-              TIM_OCxPreloadConfig(TIMx, TIM_OCPreload_ENABLE); 
-              
-       Note3: If the corresponding interrupt or DMA request are needed, the user should:
-              1. Enable the NVIC (or the DMA) to use the TIM interrupts (or DMA requests). 
-              2. Enable the corresponding interrupt (or DMA request) using the function 
-              TIM_ITConfig(TIMx, TIM_IT_CCx) (or TIM_DMA_Cmd(TIMx, TIM_DMA_CCx))   
+                ##### Output Compare management functions #####
+ ===============================================================================
+        *** TIM Driver: how to use it in Output Compare Mode ***
+ ===============================================================================
+    [..] To use the Timer in Output Compare mode, the following steps are mandatory:
+         (#) Enable TIM clock using 
+             RCC_APBxPeriphClockCmd(RCC_APBxPeriph_TIMx, ENABLE) function.
+         (#) Configure the TIM pins by configuring the corresponding GPIO pins
+         (#) Configure the Time base unit as described in the first part of this 
+             driver, if needed, else the Timer will run with the default 
+             configuration:
+             (++) Autoreload value = 0xFFFF.
+             (++) Prescaler value = 0x0000.
+             (++) Counter mode = Up counting.
+             (++) Clock Division = TIM_CKD_DIV1.
+         (#) Fill the TIM_OCInitStruct with the desired parameters including:
+             (++) The TIM Output Compare mode: TIM_OCMode.
+             (++) TIM Output State: TIM_OutputState.
+             (++) TIM Pulse value: TIM_Pulse.
+             (++) TIM Output Compare Polarity : TIM_OCPolarity.
+         (#) Call TIM_OCxInit(TIMx, &TIM_OCInitStruct) to configure the desired 
+             channel with the corresponding configuration.
+         (#) Call the TIM_Cmd(ENABLE) function to enable the TIM counter.
+    [..]
+        (@) All other functions can be used separately to modify, if needed,
+          a specific feature of the Timer.
+        (@) In case of PWM mode, this function is mandatory:
+            TIM_OCxPreloadConfig(TIMx, TIM_OCPreload_ENABLE).
+        (@) If the corresponding interrupt or DMA request are needed, the user should:
+            (#@) Enable the NVIC (or the DMA) to use the TIM interrupts (or DMA requests).
+            (#@) Enable the corresponding interrupt (or DMA request) using the function
+                 TIM_ITConfig(TIMx, TIM_IT_CCx) (or TIM_DMA_Cmd(TIMx, TIM_DMA_CCx)).
 
 @endverbatim
   * @{
@@ -607,7 +602,7 @@ void TIM_Cmd(TIM_TypeDef* TIMx, FunctionalState NewState)
 /**
   * @brief  Initializes the TIMx Channel1 according to the specified
   *         parameters in the TIM_OCInitStruct.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_OCInitStruct: pointer to a TIM_OCInitTypeDef structure
   *         that contains the configuration information for the specified TIM 
   *         peripheral.
@@ -659,7 +654,7 @@ void TIM_OC1Init(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct)
 /**
   * @brief  Initializes the TIMx Channel2 according to the specified
   *         parameters in the TIM_OCInitStruct.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_OCInitStruct: pointer to a TIM_OCInitTypeDef structure
   *         that contains the configuration information for the specified TIM 
   *         peripheral.
@@ -710,7 +705,7 @@ void TIM_OC2Init(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct)
 /**
   * @brief  Initializes the TIMx Channel3 according to the specified
   *         parameters in the TIM_OCInitStruct.
-  * @param  TIMx: where x can be  2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_OCInitStruct: pointer to a TIM_OCInitTypeDef structure
   *         that contains the configuration information for the specified TIM 
   *         peripheral.
@@ -762,7 +757,7 @@ void TIM_OC3Init(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct)
 /**
   * @brief  Initializes the TIMx Channel4 according to the specified
   *         parameters in the TIM_OCInitStruct.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_OCInitStruct: pointer to a TIM_OCInitTypeDef structure
   *         that contains the configuration information for the specified TIM 
   *         peripheral.
@@ -831,22 +826,23 @@ void TIM_OCStructInit(TIM_OCInitTypeDef* TIM_OCInitStruct)
   * @note   This function disables the selected channel before changing the Output
   *         Compare Mode.
   *         User has to enable this channel using TIM_CCxCmd and TIM_CCxNCmd functions.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
-  * @param  TIM_Channel: specifies the TIM Channel
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIM_Channel: specifies the TIM Channel.
   *   This parameter can be one of the following values:
-  *     @arg TIM_Channel_1: TIM Channel 1
-  *     @arg TIM_Channel_2: TIM Channel 2
-  *     @arg TIM_Channel_3: TIM Channel 3
-  *     @arg TIM_Channel_4: TIM Channel 4
+  *     @arg TIM_Channel_1: TIM Channel 1.
+  *     @arg TIM_Channel_2: TIM Channel 2.
+  *     @arg TIM_Channel_3: TIM Channel 3.
+  *     @arg TIM_Channel_4: TIM Channel 4.
   * @param  TIM_OCMode: specifies the TIM Output Compare Mode.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCMode_Timing
-  *     @arg TIM_OCMode_Active
-  *     @arg TIM_OCMode_Toggle
-  *     @arg TIM_OCMode_PWM1
-  *     @arg TIM_OCMode_PWM2
-  *     @arg TIM_ForcedAction_Active
-  *     @arg TIM_ForcedAction_InActive
+  *     @arg TIM_OCMode_Timing: TIM Output Compare Timing mode.
+  *     @arg TIM_OCMode_Active: TIM Output Compare Active mode.
+  *     @arg TIM_OCMode_Inactive: TIM Output Compare Inactive mode.
+  *     @arg TIM_OCMode_Toggle: TIM Output Compare Toggle mode.
+  *     @arg TIM_OCMode_PWM1: TIM Output Compare PWM1 mode.
+  *     @arg TIM_OCMode_PWM2: TIM Output Compare PWM2 mode.
+  *     @arg TIM_ForcedAction_Active: TIM Forced Action Active mode.
+  *     @arg TIM_ForcedAction_InActive: TIM Forced Action Inactive mode.
   * @retval None
   */
 void TIM_SelectOCxM(TIM_TypeDef* TIMx, uint16_t TIM_Channel, uint16_t TIM_OCMode)
@@ -890,10 +886,9 @@ void TIM_SelectOCxM(TIM_TypeDef* TIMx, uint16_t TIM_Channel, uint16_t TIM_OCMode
 
 /**
   * @brief  Sets the TIMx Capture Compare1 Register value
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  Compare1: specifies the Capture Compare1 register new value.
   * @retval None
-
   */
 void TIM_SetCompare1(TIM_TypeDef* TIMx, uint32_t Compare1)
 {
@@ -905,11 +900,10 @@ void TIM_SetCompare1(TIM_TypeDef* TIMx, uint32_t Compare1)
 }
 
 /**
-  * @brief  Sets the TIMx Capture Compare2 Register value
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @brief  Sets the TIMx Capture Compare2 Register value.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  Compare2: specifies the Capture Compare2 register new value.
   * @retval None
-
   */
 void TIM_SetCompare2(TIM_TypeDef* TIMx, uint32_t Compare2)
 {
@@ -921,11 +915,10 @@ void TIM_SetCompare2(TIM_TypeDef* TIMx, uint32_t Compare2)
 }
 
 /**
-  * @brief  Sets the TIMx Capture Compare3 Register value
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @brief  Sets the TIMx Capture Compare3 Register value.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  Compare3: specifies the Capture Compare3 register new value.
   * @retval None
-
   */
 void TIM_SetCompare3(TIM_TypeDef* TIMx, uint32_t Compare3)
 {
@@ -937,11 +930,10 @@ void TIM_SetCompare3(TIM_TypeDef* TIMx, uint32_t Compare3)
 }
 
 /**
-  * @brief  Sets the TIMx Capture Compare4 Register value
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @brief  Sets the TIMx Capture Compare4 Register value.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  Compare4: specifies the Capture Compare4 register new value.
   * @retval None
-
   */
 void TIM_SetCompare4(TIM_TypeDef* TIMx, uint32_t Compare4)
 {
@@ -954,10 +946,10 @@ void TIM_SetCompare4(TIM_TypeDef* TIMx, uint32_t Compare4)
 
 /**
   * @brief  Forces the TIMx output 1 waveform to active or inactive level.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_ForcedAction: specifies the forced Action to be set to the output waveform.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ForcedAction_Active: Force active level on OC1REF
+  *     @arg TIM_ForcedAction_Active: Force active level on OC1REF.
   *     @arg TIM_ForcedAction_InActive: Force inactive level on OC1REF.
   * @retval None
   */
@@ -978,11 +970,11 @@ void TIM_ForcedOC1Config(TIM_TypeDef* TIMx, uint16_t TIM_ForcedAction)
  
 /**
   * @brief  Forces the TIMx output 2 waveform to active or inactive level.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM 
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM 
   *   peripheral.
   * @param  TIM_ForcedAction: specifies the forced Action to be set to the output waveform.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ForcedAction_Active: Force active level on OC2REF
+  *     @arg TIM_ForcedAction_Active: Force active level on OC2REF.
   *     @arg TIM_ForcedAction_InActive: Force inactive level on OC2REF.
   * @retval None
   */
@@ -1005,10 +997,10 @@ void TIM_ForcedOC2Config(TIM_TypeDef* TIMx, uint16_t TIM_ForcedAction)
 
 /**
   * @brief  Forces the TIMx output 3 waveform to active or inactive level.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_ForcedAction: specifies the forced Action to be set to the output waveform.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ForcedAction_Active: Force active level on OC3REF
+  *     @arg TIM_ForcedAction_Active: Force active level on OC3REF.
   *     @arg TIM_ForcedAction_InActive: Force inactive level on OC3REF.
   * @retval None
   */
@@ -1031,10 +1023,10 @@ void TIM_ForcedOC3Config(TIM_TypeDef* TIMx, uint16_t TIM_ForcedAction)
 
 /**
   * @brief  Forces the TIMx output 4 waveform to active or inactive level.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_ForcedAction: specifies the forced Action to be set to the output waveform.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ForcedAction_Active: Force active level on OC4REF
+  *     @arg TIM_ForcedAction_Active: Force active level on OC4REF.
   *     @arg TIM_ForcedAction_InActive: Force inactive level on OC4REF.
   * @retval None
   */
@@ -1056,11 +1048,11 @@ void TIM_ForcedOC4Config(TIM_TypeDef* TIMx, uint16_t TIM_ForcedAction)
 
 /**
   * @brief  Enables or disables the TIMx peripheral Preload register on CCR1.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
-  * @param  TIM_OCPreload: new state of the TIMx peripheral Preload register
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIM_OCPreload: new state of the TIMx peripheral Preload register.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCPreload_Enable
-  *     @arg TIM_OCPreload_Disable
+  *     @arg TIM_OCPreload_Enable: Enable TIM output compare Preload
+  *     @arg TIM_OCPreload_Disable: Disable TIM output compare Preload
   * @retval None
   */
 void TIM_OC1PreloadConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPreload)
@@ -1081,11 +1073,11 @@ void TIM_OC1PreloadConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPreload)
 
 /**
   * @brief  Enables or disables the TIMx peripheral Preload register on CCR2.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
-  * @param  TIM_OCPreload: new state of the TIMx peripheral Preload register
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
+  * @param  TIM_OCPreload: new state of the TIMx peripheral Preload register.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCPreload_Enable
-  *     @arg TIM_OCPreload_Disable
+  *     @arg TIM_OCPreload_Enable: Enable TIM output compare Preload
+  *     @arg TIM_OCPreload_Disable: Disable TIM output compare Preload
   * @retval None
   */
 void TIM_OC2PreloadConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPreload)
@@ -1106,11 +1098,11 @@ void TIM_OC2PreloadConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPreload)
 
 /**
   * @brief  Enables or disables the TIMx peripheral Preload register on CCR3.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
-  * @param  TIM_OCPreload: new state of the TIMx peripheral Preload register
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
+  * @param  TIM_OCPreload: new state of the TIMx peripheral Preload register.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCPreload_Enable
-  *     @arg TIM_OCPreload_Disable
+  *     @arg TIM_OCPreload_Enable: Enable TIM output compare Preload
+  *     @arg TIM_OCPreload_Disable: Disable TIM output compare Preload
   * @retval None
   */
 void TIM_OC3PreloadConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPreload)
@@ -1132,11 +1124,11 @@ void TIM_OC3PreloadConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPreload)
 
 /**
   * @brief  Enables or disables the TIMx peripheral Preload register on CCR4.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
-  * @param  TIM_OCPreload: new state of the TIMx peripheral Preload register
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
+  * @param  TIM_OCPreload: new state of the TIMx peripheral Preload register.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCPreload_Enable
-  *     @arg TIM_OCPreload_Disable
+  *     @arg TIM_OCPreload_Enable: Enable TIM output compare Preload
+  *     @arg TIM_OCPreload_Disable: Disable TIM output compare Preload
   * @retval None
   */
 void TIM_OC4PreloadConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPreload)
@@ -1158,11 +1150,11 @@ void TIM_OC4PreloadConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPreload)
 
 /**
   * @brief  Configures the TIMx Output Compare 1 Fast feature.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_OCFast: new state of the Output Compare Fast Enable Bit.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCFast_Enable: TIM output compare fast enable
-  *     @arg TIM_OCFast_Disable: TIM output compare fast disable
+  *     @arg TIM_OCFast_Enable: TIM output compare fast enable.
+  *     @arg TIM_OCFast_Disable: TIM output compare fast disable.
   * @retval None
   */
 void TIM_OC1FastConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCFast)
@@ -1185,11 +1177,11 @@ void TIM_OC1FastConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCFast)
 
 /**
   * @brief  Configures the TIMx Output Compare 2 Fast feature.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_OCFast: new state of the Output Compare Fast Enable Bit.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCFast_Enable: TIM output compare fast enable
-  *     @arg TIM_OCFast_Disable: TIM output compare fast disable
+  *     @arg TIM_OCFast_Enable: TIM output compare fast enable.
+  *     @arg TIM_OCFast_Disable: TIM output compare fast disable.
   * @retval None
   */
 void TIM_OC2FastConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCFast)
@@ -1212,11 +1204,11 @@ void TIM_OC2FastConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCFast)
 
 /**
   * @brief  Configures the TIMx Output Compare 3 Fast feature.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_OCFast: new state of the Output Compare Fast Enable Bit.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCFast_Enable: TIM output compare fast enable
-  *     @arg TIM_OCFast_Disable: TIM output compare fast disable
+  *     @arg TIM_OCFast_Enable: TIM output compare fast enable.
+  *     @arg TIM_OCFast_Disable: TIM output compare fast disable.
   * @retval None
   */
 void TIM_OC3FastConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCFast)
@@ -1239,11 +1231,11 @@ void TIM_OC3FastConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCFast)
 
 /**
   * @brief  Configures the TIMx Output Compare 4 Fast feature.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_OCFast: new state of the Output Compare Fast Enable Bit.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCFast_Enable: TIM output compare fast enable
-  *     @arg TIM_OCFast_Disable: TIM output compare fast disable
+  *     @arg TIM_OCFast_Enable: TIM output compare fast enable.
+  *     @arg TIM_OCFast_Disable: TIM output compare fast disable.
   * @retval None
   */
 void TIM_OC4FastConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCFast)
@@ -1266,11 +1258,11 @@ void TIM_OC4FastConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCFast)
 
 /**
   * @brief  Clears or safeguards the OCREF1 signal on an external event
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_OCClear: new state of the Output Compare Clear Enable Bit.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCClear_Enable: TIM Output clear enable
-  *     @arg TIM_OCClear_Disable: TIM Output clear disable
+  *     @arg TIM_OCClear_Enable: TIM Output clear enable.
+  *     @arg TIM_OCClear_Disable: TIM Output clear disable.
   * @retval None
   */
 void TIM_ClearOC1Ref(TIM_TypeDef* TIMx, uint16_t TIM_OCClear)
@@ -1292,12 +1284,12 @@ void TIM_ClearOC1Ref(TIM_TypeDef* TIMx, uint16_t TIM_OCClear)
 
 /**
   * @brief  Clears or safeguards the OCREF2 signal on an external event
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_OCClear: new state of the Output Compare Clear Enable Bit.
 
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCClear_Enable: TIM Output clear enable
-  *     @arg TIM_OCClear_Disable: TIM Output clear disable
+  *     @arg TIM_OCClear_Enable: TIM Output clear enable.
+  *     @arg TIM_OCClear_Disable: TIM Output clear disable .
   * @retval None
   */
 void TIM_ClearOC2Ref(TIM_TypeDef* TIMx, uint16_t TIM_OCClear)
@@ -1319,11 +1311,11 @@ void TIM_ClearOC2Ref(TIM_TypeDef* TIMx, uint16_t TIM_OCClear)
 
 /**
   * @brief  Clears or safeguards the OCREF3 signal on an external event
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_OCClear: new state of the Output Compare Clear Enable Bit.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCClear_Enable: TIM Output clear enable
-  *     @arg TIM_OCClear_Disable: TIM Output clear disable
+  *     @arg TIM_OCClear_Enable: TIM Output clear enable.
+  *     @arg TIM_OCClear_Disable: TIM Output clear disable.
   * @retval None
   */
 void TIM_ClearOC3Ref(TIM_TypeDef* TIMx, uint16_t TIM_OCClear)
@@ -1345,11 +1337,11 @@ void TIM_ClearOC3Ref(TIM_TypeDef* TIMx, uint16_t TIM_OCClear)
 
 /**
   * @brief  Clears or safeguards the OCREF4 signal on an external event
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_OCClear: new state of the Output Compare Clear Enable Bit.
   *   This parameter can be one of the following values:
-  *     @arg TIM_OCClear_Enable: TIM Output clear enable
-  *     @arg TIM_OCClear_Disable: TIM Output clear disable
+  *     @arg TIM_OCClear_Enable: TIM Output clear enable.
+  *     @arg TIM_OCClear_Disable: TIM Output clear disable.
   * @retval None
   */
 void TIM_ClearOC4Ref(TIM_TypeDef* TIMx, uint16_t TIM_OCClear)
@@ -1371,11 +1363,11 @@ void TIM_ClearOC4Ref(TIM_TypeDef* TIMx, uint16_t TIM_OCClear)
 
 /**
   * @brief  Configures the TIMx channel 1 polarity.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
-  * @param  TIM_OCPolarity: specifies the OC1 Polarity
-  *   This parmeter can be one of the following values:
-  *     @arg TIM_OCPolarity_High: Output Compare active high
-  *     @arg TIM_OCPolarity_Low: Output Compare active low
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIM_OCPolarity: specifies the OC1 Polarity.
+  *   This parameter can be one of the following values:
+  *     @arg TIM_OCPolarity_High: Output Compare active high.
+  *     @arg TIM_OCPolarity_Low: Output Compare active low.
   * @retval None
   */
 void TIM_OC1PolarityConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPolarity)
@@ -1396,11 +1388,11 @@ void TIM_OC1PolarityConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPolarity)
 
 /**
   * @brief  Configures the TIMx channel 2 polarity.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
-  * @param  TIM_OCPolarity: specifies the OC2 Polarity
-  *   This parmeter can be one of the following values:
-  *     @arg TIM_OCPolarity_High: Output Compare active high
-  *     @arg TIM_OCPolarity_Low: Output Compare active low
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
+  * @param  TIM_OCPolarity: specifies the OC2 Polarity.
+  *   This parameter can be one of the following values:
+  *     @arg TIM_OCPolarity_High: Output Compare active high.
+  *     @arg TIM_OCPolarity_Low: Output Compare active low.
   * @retval None
   */
 void TIM_OC2PolarityConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPolarity)
@@ -1421,11 +1413,11 @@ void TIM_OC2PolarityConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPolarity)
 
 /**
   * @brief  Configures the TIMx channel 3 polarity.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
-  * @param  TIM_OCPolarity: specifies the OC3 Polarity
-  *   This parmeter can be one of the following values:
-  *     @arg TIM_OCPolarity_High: Output Compare active high
-  *     @arg TIM_OCPolarity_Low: Output Compare active low
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
+  * @param  TIM_OCPolarity: specifies the OC3 Polarity.
+  *   This parameter can be one of the following values:
+  *     @arg TIM_OCPolarity_High: Output Compare active high.
+  *     @arg TIM_OCPolarity_Low: Output Compare active low.
   * @retval None
   */
 void TIM_OC3PolarityConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPolarity)
@@ -1446,11 +1438,11 @@ void TIM_OC3PolarityConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPolarity)
 
 /**
   * @brief  Configures the TIMx channel 4 polarity.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
-  * @param  TIM_OCPolarity: specifies the OC4 Polarity
-  *   This parmeter can be one of the following values:
-  *     @arg TIM_OCPolarity_High: Output Compare active high
-  *     @arg TIM_OCPolarity_Low: Output Compare active low
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
+  * @param  TIM_OCPolarity: specifies the OC4 Polarity.
+  *   This parameter can be one of the following values:
+  *     @arg TIM_OCPolarity_High: Output Compare active high.
+  *     @arg TIM_OCPolarity_Low: Output Compare active low.
   * @retval None
   */
 void TIM_OC4PolarityConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPolarity)
@@ -1471,7 +1463,7 @@ void TIM_OC4PolarityConfig(TIM_TypeDef* TIMx, uint16_t TIM_OCPolarity)
 
 /**
   * @brief  Selects the OCReference Clear source.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_OCReferenceClear: specifies the OCReference Clear source.
   *   This parameter can be one of the following values:
   *     @arg TIM_OCReferenceClear_ETRF: The internal OCreference clear input is connected to ETRF.
@@ -1491,13 +1483,13 @@ void TIM_SelectOCREFClear(TIM_TypeDef* TIMx, uint16_t TIM_OCReferenceClear)
 
 /**
   * @brief  Enables or disables the TIM Capture Compare Channel x.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
-  * @param  TIM_Channel: specifies the TIM Channel
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIM_Channel: specifies the TIM Channel.
   *   This parameter can be one of the following values:
-  *     @arg TIM_Channel_1: TIM Channel 1
-  *     @arg TIM_Channel_2: TIM Channel 2
-  *     @arg TIM_Channel_3: TIM Channel 3
-  *     @arg TIM_Channel_4: TIM Channel 4
+  *     @arg TIM_Channel_1: TIM Channel 1.
+  *     @arg TIM_Channel_2: TIM Channel 2.
+  *     @arg TIM_Channel_3: TIM Channel 3.
+  *     @arg TIM_Channel_4: TIM Channel 4.
   * @param  TIM_CCx: specifies the TIM Channel CCxE bit new state.
   *   This parameter can be: TIM_CCx_Enable or TIM_CCx_Disable. 
   * @retval None
@@ -1526,51 +1518,44 @@ void TIM_CCxCmd(TIM_TypeDef* TIMx, uint16_t TIM_Channel, uint16_t TIM_CCx)
 /** @defgroup TIM_Group3 Input Capture management functions
  *  @brief    Input Capture management functions 
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                      Input Capture management functions
- ===============================================================================  
+               ##### Input Capture management functions #####
+ ===============================================================================
    
-       ===================================================================      
-              TIM Driver: how to use it in Input Capture Mode
-       =================================================================== 
-       To use the Timer in Input Capture mode, the following steps are mandatory:
-       
-       1. Enable TIM clock using RCC_APBxPeriphClockCmd(RCC_APBxPeriph_TIMx, ENABLE) function
-       
-       2. Configure the TIM pins by configuring the corresponding GPIO pins
-       
-       2. Configure the Time base unit as described in the first part of this driver, if needed,
-          else the Timer will run with the default configuration:
-          - Autoreload value = 0xFFFF
-          - Prescaler value = 0x0000
-          - Counter mode = Up counting
-          - Clock Division = TIM_CKD_DIV1
-          
-       3. Fill the TIM_ICInitStruct with the desired parameters including:
-          - TIM Channel: TIM_Channel
-          - TIM Input Capture polarity: TIM_ICPolarity
-          - TIM Input Capture selection: TIM_ICSelection
-          - TIM Input Capture Prescaler: TIM_ICPrescaler
-          - TIM Input CApture filter value: TIM_ICFilter
-       
-       4. Call TIM_ICInit(TIMx, &TIM_ICInitStruct) to configure the desired channel with the 
-          corresponding configuration and to measure only frequency or duty cycle of the input signal,
-          or,
-          Call TIM_PWMIConfig(TIMx, &TIM_ICInitStruct) to configure the desired channels with the 
-          corresponding configuration and to measure the frequency and the duty cycle of the input signal
-          
-       5. Enable the NVIC or the DMA to read the measured frequency. 
-          
-       6. Enable the corresponding interrupt (or DMA request) to read the Captured value,
-          using the function TIM_ITConfig(TIMx, TIM_IT_CCx) (or TIM_DMA_Cmd(TIMx, TIM_DMA_CCx)) 
-       
-       7. Call the TIM_Cmd(ENABLE) function to enable the TIM counter.
-       
-       8. Use TIM_GetCapturex(TIMx); to read the captured value.
-       
-       Note1: All other functions can be used seperatly to modify, if needed,
-          a specific feature of the Timer. 
+          *** TIM Driver: how to use it in Input Capture Mode ***
+ ===============================================================================
+    [..] To use the Timer in Input Capture mode, the following steps are mandatory:
+         (#) Enable TIM clock using RCC_APBxPeriphClockCmd(RCC_APBxPeriph_TIMx, ENABLE) 
+             function.
+         (#) Configure the TIM pins by configuring the corresponding GPIO pins.
+         (#) Configure the Time base unit as described in the first part of this 
+             driver, if needed, else the Timer will run with the default configuration:
+             (++) Autoreload value = 0xFFFF.
+             (++) Prescaler value = 0x0000.
+             (++) Counter mode = Up counting.
+             (++) Clock Division = TIM_CKD_DIV1.
+         (#) Fill the TIM_ICInitStruct with the desired parameters including:
+             (++) TIM Channel: TIM_Channel.
+             (++) TIM Input Capture polarity: TIM_ICPolarity.
+             (++) TIM Input Capture selection: TIM_ICSelection.
+             (++) TIM Input Capture Prescaler: TIM_ICPrescaler.
+             (++) TIM Input CApture filter value: TIM_ICFilter.
+         (#) Call TIM_ICInit(TIMx, &TIM_ICInitStruct) to configure the desired 
+             channel with the corresponding configuration and to measure only 
+             frequency or duty cycle of the input signal,or, Call 
+             TIM_PWMIConfig(TIMx, &TIM_ICInitStruct) to configure the desired 
+             channels with the corresponding configuration and to measure the 
+             frequency and the duty cycle of the input signal.
+         (#) Enable the NVIC or the DMA to read the measured frequency.
+         (#) Enable the corresponding interrupt (or DMA request) to read 
+             the Captured value, using the function TIM_ITConfig(TIMx, TIM_IT_CCx)
+             (or TIM_DMA_Cmd(TIMx, TIM_DMA_CCx)).
+         (#) Call the TIM_Cmd(ENABLE) function to enable the TIM counter.
+         (#) Use TIM_GetCapturex(TIMx); to read the captured value.
+    [..]
+        (@) All other functions can be used separately to modify, if needed,
+            a specific feature of the Timer. 
 
 @endverbatim
   * @{
@@ -1579,7 +1564,7 @@ void TIM_CCxCmd(TIM_TypeDef* TIMx, uint16_t TIM_Channel, uint16_t TIM_CCx)
 /**
   * @brief  Initializes the TIM peripheral according to the specified
   *         parameters in the TIM_ICInitStruct.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_ICInitStruct: pointer to a TIM_ICInitTypeDef structure
   *         that contains the configuration information for the specified TIM 
   *         peripheral.
@@ -1606,6 +1591,7 @@ void TIM_ICInit(TIM_TypeDef* TIMx, TIM_ICInitTypeDef* TIM_ICInitStruct)
   else if (TIM_ICInitStruct->TIM_Channel == TIM_Channel_2)
   {
     /* TI2 Configuration */
+    assert_param(IS_TIM_LIST2_PERIPH(TIMx));
     TI2_Config(TIMx, TIM_ICInitStruct->TIM_ICPolarity,
                TIM_ICInitStruct->TIM_ICSelection,
                TIM_ICInitStruct->TIM_ICFilter);
@@ -1615,6 +1601,7 @@ void TIM_ICInit(TIM_TypeDef* TIMx, TIM_ICInitTypeDef* TIM_ICInitStruct)
   else if (TIM_ICInitStruct->TIM_Channel == TIM_Channel_3)
   {
     /* TI3 Configuration */
+    assert_param(IS_TIM_LIST3_PERIPH(TIMx));
     TI3_Config(TIMx,  TIM_ICInitStruct->TIM_ICPolarity,
                TIM_ICInitStruct->TIM_ICSelection,
                TIM_ICInitStruct->TIM_ICFilter);
@@ -1624,6 +1611,7 @@ void TIM_ICInit(TIM_TypeDef* TIMx, TIM_ICInitTypeDef* TIM_ICInitStruct)
   else
   {
     /* TI4 Configuration */
+    assert_param(IS_TIM_LIST3_PERIPH(TIMx));
     TI4_Config(TIMx, TIM_ICInitStruct->TIM_ICPolarity,
                TIM_ICInitStruct->TIM_ICSelection,
                TIM_ICInitStruct->TIM_ICFilter);
@@ -1651,7 +1639,7 @@ void TIM_ICStructInit(TIM_ICInitTypeDef* TIM_ICInitStruct)
 /**
   * @brief  Configures the TIM peripheral according to the specified
   *         parameters in the TIM_ICInitStruct to measure an external PWM signal.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_ICInitStruct: pointer to a TIM_ICInitTypeDef structure
   *         that contains the configuration information for the specified TIM 
   *         peripheral.
@@ -1709,9 +1697,8 @@ void TIM_PWMIConfig(TIM_TypeDef* TIMx, TIM_ICInitTypeDef* TIM_ICInitStruct)
 
 /**
   * @brief  Gets the TIMx Input Capture 1 value.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @retval Capture Compare 1 Register value.
-
   */
 uint32_t TIM_GetCapture1(TIM_TypeDef* TIMx)
 {
@@ -1724,9 +1711,8 @@ uint32_t TIM_GetCapture1(TIM_TypeDef* TIMx)
 
 /**
   * @brief  Gets the TIMx Input Capture 2 value.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @retval Capture Compare 2 Register value.
-
   */
 uint32_t TIM_GetCapture2(TIM_TypeDef* TIMx)
 {
@@ -1739,7 +1725,7 @@ uint32_t TIM_GetCapture2(TIM_TypeDef* TIMx)
 
 /**
   * @brief  Gets the TIMx Input Capture 3 value.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @retval Capture Compare 3 Register value.
   */
 uint32_t TIM_GetCapture3(TIM_TypeDef* TIMx)
@@ -1753,7 +1739,7 @@ uint32_t TIM_GetCapture3(TIM_TypeDef* TIMx)
 
 /**
   * @brief  Gets the TIMx Input Capture 4 value.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @retval Capture Compare 4 Register value.
   */
 uint32_t TIM_GetCapture4(TIM_TypeDef* TIMx)
@@ -1767,13 +1753,13 @@ uint32_t TIM_GetCapture4(TIM_TypeDef* TIMx)
 
 /**
   * @brief  Sets the TIMx Input Capture 1 prescaler.
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_ICPSC: specifies the Input Capture1 prescaler new value.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPSC_DIV1: no prescaler
-  *     @arg TIM_ICPSC_DIV2: capture is done once every 2 events
-  *     @arg TIM_ICPSC_DIV4: capture is done once every 4 events
-  *     @arg TIM_ICPSC_DIV8: capture is done once every 8 events
+  *     @arg TIM_ICPSC_DIV1: no prescaler.
+  *     @arg TIM_ICPSC_DIV2: capture is done once every 2 events.
+  *     @arg TIM_ICPSC_DIV4: capture is done once every 4 events.
+  *     @arg TIM_ICPSC_DIV8: capture is done once every 8 events.
   * @retval None
   */
 void TIM_SetIC1Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
@@ -1790,13 +1776,13 @@ void TIM_SetIC1Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
 
 /**
   * @brief  Sets the TIMx Input Capture 2 prescaler.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_ICPSC: specifies the Input Capture2 prescaler new value.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPSC_DIV1: no prescaler
-  *     @arg TIM_ICPSC_DIV2: capture is done once every 2 events
-  *     @arg TIM_ICPSC_DIV4: capture is done once every 4 events
-  *     @arg TIM_ICPSC_DIV8: capture is done once every 8 events
+  *     @arg TIM_ICPSC_DIV1: no prescaler.
+  *     @arg TIM_ICPSC_DIV2: capture is done once every 2 events.
+  *     @arg TIM_ICPSC_DIV4: capture is done once every 4 events.
+  *     @arg TIM_ICPSC_DIV8: capture is done once every 8 events.
   * @retval None
   */
 void TIM_SetIC2Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
@@ -1813,13 +1799,13 @@ void TIM_SetIC2Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
 
 /**
   * @brief  Sets the TIMx Input Capture 3 prescaler.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_ICPSC: specifies the Input Capture3 prescaler new value.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPSC_DIV1: no prescaler
-  *     @arg TIM_ICPSC_DIV2: capture is done once every 2 events
-  *     @arg TIM_ICPSC_DIV4: capture is done once every 4 events
-  *     @arg TIM_ICPSC_DIV8: capture is done once every 8 events
+  *     @arg TIM_ICPSC_DIV1: no prescaler.
+  *     @arg TIM_ICPSC_DIV2: capture is done once every 2 events.
+  *     @arg TIM_ICPSC_DIV4: capture is done once every 4 events.
+  *     @arg TIM_ICPSC_DIV8: capture is done once every 8 events.
   * @retval None
   */
 void TIM_SetIC3Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
@@ -1836,13 +1822,13 @@ void TIM_SetIC3Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
 
 /**
   * @brief  Sets the TIMx Input Capture 4 prescaler.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_ICPSC: specifies the Input Capture4 prescaler new value.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPSC_DIV1: no prescaler
-  *     @arg TIM_ICPSC_DIV2: capture is done once every 2 events
-  *     @arg TIM_ICPSC_DIV4: capture is done once every 4 events
-  *     @arg TIM_ICPSC_DIV8: capture is done once every 8 events
+  *     @arg TIM_ICPSC_DIV1: no prescaler.
+  *     @arg TIM_ICPSC_DIV2: capture is done once every 2 events.
+  *     @arg TIM_ICPSC_DIV4: capture is done once every 4 events.
+  *     @arg TIM_ICPSC_DIV8: capture is done once every 8 events.
   * @retval None
   */
 void TIM_SetIC4Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
@@ -1864,10 +1850,10 @@ void TIM_SetIC4Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
 /** @defgroup TIM_Group4 Interrupts DMA and flags management functions
  *  @brief    Interrupts, DMA and flags management functions 
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                 Interrupts, DMA and flags management functions
- ===============================================================================  
+          ##### Interrupts, DMA and flags management functions #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -1878,16 +1864,15 @@ void TIM_SetIC4Prescaler(TIM_TypeDef* TIMx, uint16_t TIM_ICPSC)
   * @param  TIMx: where x can be 2 to 11 to select the TIMx peripheral.
   * @param  TIM_IT: specifies the TIM interrupts sources to be enabled or disabled.
   *   This parameter can be any combination of the following values:
-  *     @arg TIM_IT_Update: TIM update Interrupt source
-  *     @arg TIM_IT_CC1: TIM Capture Compare 1 Interrupt source
-  *     @arg TIM_IT_CC2: TIM Capture Compare 2 Interrupt source
-  *     @arg TIM_IT_CC3: TIM Capture Compare 3 Interrupt source
-  *     @arg TIM_IT_CC4: TIM Capture Compare 4 Interrupt source
-  *     @arg TIM_IT_Trigger: TIM Trigger Interrupt source
-  * @note 
-  *   - TIM6 and TIM7 can only generate an update interrupt.  
-  *   - TIM_IT_CC2, TIM_IT_CC3, TIM_IT_CC4 and TIM_IT_Trigger can not be used with TIM10 and TIM11
-  *   - TIM_IT_CC3, TIM_IT_CC4 can not be used with TIM9.   
+  *     @arg TIM_IT_Update: TIM update Interrupt source.
+  *     @arg TIM_IT_CC1: TIM Capture Compare 1 Interrupt source.
+  *     @arg TIM_IT_CC2: TIM Capture Compare 2 Interrupt source.
+  *     @arg TIM_IT_CC3: TIM Capture Compare 3 Interrupt source.
+  *     @arg TIM_IT_CC4: TIM Capture Compare 4 Interrupt source.
+  *     @arg TIM_IT_Trigger: TIM Trigger Interrupt source.
+  * @note TIM6 and TIM7 can only generate an update interrupt.  
+  * @note TIM_IT_CC2, TIM_IT_CC3, TIM_IT_CC4 and TIM_IT_Trigger can not be used with TIM10 and TIM11.
+  * @note TIM_IT_CC3, TIM_IT_CC4 can not be used with TIM9.   
   * @param  NewState: new state of the TIM interrupts.
   *         This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -1916,17 +1901,16 @@ void TIM_ITConfig(TIM_TypeDef* TIMx, uint16_t TIM_IT, FunctionalState NewState)
   * @param  TIMx: where x can be 2 to 11 to select the TIM peripheral.
   * @param  TIM_EventSource: specifies the event source.
   *   This parameter can be one or more of the following values:	   
-  *     @arg TIM_EventSource_Update: Timer update Event source
-  *     @arg TIM_EventSource_CC1: Timer Capture Compare 1 Event source
-  *     @arg TIM_EventSource_CC2: Timer Capture Compare 2 Event source
-  *     @arg TIM_EventSource_CC3: Timer Capture Compare 3 Event source
-  *     @arg TIM_EventSource_CC4: Timer Capture Compare 4 Event source 
-  *     @arg TIM_EventSource_Trigger: Timer Trigger Event source
-  * @note 
-  *   - TIM6 and TIM7 can only generate an update event. 
-  *   - TIM9 can only generate an update event, Capture Compare 1 event, 
+  *     @arg TIM_EventSource_Update: Timer update Event source.
+  *     @arg TIM_EventSource_CC1: Timer Capture Compare 1 Event source.
+  *     @arg TIM_EventSource_CC2: Timer Capture Compare 2 Event source.
+  *     @arg TIM_EventSource_CC3: Timer Capture Compare 3 Event source.
+  *     @arg TIM_EventSource_CC4: Timer Capture Compare 4 Event source.
+  *     @arg TIM_EventSource_Trigger: Timer Trigger Event source.
+  * @note TIM6 and TIM7 can only generate an update event. 
+  * @note TIM9 can only generate an update event, Capture Compare 1 event, 
   *     Capture Compare 2 event and TIM_EventSource_Trigger.  
-  *   - TIM10 and TIM11 can only generate an update event and Capture Compare 1 event.            
+  * @note TIM10 and TIM11 can only generate an update event and Capture Compare 1 event.            
   * @retval None
   */
 void TIM_GenerateEvent(TIM_TypeDef* TIMx, uint16_t TIM_EventSource)
@@ -1943,21 +1927,21 @@ void TIM_GenerateEvent(TIM_TypeDef* TIMx, uint16_t TIM_EventSource)
   * @param  TIMx: where x can be 2 to 11 to select the TIM peripheral.
   * @param  TIM_FLAG: specifies the flag to check.
   *   This parameter can be one of the following values:
-  *     @arg TIM_FLAG_Update: TIM update Flag
-  *     @arg TIM_FLAG_CC1: TIM Capture Compare 1 Flag
-  *     @arg TIM_FLAG_CC2: TIM Capture Compare 2 Flag
-  *     @arg TIM_FLAG_CC3: TIM Capture Compare 3 Flag
-  *     @arg TIM_FLAG_CC4: TIM Capture Compare 4 Flag
-  *     @arg TIM_FLAG_Trigger: TIM Trigger Flag
-  *     @arg TIM_FLAG_CC1OF: TIM Capture Compare 1 overcapture Flag
-  *     @arg TIM_FLAG_CC2OF: TIM Capture Compare 2 overcapture Flag
-  *     @arg TIM_FLAG_CC3OF: TIM Capture Compare 3 overcapture Flag
-  *     @arg TIM_FLAG_CC4OF: TIM Capture Compare 4 overcapture Flag
-  * @note
-  *   - TIM6 and TIM7 can have only one update flag.
-  *   - TIM9 can have only update flag, TIM_FLAG_CC1, TIM_FLAG_CC2 and TIM_FLAG_Trigger,
-  *     TIM_FLAG_CC1OF or TIM_FLAG_CC2OF flags  
-  *   - TIM10 and TIM11 can have only update flag, TIM_FLAG_CC1 or TIM_FLAG_CC1OF flags         
+  *     @arg TIM_FLAG_Update: TIM update Flag.
+  *     @arg TIM_FLAG_CC1: TIM Capture Compare 1 Flag.
+  *     @arg TIM_FLAG_CC2: TIM Capture Compare 2 Flag.
+  *     @arg TIM_FLAG_CC3: TIM Capture Compare 3 Flag.
+  *     @arg TIM_FLAG_CC4: TIM Capture Compare 4 Flag.
+  *     @arg TIM_FLAG_Trigger: TIM Trigger Flag.
+  *     @arg TIM_FLAG_CC1OF: TIM Capture Compare 1 overcapture Flag.
+  *     @arg TIM_FLAG_CC2OF: TIM Capture Compare 2 overcapture Flag.
+  *     @arg TIM_FLAG_CC3OF: TIM Capture Compare 3 overcapture Flag.
+  *     @arg TIM_FLAG_CC4OF: TIM Capture Compare 4 overcapture Flag.
+  *
+  * @note TIM6 and TIM7 can have only one update flag.
+  * @note TIM9 can have only update flag, TIM_FLAG_CC1, TIM_FLAG_CC2 and TIM_FLAG_Trigger,
+  *     TIM_FLAG_CC1OF or TIM_FLAG_CC2OF flags.  
+  * @note TIM10 and TIM11 can have only update flag, TIM_FLAG_CC1 or TIM_FLAG_CC1OF flags         
   * @retval The new state of TIM_FLAG (SET or RESET).
   */
 FlagStatus TIM_GetFlagStatus(TIM_TypeDef* TIMx, uint16_t TIM_FLAG)
@@ -1984,21 +1968,20 @@ FlagStatus TIM_GetFlagStatus(TIM_TypeDef* TIMx, uint16_t TIM_FLAG)
   * @param  TIMx: where x can be 2 to 11 to select the TIM peripheral.
   * @param  TIM_FLAG: specifies the flag bit to clear.
   *   This parameter can be any combination of the following values:
-  *     @arg TIM_FLAG_Update: TIM update Flag
-  *     @arg TIM_FLAG_CC1: TIM Capture Compare 1 Flag
-  *     @arg TIM_FLAG_CC2: TIM Capture Compare 2 Flag
-  *     @arg TIM_FLAG_CC3: TIM Capture Compare 3 Flag
-  *     @arg TIM_FLAG_CC4: TIM Capture Compare 4 Flag
-  *     @arg TIM_FLAG_Trigger: TIM Trigger Flag
-  *     @arg TIM_FLAG_CC1OF: TIM Capture Compare 1 overcapture Flag
-  *     @arg TIM_FLAG_CC2OF: TIM Capture Compare 2 overcapture Flag
-  *     @arg TIM_FLAG_CC3OF: TIM Capture Compare 3 overcapture Flag
-  *     @arg TIM_FLAG_CC4OF: TIM Capture Compare 4 overcapture Flag
-  * @note
-  *   - TIM6 and TIM7 can have only one update flag. 
-  *   - TIM9 can have only update flag, TIM_FLAG_CC1, TIM_FLAG_CC2 and TIM_FLAG_Trigger flags
-  *     TIM_FLAG_CC1OF or TIM_FLAG_CC2OF flags  
-  *   - TIM10 and TIM11 can have only update flag, TIM_FLAG_CC1
+  *     @arg TIM_FLAG_Update: TIM update Flag.
+  *     @arg TIM_FLAG_CC1: TIM Capture Compare 1 Flag.
+  *     @arg TIM_FLAG_CC2: TIM Capture Compare 2 Flag.
+  *     @arg TIM_FLAG_CC3: TIM Capture Compare 3 Flag.
+  *     @arg TIM_FLAG_CC4: TIM Capture Compare 4 Flag.
+  *     @arg TIM_FLAG_Trigger: TIM Trigger Flag.
+  *     @arg TIM_FLAG_CC1OF: TIM Capture Compare 1 overcapture Flag.
+  *     @arg TIM_FLAG_CC2OF: TIM Capture Compare 2 overcapture Flag.
+  *     @arg TIM_FLAG_CC3OF: TIM Capture Compare 3 overcapture Flag.
+  *     @arg TIM_FLAG_CC4OF: TIM Capture Compare 4 overcapture Flag.
+  * @note TIM6 and TIM7 can have only one update flag. 
+  * @note TIM9 can have only update flag, TIM_FLAG_CC1, TIM_FLAG_CC2 and TIM_FLAG_Trigger flags
+  *     TIM_FLAG_CC1OF or TIM_FLAG_CC2OF flags.  
+  * @note TIM10 and TIM11 can have only update flag, TIM_FLAG_CC1
   *     or TIM_FLAG_CC1OF flags      
   * @retval None
   */
@@ -2017,17 +2000,17 @@ void TIM_ClearFlag(TIM_TypeDef* TIMx, uint16_t TIM_FLAG)
   * @param  TIMx: where x can be 2 to 11 to select the TIM peripheral.
   * @param  TIM_IT: specifies the TIM interrupt source to check.
   *   This parameter can be one of the following values:
-  *     @arg TIM_IT_Update: TIM update Interrupt source
-  *     @arg TIM_IT_CC1: TIM Capture Compare 1 Interrupt source
-  *     @arg TIM_IT_CC2: TIM Capture Compare 2 Interrupt source
-  *     @arg TIM_IT_CC3: TIM Capture Compare 3 Interrupt source
-  *     @arg TIM_IT_CC4: TIM Capture Compare 4 Interrupt source
-  *     @arg TIM_IT_Trigger: TIM Trigger Interrupt source
-  * @note
-  *   - TIM6 and TIM7 can generate only an update interrupt.
-  *   - TIM9 can have only update interrupt, TIM_FLAG_CC1 or TIM_FLAG_CC2,
+  *     @arg TIM_IT_Update: TIM update Interrupt source.
+  *     @arg TIM_IT_CC1: TIM Capture Compare 1 Interrupt source.
+  *     @arg TIM_IT_CC2: TIM Capture Compare 2 Interrupt source.
+  *     @arg TIM_IT_CC3: TIM Capture Compare 3 Interrupt source.
+  *     @arg TIM_IT_CC4: TIM Capture Compare 4 Interrupt source.
+  *     @arg TIM_IT_Trigger: TIM Trigger Interrupt source.
+  *
+  * @note TIM6 and TIM7 can generate only an update interrupt.
+  * @note TIM9 can have only update interrupt, TIM_FLAG_CC1 or TIM_FLAG_CC2,
   *     interrupt and TIM_IT_Trigger interrupt.
-  *   - TIM10 and TIM11 can have only update interrupt or TIM_FLAG_CC1
+  * @note TIM10 and TIM11 can have only update interrupt or TIM_FLAG_CC1
   *     interrupt      
   * @retval The new state of the TIM_IT(SET or RESET).
   */
@@ -2059,17 +2042,17 @@ ITStatus TIM_GetITStatus(TIM_TypeDef* TIMx, uint16_t TIM_IT)
   * @param  TIMx: where x can be 2 to 11 to select the TIM peripheral.
   * @param  TIM_IT: specifies the pending bit to clear.
   *   This parameter can be any combination of the following values:
-  *     @arg TIM_IT_Update: TIM update Interrupt source
-  *     @arg TIM_IT_CC1: TIM Capture Compare 1 Interrupt source
-  *     @arg TIM_IT_CC2: TIM Capture Compare 2 Interrupt source
-  *     @arg TIM_IT_CC3: TIM Capture Compare 3 Interrupt source
-  *     @arg TIM_IT_CC4: TIM Capture Compare 4 Interrupt source
-  *     @arg TIM_IT_Trigger: TIM Trigger Interrupt source
+  *     @arg TIM_IT_Update: TIM update Interrupt source.
+  *     @arg TIM_IT_CC1: TIM Capture Compare 1 Interrupt source.
+  *     @arg TIM_IT_CC2: TIM Capture Compare 2 Interrupt source.
+  *     @arg TIM_IT_CC3: TIM Capture Compare 3 Interrupt source.
+  *     @arg TIM_IT_CC4: TIM Capture Compare 4 Interrupt source.
+  *     @arg TIM_IT_Trigger: TIM Trigger Interrupt source.
   * @note
-  *   - TIM6 and TIM7 can generate only an update interrupt.
-  *   - TIM9 can have only update interrupt, TIM_IT_CC1 or TIM_IT_CC2,
+  * @note TIM6 and TIM7 can generate only an update interrupt.
+  * @note TIM9 can have only update interrupt, TIM_IT_CC1 or TIM_IT_CC2,
   *     and TIM_IT_Trigger interrupt.  
-  *   - TIM10 and TIM11 can have only update interrupt or TIM_IT_CC1
+  * @note TIM10 and TIM11 can have only update interrupt or TIM_IT_CC1
   *     interrupt        
   * @retval None
   */
@@ -2084,19 +2067,31 @@ void TIM_ClearITPendingBit(TIM_TypeDef* TIMx, uint16_t TIM_IT)
 }
 
 /**
-  * @brief  Configures the TIMx’s DMA interface.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @brief  Configures the TIMx's DMA interface.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_DMABase: DMA Base address.
   *   This parameter can be one of the following values:
-  *     @arg TIM_DMABase_CR, TIM_DMABase_CR2, TIM_DMABase_SMCR,
-  *          TIM_DMABase_DIER, TIM_DMABase_SR, TIM_DMABase_EGR,
-  *          TIM_DMABase_CCMR1, TIM_DMABase_CCMR2, TIM_DMABase_CCER,
-  *          TIM_DMABase_CNT, TIM_DMABase_PSC, TIM_DMABase_ARR,
-  *          TIM_DMABase_CCR1, TIM_DMABase_CCR2, TIM_DMABase_CCR3, 
-  *          TIM_DMABase_CCR4, TIM_DMABase_DCR.
+  *     @arg TIM_DMABase_CR1: TIM CR1 register as TIM DMA Base.
+  *     @arg TIM_DMABase_CR2: TIM CR2 register as TIM DMA Base.
+  *     @arg TIM_DMABase_SMCR: TIM SMCR register as TIM DMA Base.
+  *     @arg TIM_DMABase_DIER: TIM DIER register as TIM DMA Base.
+  *     @arg TIM_DMABase_SR: TIM SR register as TIM DMA Base.
+  *     @arg TIM_DMABase_EGR: TIM EGR register as TIM DMA Base.
+  *     @arg TIM_DMABase_CCMR1: TIM CCMR1 register as TIM DMA Base.
+  *     @arg TIM_DMABase_CCMR2: TIM CCMR2 register as TIM DMA Base.
+  *     @arg TIM_DMABase_CCER: TIM CCER register as TIM DMA Base.
+  *     @arg TIM_DMABase_CNT: TIM CNT register as TIM DMA Base.
+  *     @arg TIM_DMABase_PSC: TIM PSC register as TIM DMA Base.
+  *     @arg TIM_DMABase_ARR: TIM ARR register as TIM DMA Base.
+  *     @arg TIM_DMABase_CCR1: TIM CCR1 register as TIM DMA Base.
+  *     @arg TIM_DMABase_CCR2: TIM CCR2 register as TIM DMA Base.
+  *     @arg TIM_DMABase_CCR3: TIM CCR3 register as TIM DMA Base.
+  *     @arg TIM_DMABase_CCR4: TIM CCR4 register as TIM DMA Base.
+  *     @arg TIM_DMABase_DCR: TIM DCR register as TIM DMA Base.
+  *     @arg TIM_DMABase_OR: TIM OR register as TIM DMA Base.
   * @param  TIM_DMABurstLength: DMA Burst length.
   *   This parameter can be one value between:
-  *   TIM_DMABurstLength_1Byte and TIM_DMABurstLength_18Bytes.
+  *   TIM_DMABurstLength_1Transfer and TIM_DMABurstLength_18Transfers.
   * @retval None
   */
 void TIM_DMAConfig(TIM_TypeDef* TIMx, uint16_t TIM_DMABase, uint16_t TIM_DMABurstLength)
@@ -2110,16 +2105,16 @@ void TIM_DMAConfig(TIM_TypeDef* TIMx, uint16_t TIM_DMABase, uint16_t TIM_DMABurs
 }
 
 /**
-  * @brief  Enables or disables the TIMx’s DMA Requests.
-  * @param  TIMx: where x can be 2, 3, 4, 6 or 7 to select the TIM peripheral. 
+  * @brief  Enables or disables the TIMx's DMA Requests.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 6 or 7 to select the TIM peripheral. 
   * @param  TIM_DMASource: specifies the DMA Request sources.
   *   This parameter can be any combination of the following values:
-  *     @arg TIM_DMA_Update: TIM update Interrupt source
-  *     @arg TIM_DMA_CC1: TIM Capture Compare 1 DMA source
-  *     @arg TIM_DMA_CC2: TIM Capture Compare 2 DMA source
-  *     @arg TIM_DMA_CC3: TIM Capture Compare 3 DMA source
-  *     @arg TIM_DMA_CC4: TIM Capture Compare 4 DMA source
-  *     @arg TIM_DMA_Trigger: TIM Trigger DMA source
+  *     @arg TIM_DMA_Update: TIM update Interrupt source.
+  *     @arg TIM_DMA_CC1: TIM Capture Compare 1 DMA source.
+  *     @arg TIM_DMA_CC2: TIM Capture Compare 2 DMA source.
+  *     @arg TIM_DMA_CC3: TIM Capture Compare 3 DMA source.
+  *     @arg TIM_DMA_CC4: TIM Capture Compare 4 DMA source.
+  *     @arg TIM_DMA_Trigger: TIM Trigger DMA source.
   * @param  NewState: new state of the DMA Request sources.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -2145,7 +2140,7 @@ void TIM_DMACmd(TIM_TypeDef* TIMx, uint16_t TIM_DMASource, FunctionalState NewSt
 
 /**
   * @brief  Selects the TIMx peripheral Capture Compare DMA source.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  NewState: new state of the Capture Compare DMA source
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -2175,10 +2170,10 @@ void TIM_SelectCCDMA(TIM_TypeDef* TIMx, FunctionalState NewState)
 /** @defgroup TIM_Group5 Clocks management functions
  *  @brief    Clocks management functions
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                         Clocks management functions
- ===============================================================================  
+                     ##### Clocks management functions #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -2186,7 +2181,7 @@ void TIM_SelectCCDMA(TIM_TypeDef* TIMx, FunctionalState NewState)
 
 /**
   * @brief  Configures the TIMx internal Clock
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @retval None
   */
 void TIM_InternalClockConfig(TIM_TypeDef* TIMx)
@@ -2199,13 +2194,13 @@ void TIM_InternalClockConfig(TIM_TypeDef* TIMx)
 
 /**
   * @brief  Configures the TIMx Internal Trigger as External Clock
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_ITRSource: Trigger source.
   *   This parameter can be one of the following values:
-  * @param  TIM_TS_ITR0: Internal Trigger 0
-  * @param  TIM_TS_ITR1: Internal Trigger 1
-  * @param  TIM_TS_ITR2: Internal Trigger 2
-  * @param  TIM_TS_ITR3: Internal Trigger 3
+  * @param  TIM_TS_ITR0: Internal Trigger 0.
+  * @param  TIM_TS_ITR1: Internal Trigger 1.
+  * @param  TIM_TS_ITR2: Internal Trigger 2.
+  * @param  TIM_TS_ITR3: Internal Trigger 3.
   * @retval None
   */
 void TIM_ITRxExternalClockConfig(TIM_TypeDef* TIMx, uint16_t TIM_InputTriggerSource)
@@ -2221,16 +2216,16 @@ void TIM_ITRxExternalClockConfig(TIM_TypeDef* TIMx, uint16_t TIM_InputTriggerSou
 
 /**
   * @brief  Configures the TIMx Trigger as External Clock
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_TIxExternalCLKSource: Trigger source.
   *   This parameter can be one of the following values:
-  *     @arg TIM_TIxExternalCLK1Source_TI1ED: TI1 Edge Detector
-  *     @arg TIM_TIxExternalCLK1Source_TI1: Filtered Timer Input 1
-  *     @arg TIM_TIxExternalCLK1Source_TI2: Filtered Timer Input 2
+  *     @arg TIM_TIxExternalCLK1Source_TI1ED: TI1 Edge Detector.
+  *     @arg TIM_TIxExternalCLK1Source_TI1: Filtered Timer Input 1.
+  *     @arg TIM_TIxExternalCLK1Source_TI2: Filtered Timer Input 2.
   * @param  TIM_ICPolarity: specifies the TIx Polarity.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPolarity_Rising
-  *     @arg TIM_ICPolarity_Falling
+  *     @arg TIM_ICPolarity_Rising:
+  *     @arg TIM_ICPolarity_Falling:
   * @param  ICFilter : specifies the filter value.
   *   This parameter must be a value between 0x0 and 0xF.
   * @retval None
@@ -2260,7 +2255,7 @@ void TIM_TIxExternalClockConfig(TIM_TypeDef* TIMx, uint16_t TIM_TIxExternalCLKSo
 
 /**
   * @brief  Configures the External clock Mode1
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_ExtTRGPrescaler: The external Trigger Prescaler.
   *   This parameter can be one of the following values:
   *     @arg TIM_ExtTRGPSC_OFF: ETRP Prescaler OFF.
@@ -2304,7 +2299,7 @@ void TIM_ETRClockMode1Config(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, ui
 
 /**
   * @brief  Configures the External clock Mode2
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_ExtTRGPrescaler: The external Trigger Prescaler.
   *   This parameter can be one of the following values:
   *     @arg TIM_ExtTRGPSC_OFF: ETRP Prescaler OFF.
@@ -2341,31 +2336,30 @@ void TIM_ETRClockMode2Config(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler,
 /** @defgroup TIM_Group6 Synchronization management functions
  *  @brief    Synchronization management functions 
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                       Synchronization management functions
- ===============================================================================  
-                   
-       ===================================================================      
-              TIM Driver: how to use it in synchronization Mode
-       =================================================================== 
-       Case of two/several Timers
-       **************************
-       1. Configure the Master Timers using the following functions:
-          - void TIM_SelectOutputTrigger(TIM_TypeDef* TIMx, uint16_t TIM_TRGOSource); 
-          - void TIM_SelectMasterSlaveMode(TIM_TypeDef* TIMx, uint16_t TIM_MasterSlaveMode);  
-       2. Configure the Slave Timers using the following functions: 
-          - void TIM_SelectInputTrigger(TIM_TypeDef* TIMx, uint16_t TIM_InputTriggerSource);  
-          - void TIM_SelectSlaveMode(TIM_TypeDef* TIMx, uint16_t TIM_SlaveMode); 
-          
-       Case of Timers and external trigger(ETR pin)
-       ********************************************       
-       1. Configure the Etrenal trigger using this function:
-          - void TIM_ETRConfig(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, uint16_t TIM_ExtTRGPolarity,
-                   uint16_t ExtTRGFilter);
-       2. Configure the Slave Timers using the following functions: 
-          - void TIM_SelectInputTrigger(TIM_TypeDef* TIMx, uint16_t TIM_InputTriggerSource);  
-          - void TIM_SelectSlaveMode(TIM_TypeDef* TIMx, uint16_t TIM_SlaveMode); 
+               ##### Synchronization management functions #####
+ ===============================================================================
+        *** TIM Driver: how to use it in synchronization Mode ***
+ ===============================================================================
+    [..] Case of two/several Timers
+         (#) Configure the Master Timers using the following functions:
+             (++) void TIM_SelectOutputTrigger(TIM_TypeDef* TIMx,
+                  uint16_t TIM_TRGOSource).
+             (++) void TIM_SelectMasterSlaveMode(TIM_TypeDef* TIMx,
+                  uint16_t TIM_MasterSlaveMode);  
+         (#) Configure the Slave Timers using the following functions: 
+             (++) void TIM_SelectInputTrigger(TIM_TypeDef* TIMx, 
+                  uint16_t TIM_InputTriggerSource);  
+             (++) void TIM_SelectSlaveMode(TIM_TypeDef* TIMx, uint16_t TIM_SlaveMode);
+    [..] Case of Timers and external trigger(ETR pin)
+         (#) Configure the Etrenal trigger using this function:
+             (++) void TIM_ETRConfig(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler,
+                  uint16_t TIM_ExtTRGPolarity, uint16_t ExtTRGFilter);
+         (#) Configure the Slave Timers using the following functions:
+             (++) void TIM_SelectInputTrigger(TIM_TypeDef* TIMx,
+                  uint16_t TIM_InputTriggerSource);
+             (++) void TIM_SelectSlaveMode(TIM_TypeDef* TIMx, uint16_t TIM_SlaveMode);
 
 @endverbatim
   * @{
@@ -2373,17 +2367,17 @@ void TIM_ETRClockMode2Config(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler,
 
 /**
   * @brief  Selects the Input Trigger source
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, or 9 to select the TIM peripheral.
   * @param  TIM_InputTriggerSource: The Input Trigger source.
   *   This parameter can be one of the following values:
-  *     @arg TIM_TS_ITR0: Internal Trigger 0
-  *     @arg TIM_TS_ITR1: Internal Trigger 1
-  *     @arg TIM_TS_ITR2: Internal Trigger 2
-  *     @arg TIM_TS_ITR3: Internal Trigger 3
-  *     @arg TIM_TS_TI1F_ED: TI1 Edge Detector
-  *     @arg TIM_TS_TI1FP1: Filtered Timer Input 1
-  *     @arg TIM_TS_TI2FP2: Filtered Timer Input 2
-  *     @arg TIM_TS_ETRF: External Trigger input
+  *     @arg TIM_TS_ITR0: Internal Trigger 0.
+  *     @arg TIM_TS_ITR1: Internal Trigger 1.
+  *     @arg TIM_TS_ITR2: Internal Trigger 2.
+  *     @arg TIM_TS_ITR3: Internal Trigger 3.
+  *     @arg TIM_TS_TI1F_ED: TI1 Edge Detector.
+  *     @arg TIM_TS_TI1FP1: Filtered Timer Input 1.
+  *     @arg TIM_TS_TI2FP2: Filtered Timer Input 2.
+  *     @arg TIM_TS_ETRF: External Trigger input.
   * @retval None
   */
 void TIM_SelectInputTrigger(TIM_TypeDef* TIMx, uint16_t TIM_InputTriggerSource)
@@ -2406,24 +2400,24 @@ void TIM_SelectInputTrigger(TIM_TypeDef* TIMx, uint16_t TIM_InputTriggerSource)
 
 /**
   * @brief  Selects the TIMx Trigger Output Mode.
-  * @param  TIMx: where x can be 2, 3, 4, 6, 7 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 6, 7 or 9 to select the TIM peripheral.
   * @param  TIM_TRGOSource: specifies the Trigger Output source.
   *   This paramter can be one of the following values:
   *
-  *  - For all TIMx
+  *  @param For all TIMx
   *     @arg TIM_TRGOSource_Reset:  The UG bit in the TIM_EGR register is used as the trigger output (TRGO).
   *     @arg TIM_TRGOSource_Enable: The Counter Enable CEN is used as the trigger output (TRGO).
   *     @arg TIM_TRGOSource_Update: The update event is selected as the trigger output (TRGO).
   *
-  *  - For all TIMx except TIM6 and TIM7
+  *  @param For all TIMx except TIM6 and TIM7
   *     @arg TIM_TRGOSource_OC1: The trigger output sends a positive pulse when the CC1IF flag
   *                              is to be set, as soon as a capture or compare match occurs (TRGO).
   *     @arg TIM_TRGOSource_OC1Ref: OC1REF signal is used as the trigger output (TRGO).
 
-  *  - For all TIMx except TIM6, TIM7, TIM10 and TIM11
+  *  @param For all TIMx except TIM6, TIM7, TIM10 and TIM11
   *     @arg TIM_TRGOSource_OC2Ref: OC2REF signal is used as the trigger output (TRGO).
 
-  *  - For TIM2, TIM3 and TIM4
+  *  @param For TIM2, TIM3 and TIM4
   *     @arg TIM_TRGOSource_OC3Ref: OC3REF signal is used as the trigger output (TRGO).
   *     @arg TIM_TRGOSource_OC4Ref: OC4REF signal is used as the trigger output (TRGO).
   *
@@ -2443,7 +2437,7 @@ void TIM_SelectOutputTrigger(TIM_TypeDef* TIMx, uint16_t TIM_TRGOSource)
 
 /**
   * @brief  Selects the TIMx Slave Mode.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_SlaveMode: specifies the Timer Slave Mode.
   *   This paramter can be one of the following values:
   *     @arg TIM_SlaveMode_Reset: Rising edge of the selected trigger signal (TRGI) re-initializes
@@ -2467,7 +2461,7 @@ void TIM_SelectSlaveMode(TIM_TypeDef* TIMx, uint16_t TIM_SlaveMode)
 
 /**
   * @brief  Sets or Resets the TIMx Master/Slave Mode.
-  * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5 or 9 to select the TIM peripheral.
   * @param  TIM_MasterSlaveMode: specifies the Timer Master Slave Mode.
   *   This paramter can be one of the following values:
   *     @arg TIM_MasterSlaveMode_Enable: synchronization between the current timer
@@ -2490,7 +2484,7 @@ void TIM_SelectMasterSlaveMode(TIM_TypeDef* TIMx, uint16_t TIM_MasterSlaveMode)
 
 /**
   * @brief  Configures the TIMx External Trigger (ETR).
-  * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
+  * @param  TIMx: where x can be 2, 3, 4, 5, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_ExtTRGPrescaler: The external Trigger Prescaler.
   *   This parameter can be one of the following values:
   *     @arg TIM_ExtTRGPSC_OFF: ETRP Prescaler OFF.
@@ -2532,10 +2526,10 @@ void TIM_ETRConfig(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, uint16_t TIM
 /** @defgroup TIM_Group7 Specific interface management functions
  *  @brief    Specific interface management functions 
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                    Specific interface management functions
- ===============================================================================  
+             ##### Specific interface management functions #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -2543,14 +2537,14 @@ void TIM_ETRConfig(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, uint16_t TIM
 
 /**
   * @brief  Configures the TIMx Encoder Interface.
-  * @param  TIMx: where x can be  2, 3 or 4 to select the TIM peripheral.
+  * @param  TIMx: where x can be  2, 3, 4 or 5 to select the TIM peripheral.
   * @param  TIM_EncoderMode: specifies the TIMx Encoder Mode.
   *   This parameter can be one of the following values:
   *     @arg TIM_EncoderMode_TI1: Counter counts on TI1FP1 edge depending on TI2FP2 level.
   *     @arg TIM_EncoderMode_TI2: Counter counts on TI2FP2 edge depending on TI1FP1 level.
   *     @arg TIM_EncoderMode_TI12: Counter counts on both TI1FP1 and TI2FP2 edges depending
   *                                on the level of the other input.
-  * @param  TIM_IC1Polarity: specifies the IC1 Polarity
+  * @param  TIM_IC1Polarity: specifies the IC1 Polarity.
   *   This parmeter can be one of the following values:
   *     @arg TIM_ICPolarity_Falling: IC Falling edge.
   *     @arg TIM_ICPolarity_Rising: IC Rising edge.
@@ -2597,8 +2591,8 @@ void TIM_EncoderInterfaceConfig(TIM_TypeDef* TIMx, uint16_t TIM_EncoderMode,
 }
 
 /**
-  * @brief  Enables or disables the TIMx’s Hall sensor interface.
-  * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
+  * @brief  Enables or disables the TIMx's Hall sensor interface.
+  * @param  TIMx: where x can be 2, 3, 4 or 5 to select the TIM peripheral.
   * @param  NewState: new state of the TIMx Hall sensor interface.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -2628,39 +2622,53 @@ void TIM_SelectHallSensor(TIM_TypeDef* TIMx, FunctionalState NewState)
 /** @defgroup TIM_Group8 Specific remapping management function
  *  @brief   Specific remapping management function
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                     Specific remapping management function
- ===============================================================================  
+               ##### Specific remapping management function #####
+ ===============================================================================
 
 @endverbatim
   * @{
   */
 
 /**
-  * @brief  Configures the TIM9, TIM10 and TIM11 Remapping input Capabilities.
-  * @param  TIMx: where x can be 9, 10 or 11 to select the TIM peripheral.
+  * @brief  Configures the TIM2, TIM3, TIM9, TIM10 and TIM11 Remapping input 
+  *         Capabilities.
+  * @param  TIMx: where x can be 2, 3, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_Remap: specifies the TIM input remapping source.
   *   This parameter can be one of the following values:
-  *     @arg TIM9_GPIO: TIM9 Channel 1 is connected to dedicated Timer pin(default)
+  *     @arg TIM2_TIM10_OC: TIM2 ITR1 is connected to TIM10 output compare(default).
+  *     @arg TIM2_TIM5_TRGO: TIM2 ITR1 is connected to TIM5 Trigger output.
+  *     @arg TIM3_TIM11_OC: TIM3 ITR2 is connected to TIM11 output compare(default).
+  *     @arg TIM3_TIM5_TRGO: TIM3 ITR2 is connected to TIM5 Trigger output.
+  *     @arg TIM9_GPIO: TIM9 Channel 1 is connected to dedicated Timer pin(default).
   *     @arg TIM9_LSE: TIM9 Channel 1 is connected to LSE clock.
-  *     @arg TIM10_GPIO: TIM10 Channel 1 is connected to dedicated Timer pin(default) 
+  *     @arg TIM9_TIM3_TRGO: TIM9 ITR1 is connected to TIM3 TRGO.
+  *     @arg TIM9_TS_IO: TIM9 ITR1 is connected to Touch Sense IO.
+  *     @arg TIM10_GPIO: TIM10 Channel 1 is connected to dedicated Timer pin(default).
   *     @arg TIM10_LSI: TIM10 Channel 1 is connected to LSI clock.
   *     @arg TIM10_LSE: TIM10 Channel 1 is connected to LSE clock.
-  *     @arg TIM10_RTC: TIM10 Channel 1 is connected to RTC Output event. 
-  *     @arg TIM11_GPIO: TIM11 Channel 1 is connected to dedicated Timer pin(default) 
+  *     @arg TIM10_RTC: TIM10 Channel 1 is connected to RTC Output event.
+  *     @arg TIM10_RI: TIM10 Channel 1 is connected to Routing Interface (RI).  
+  *     @arg TIM10_ETR_LSE: TIM10 ETR input is connected to LSE Clock.
+  *     @arg TIM10_ETR_TIM9_TRGO: TIM10 ETR input is connected to TIM9 Trigger Output.
+  *     @arg TIM11_GPIO: TIM11 Channel 1 is connected to dedicated Timer pin(default). 
   *     @arg TIM11_MSI: TIM11 Channel 1 is connected to MSI clock.
-  *     @arg TIM11_HSE_RTC: TIM11 Channel 1 is connected to HSE_RTC clock.  
+  *     @arg TIM11_HSE_RTC: TIM11 Channel 1 is connected to HSE_RTC clock.
+  *     @arg TIM11_RI: TIM11 Channel 1 is connected to Routing Interface (RI).  
+  *     @arg TIM11_ETR_LSE: TIM11 ETR input is connected to LSE Clock.
+  *     @arg TIM11_ETR_TIM9_TRGO: TIM11 ETR input is connected to TIM9 Trigger Output.
   * @retval None
   */
-void TIM_RemapConfig(TIM_TypeDef* TIMx, uint16_t TIM_Remap)
+void TIM_RemapConfig(TIM_TypeDef* TIMx, uint32_t TIM_Remap)
 {
- /* Check the parameters */
+  /* Check the parameters */
   assert_param(IS_TIM_LIST6_PERIPH(TIMx));
   assert_param(IS_TIM_REMAP(TIM_Remap));
 
   /* Set the Timer remapping configuration */
-  TIMx->OR =  TIM_Remap;
+  TIMx->OR &=  (uint16_t)(TIM_Remap >> 16);
+  TIMx->OR |=  (uint16_t)TIM_Remap;
 }
 
 /**
@@ -2672,8 +2680,8 @@ void TIM_RemapConfig(TIM_TypeDef* TIMx, uint16_t TIM_Remap)
   * @param  TIMx: where x can be 2, 3, 4, 9, 10 or 11 to select the TIM peripheral.
   * @param  TIM_ICPolarity : The Input Polarity.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPolarity_Rising
-  *     @arg TIM_ICPolarity_Falling
+  *     @arg TIM_ICPolarity_Rising: IC Rising edge.
+  *     @arg TIM_ICPolarity_Falling: IC Falling edge.
   * @param  TIM_ICSelection: specifies the input to be used.
   *   This parameter can be one of the following values:
   *     @arg TIM_ICSelection_DirectTI: TIM Input 1 is selected to be connected to IC1.
@@ -2708,8 +2716,8 @@ static void TI1_Config(TIM_TypeDef* TIMx, uint16_t TIM_ICPolarity, uint16_t TIM_
   * @param  TIMx: where x can be 2, 3, 4 or 9 to select the TIM peripheral.
   * @param  TIM_ICPolarity : The Input Polarity.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPolarity_Rising
-  *     @arg TIM_ICPolarity_Falling
+  *     @arg TIM_ICPolarity_Rising: IC Rising edge.
+  *     @arg TIM_ICPolarity_Falling: IC Falling edge.
   * @param  TIM_ICSelection: specifies the input to be used.
   *   This parameter can be one of the following values:
   *     @arg TIM_ICSelection_DirectTI: TIM Input 2 is selected to be connected to IC2.
@@ -2746,8 +2754,8 @@ static void TI2_Config(TIM_TypeDef* TIMx, uint16_t TIM_ICPolarity, uint16_t TIM_
   * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
   * @param  TIM_ICPolarity : The Input Polarity.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPolarity_Rising
-  *     @arg TIM_ICPolarity_Falling
+  *     @arg TIM_ICPolarity_Rising: IC Rising edge.
+  *     @arg TIM_ICPolarity_Falling: IC Falling edge.
   * @param  TIM_ICSelection: specifies the input to be used.
   *   This parameter can be one of the following values:
   *     @arg TIM_ICSelection_DirectTI: TIM Input 3 is selected to be connected to IC3.
@@ -2783,8 +2791,8 @@ static void TI3_Config(TIM_TypeDef* TIMx, uint16_t TIM_ICPolarity, uint16_t TIM_
   * @param  TIMx: where x can be 2, 3 or 4 to select the TIM peripheral.
   * @param  TIM_ICPolarity : The Input Polarity.
   *   This parameter can be one of the following values:
-  *     @arg TIM_ICPolarity_Rising
-  *     @arg TIM_ICPolarity_Falling
+  *     @arg TIM_ICPolarity_Rising: IC Rising edge.
+  *     @arg TIM_ICPolarity_Falling: IC Falling edge.
   * @param  TIM_ICSelection: specifies the input to be used.
   *   This parameter can be one of the following values:
   *     @arg TIM_ICSelection_DirectTI: TIM Input 4 is selected to be connected to IC4.
@@ -2829,4 +2837,4 @@ static void TI4_Config(TIM_TypeDef* TIMx, uint16_t TIM_ICPolarity, uint16_t TIM_
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

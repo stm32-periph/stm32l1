@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    NVIC/DMA_WFIMode/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -33,7 +41,17 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define USART2_DR_Address    0x40004404
+#ifdef USE_STM32L152_EVAL 
+  #define USART2_DR_ADDRESS    0x40004404
+  #define USARTx_DR_ADDRESS USART2_DR_ADDRESS
+  #define DMA1_CHANNEL DMA1_Channel6
+  #define DMA1_CHANNEL_IRQn DMA1_Channel6_IRQn
+#elif defined USE_STM32L152D_EVAL 
+  #define USART1_DR_ADDRESS    0x40013804
+  #define USARTx_DR_ADDRESS USART1_DR_ADDRESS
+  #define DMA1_CHANNEL DMA1_Channel5
+  #define DMA1_CHANNEL_IRQn DMA1_Channel5_IRQn
+#endif 
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -57,7 +75,7 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */     
@@ -69,7 +87,7 @@ int main(void)
   STM_EVAL_LEDInit(LED4);
   STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_EXTI); 
 
-  /* DMA Channel 6 configuration ----------------------------------------------*/
+  /* DMA Channel 6 or 3 configuration ----------------------------------------------*/
   DMA_Config();
 
   /* EVAL COM1 configuration --------------------------------------------------*/
@@ -135,9 +153,9 @@ void DMA_Config(void)
 
   /* DMA1 clock enable */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
-  /* USART2_DMA1_Channel Config */
-  DMA_DeInit(DMA1_Channel6);
-  DMA_InitStructure.DMA_PeripheralBaseAddr = USART2_DR_Address;
+  /* USART2_DMA1_Channel or USART3_DMA1_ChannelConfig */
+  DMA_DeInit(DMA1_CHANNEL);
+  DMA_InitStructure.DMA_PeripheralBaseAddr = USARTx_DR_ADDRESS;
   DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)DstBuffer;
   DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
   DMA_InitStructure.DMA_BufferSize = 10;
@@ -148,18 +166,20 @@ void DMA_Config(void)
   DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
   DMA_InitStructure.DMA_Priority = DMA_Priority_High;
   DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-  DMA_Init(DMA1_Channel6, &DMA_InitStructure);
+  DMA_Init(DMA1_CHANNEL, &DMA_InitStructure);
+  
+  
 
   /* Enable USART DMA1 Channel Transfer complete interrupt */
-  DMA_ITConfig(DMA1_Channel6, DMA_IT_TC, ENABLE);
+  DMA_ITConfig(DMA1_CHANNEL, DMA_IT_TC, ENABLE);
   
   /* USART DMA1 Channel enable */
-  DMA_Cmd(DMA1_Channel6, ENABLE);
+  DMA_Cmd(DMA1_CHANNEL, ENABLE);
 
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 
   /* Enable the USART DMA1 IRQn Interrupt */
-  NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel6_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannel = DMA1_CHANNEL_IRQn;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -227,4 +247,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

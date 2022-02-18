@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    USART/HyperTerminal_Interrupt/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,27 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+  #define EVAL_COMX EVAL_COM1
+  #define COMX COM1
+  #define EVAL_COMX_IRQn EVAL_COM1_IRQn
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+  #define EVAL_COMX EVAL_COM2
+  #define COMX COM2
+  #define EVAL_COMX_IRQn EVAL_COM2_IRQn
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -57,7 +71,7 @@ int main(void)
        file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
-     */     
+     */    
               
   /* NVIC configuration */
   NVIC_Config();
@@ -78,26 +92,26 @@ int main(void)
   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
-  STM_EVAL_COMInit(COM2, &USART_InitStructure);
+  STM_EVAL_COMInit(COMX, &USART_InitStructure);
 
-  /* Enable the EVAL_COM2 Transmoit interrupt: this interrupt is generated when the 
+  /* Enable the EVAL_COMX Transmoit interrupt: this interrupt is generated when the 
      EVAL_COM1 transmit data register is empty */  
-  USART_ITConfig(EVAL_COM2, USART_IT_TXE, ENABLE);
+  USART_ITConfig(EVAL_COMX, USART_IT_TXE, ENABLE);
   
-  /* Wait until EVAL_COM2 send the TxBuffer */
+  /* Wait until EVAL_COMX send the TxBuffer */
   while(TxCounter < NbrOfDataToTransfer)
   {}
   
   /* The software must wait until TC=1. The TC flag remains cleared during all data
      transfers and it is set by hardware at the last frame’s end of transmission*/
-  while (USART_GetFlagStatus(EVAL_COM2, USART_FLAG_TC) == RESET)
+  while (USART_GetFlagStatus(EVAL_COMX, USART_FLAG_TC) == RESET)
   {}
  
-  /* Enable the EVAL_COM2 Receive interrupt: this interrupt is generated when the 
-     EVAL_COM1 receive data register is not empty */
-  USART_ITConfig(EVAL_COM2, USART_IT_RXNE, ENABLE);
+  /* Enable the EVAL_COMX Receive interrupt: this interrupt is generated when the 
+     EVAL_COMX receive data register is not empty */
+  USART_ITConfig(EVAL_COMX, USART_IT_RXNE, ENABLE);
   
-  /* Wait until EVAL_COM2 receive the RxBuffer */
+  /* Wait until EVAL_COMX receive the RxBuffer */
   while(RxCounter < NbrOfDataToRead)
   {}
 
@@ -116,7 +130,7 @@ void NVIC_Config(void)
   NVIC_InitTypeDef NVIC_InitStructure;
 
   /* Enable the USARTx Interrupt */
-  NVIC_InitStructure.NVIC_IRQChannel = EVAL_COM2_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannel = EVAL_COMX_IRQn;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -151,4 +165,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

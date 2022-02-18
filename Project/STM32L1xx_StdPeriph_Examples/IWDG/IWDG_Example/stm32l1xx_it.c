@@ -2,11 +2,11 @@
   ******************************************************************************
   * @file    IWDG/IWDG_Example/stm32l1xx_it.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main Interrupt Service Routines.
-  *          This file provides template for all exceptions handler and peripherals
-  *          interrupt service routine.
+  *          This file provides template for all exceptions handler and 
+  *          peripherals interrupt service routine.
   ******************************************************************************
   * @attention
   *
@@ -17,13 +17,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -38,10 +46,9 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 extern __IO uint32_t TimingDelay;
-__IO uint16_t IC1ReadValue1 = 0, IC1ReadValue2 = 0;
-__IO uint16_t CaptureNumber = 0;
-__IO uint32_t Capture = 0;
-extern uint32_t LsiFreq;
+extern __IO uint32_t PeriodValue;
+extern __IO uint32_t CaptureNumber;
+uint16_t tmpCC1[2] = {0, 0};
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -130,7 +137,7 @@ void DebugMon_Handler(void)
 }
 
 /**
-  * @brief  This function handles PendSV_Handler exception.
+  * @brief  This function handles PendSVC exception.
   * @param  None
   * @retval None
   */
@@ -149,9 +156,8 @@ void SysTick_Handler(void)
 }
 
 /******************************************************************************/
-/*            STM32L1xx Peripherals Interrupt Handlers                        */
+/*                 STM32l1xx Peripherals Interrupt Handlers                   */
 /******************************************************************************/
- 
 /**
   * @brief  This function handles External line O interrupt request.
   * @param  None
@@ -180,34 +186,17 @@ void TIM10_IRQHandler(void)
 {
   if (TIM_GetITStatus(TIM10, TIM_IT_CC1) != RESET)
   {    
-    if(CaptureNumber == 0)
-    {
-      /* Get the Input Capture value */
-      IC1ReadValue1 = TIM_GetCapture1(TIM10);
-    }
-    else if(CaptureNumber == 1)
-    {
-      /* Get the Input Capture value */
-      IC1ReadValue2 = TIM_GetCapture1(TIM10); 
-      
-      /* Capture computation */
-      if (IC1ReadValue2 > IC1ReadValue1)
-      {
-        Capture = (IC1ReadValue2 - IC1ReadValue1); 
-      }
-      else
-      {
-        Capture = ((0xFFFF - IC1ReadValue1) + IC1ReadValue2); 
-      }
-      /* Frequency computation */ 
-      LsiFreq = (uint32_t) SystemCoreClock / Capture;
-      LsiFreq *= 8;
-    }
-    
-    CaptureNumber++;
-    
-    /* Clear TIM10 Capture compare interrupt pending bit */
+    /* Get the Input Capture value */
+    tmpCC1[CaptureNumber++] = TIM_GetCapture1(TIM10);
+   
+    /* Clear CC1 Interrupt pending bit */
     TIM_ClearITPendingBit(TIM10, TIM_IT_CC1);
+
+    if (CaptureNumber >= 2)
+    {
+      /* Compute the period length */
+      PeriodValue = (uint16_t)(0xFFFF - tmpCC1[0] + tmpCC1[1] + 1);
+    }
   }
 }
 
@@ -215,7 +204,7 @@ void TIM10_IRQHandler(void)
 /*                 STM32L1xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
 /*  available peripheral interrupt handler's name please refer to the startup */
-/*  file (startup_stm32l1xx_md.s).                                            */
+/*  file (startup_stm32l1xx_xx.s).                                            */
 /******************************************************************************/
 
 /**
@@ -235,4 +224,4 @@ void TIM10_IRQHandler(void)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

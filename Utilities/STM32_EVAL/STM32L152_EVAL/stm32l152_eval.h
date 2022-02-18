@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l152_eval.h
   * @author  MCD Application Team
-  * @version V4.4.0
-  * @date    31-December-2010
+  * @version V5.0.1
+  * @date    24-January-2012
   * @brief   This file contains definitions for STM32L152_EVAL's Leds, push-buttons
   *          and COM ports hardware resources.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
   
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L152_EVAL_H
@@ -29,7 +32,8 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32_eval.h"
+#include "stm32l1xx.h"
+#include "stm32_eval_legacy.h"
 
 /** @addtogroup Utilities
   * @{
@@ -50,6 +54,46 @@
 /** @defgroup STM32L152_EVAL_LOW_LEVEL_Exported_Types
   * @{
   */
+typedef enum 
+{
+  LED1 = 0,
+  LED2 = 1,
+  LED3 = 2,
+  LED4 = 3
+} Led_TypeDef;
+
+typedef enum 
+{
+  BUTTON_KEY = 0,
+  BUTTON_RIGHT = 1,
+  BUTTON_LEFT = 2,
+  BUTTON_UP = 3,
+  BUTTON_DOWN = 4,
+  BUTTON_SEL = 5
+} Button_TypeDef;
+
+typedef enum 
+{  
+  BUTTON_MODE_GPIO = 0,
+  BUTTON_MODE_EXTI = 1
+} ButtonMode_TypeDef;
+
+typedef enum 
+{ 
+  JOY_NONE = 0,
+  JOY_SEL = 1,
+  JOY_DOWN = 2,
+  JOY_LEFT = 3,
+  JOY_RIGHT = 4,
+  JOY_UP = 5
+} JOYState_TypeDef
+;
+
+typedef enum 
+{
+  COM1 = 0,
+  COM2 = 1
+} COM_TypeDef;  
 /**
   * @}
   */ 
@@ -57,6 +101,13 @@
 /** @defgroup STM32L152_EVAL_LOW_LEVEL_Exported_Constants
   * @{
   */ 
+
+/** 
+  * @brief  Define for STM32L152_EVAL board  
+  */ 
+#if !defined (USE_STM32L152_EVAL)
+ #define USE_STM32L152_EVAL
+#endif
 
 /** @addtogroup STM32L152_EVAL_LOW_LEVEL_LED
   * @{
@@ -87,8 +138,8 @@
   * @{
   */  
 #define BUTTONn                          6 
-/* On STM32L152-EVAL board, the KEY button is connected to PC.13 and it can
-be use as Tamper and Wakeup pin buttons. */
+/* On STM32L152-EVAL board, the KEY button is connected to PA.00 and it can
+   be use as Wakeup pin button. */
 
 /**
  * @brief Key push-button
@@ -338,8 +389,8 @@ be use as Tamper and Wakeup pin buttons. */
 
 /* Time constant for the delay caclulation allowing to have a millisecond 
    incrementing counter. This value should be equal to (System Clock / 1000).
-   ie. if system clock = 24MHz then sEE_TIME_CONST should be 24. */
-#define sEE_TIME_CONST          24 
+   ie. if system clock = 32MHz then sEE_TIME_CONST should be 32. */
+#define sEE_TIME_CONST          32 
 
 /**
   * @}
@@ -400,4 +451,4 @@ void sEE_LowLevel_DMAConfig(uint32_t pBuffer, uint32_t BufferSize, uint32_t Dire
   * @}
   */  
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

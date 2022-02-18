@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l152_eval_i2c_ee.c
   * @author  MCD Application Team
-  * @version V4.4.0
-  * @date    31-December-2010
+  * @version V5.0.1
+  * @date    24-January-2012
   * @brief   This file provides a set of functions needed to manage an I2C M24CXX 
   *          EEPROM memory.
   *          
@@ -58,9 +58,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l152_eval_i2c_ee.h"
@@ -472,7 +475,7 @@ uint32_t sEE_WritePage(uint8_t* pBuffer, uint16_t WriteAddr, uint8_t* NumByteToW
   */
 void sEE_WriteBuffer(uint8_t* pBuffer, uint16_t WriteAddr, uint16_t NumByteToWrite)
 {
-  uint8_t NumOfPage = 0, NumOfSingle = 0, count = 0;
+  uint16_t NumOfPage = 0, NumOfSingle = 0, count = 0;
   uint16_t Addr = 0;
 
   Addr = WriteAddr % sEE_PAGESIZE;
@@ -663,7 +666,7 @@ uint32_t sEE_WaitEepromStandbyState(void)
 
   /* Keep looping till the slave acknowledge his address or maximum number 
      of trials is reached (this number is defined by sEE_MAX_TRIALS_NUMBER define
-     in stm32_eval_i2c_ee.h file) */
+     in stm32l152_eval_i2c_ee.h file) */
   while (1)
   {
     /*!< Send START condition */
@@ -807,4 +810,4 @@ uint32_t sEE_TIMEOUT_UserCallback(void)
   * @}
   */  
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

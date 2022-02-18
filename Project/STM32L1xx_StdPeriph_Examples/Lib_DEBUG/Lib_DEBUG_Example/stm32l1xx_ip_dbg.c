@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    Lib_DEBUG/Lib_DEBUG_Example/stm32l1xx_ip_dbg.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides all peripherals pointers initialization.
   ******************************************************************************
   * @attention
@@ -15,9 +15,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_ip_dbg.h"
@@ -37,6 +40,7 @@
 TIM_TypeDef             *TIM2_DBG;
 TIM_TypeDef             *TIM3_DBG;
 TIM_TypeDef             *TIM4_DBG;
+TIM_TypeDef             *TIM5_DBG;
 TIM_TypeDef             *TIM6_DBG;
 TIM_TypeDef             *TIM7_DBG;
 TIM_TypeDef             *TIM9_DBG;
@@ -46,6 +50,7 @@ RTC_TypeDef             *RTC_DBG;
 WWDG_TypeDef            *WWDG_DBG;
 IWDG_TypeDef            *IWDG_DBG;
 SPI_TypeDef             *SPI2_DBG;
+SPI_TypeDef             *SPI3_DBG;
 USART_TypeDef           *USART1_DBG;
 USART_TypeDef           *USART2_DBG;
 USART_TypeDef           *USART3_DBG;
@@ -59,8 +64,11 @@ GPIO_TypeDef            *GPIOB_DBG;
 GPIO_TypeDef            *GPIOC_DBG;
 GPIO_TypeDef            *GPIOD_DBG;
 GPIO_TypeDef            *GPIOE_DBG;
+GPIO_TypeDef            *GPIOF_DBG;
+GPIO_TypeDef            *GPIOG_DBG;
 GPIO_TypeDef            *GPIOH_DBG;
 ADC_TypeDef             *ADC1_DBG;
+ADC_Common_TypeDef      *ADC_DBG;
 SPI_TypeDef             *SPI1_DBG;
 DMA_TypeDef             *DMA1_DBG;
 DMA_Channel_TypeDef     *DMA1_Channel1_DBG;
@@ -80,6 +88,22 @@ SCB_Type                *SCB_DBG;
 SysTick_Type            *SysTick_DBG;
 MPU_Type                *MPU_DBG;
 COMP_TypeDef            *COMP_DBG;
+LCD_TypeDef             *LCD_DBG;
+USART_TypeDef           *UART4_DBG;
+USART_TypeDef           *UART5_DBG;
+RI_TypeDef              *RI_DBG;
+OPAMP_TypeDef           *OPAMP_DBG;
+SYSCFG_TypeDef          *SYSCFG_DBG;
+SDIO_TypeDef            *SDIO_DBG;
+DMA_TypeDef             *DMA2_DBG;
+DMA_Channel_TypeDef     *DMA2_Channel1_DBG;
+DMA_Channel_TypeDef     *DMA2_Channel2_DBG;
+DMA_Channel_TypeDef     *DMA2_Channel3_DBG;
+DMA_Channel_TypeDef     *DMA2_Channel4_DBG;
+DMA_Channel_TypeDef     *DMA2_Channel5_DBG;
+AES_TypeDef             *AES_DBG;
+FSMC_Bank1_TypeDef      *FSMC_Bank1_DBG;
+FSMC_Bank1E_TypeDef     *FSMC_Bank1E_DBG;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -93,6 +117,8 @@ void IP_Debug(void)
 {
 /************************************* ADC ************************************/
   ADC1_DBG = (ADC_TypeDef *)  ADC1_BASE;
+  
+  ADC_DBG = (ADC_Common_TypeDef *)  ADC_BASE;
   
 /************************************* CRC ************************************/
   CRC_DBG = (CRC_TypeDef *)  CRC_BASE;
@@ -120,6 +146,18 @@ void IP_Debug(void)
   DMA1_Channel6_DBG = (DMA_Channel_TypeDef *)  DMA1_Channel6_BASE;
 
   DMA1_Channel7_DBG = (DMA_Channel_TypeDef *)  DMA1_Channel7_BASE;
+  
+  DMA2_DBG = (DMA_TypeDef *)  DMA2_BASE;
+
+  DMA2_Channel1_DBG = (DMA_Channel_TypeDef *)  DMA2_Channel1_BASE;
+
+  DMA2_Channel2_DBG = (DMA_Channel_TypeDef *)  DMA2_Channel2_BASE;
+
+  DMA2_Channel3_DBG = (DMA_Channel_TypeDef *)  DMA2_Channel3_BASE;
+
+  DMA2_Channel4_DBG = (DMA_Channel_TypeDef *)  DMA2_Channel4_BASE;
+
+  DMA2_Channel5_DBG = (DMA_Channel_TypeDef *)  DMA2_Channel5_BASE;
 
 /************************************* EXTI ***********************************/
   EXTI_DBG = (EXTI_TypeDef *)  EXTI_BASE;
@@ -138,6 +176,10 @@ void IP_Debug(void)
   GPIOD_DBG = (GPIO_TypeDef *)  GPIOD_BASE;
 
   GPIOE_DBG = (GPIO_TypeDef *)  GPIOE_BASE;
+  
+  GPIOF_DBG = (GPIO_TypeDef *)  GPIOF_BASE;
+
+  GPIOG_DBG = (GPIO_TypeDef *)  GPIOG_BASE;
 
   GPIOH_DBG = (GPIO_TypeDef *)  GPIOH_BASE;
 
@@ -167,6 +209,8 @@ void IP_Debug(void)
   SPI1_DBG = (SPI_TypeDef *)  SPI1_BASE;
 
   SPI2_DBG = (SPI_TypeDef *)  SPI2_BASE;
+  
+  SPI3_DBG = (SPI_TypeDef *)  SPI3_BASE;
 
 /************************************* SysTick ********************************/
   SysTick_DBG = (SysTick_Type *)  SysTick_BASE;
@@ -177,6 +221,8 @@ void IP_Debug(void)
   TIM3_DBG = (TIM_TypeDef *)  TIM3_BASE;
 
   TIM4_DBG = (TIM_TypeDef *)  TIM4_BASE;
+  
+  TIM5_DBG = (TIM_TypeDef *)  TIM5_BASE;
 
   TIM6_DBG = (TIM_TypeDef *)  TIM6_BASE;
 
@@ -194,10 +240,38 @@ void IP_Debug(void)
   USART2_DBG = (USART_TypeDef *) USART2_BASE;
 
   USART3_DBG = (USART_TypeDef *) USART3_BASE;
+  
+  UART4_DBG = (USART_TypeDef *) UART4_BASE;
+
+  UART5_DBG = (USART_TypeDef *) UART5_BASE;  
 
 
 /************************************* WWDG ***********************************/
   WWDG_DBG = (WWDG_TypeDef *)  WWDG_BASE;
+
+/************************************* LCD ************************************/
+  LCD_DBG = (LCD_TypeDef *)  LCD_BASE;
+  
+/************************************* RI *************************************/  
+  RI_DBG = (RI_TypeDef *)  RI_BASE;
+  
+/************************************* OPAMP **********************************/  
+  OPAMP_DBG = (OPAMP_TypeDef *)  OPAMP_BASE; 
+  
+/************************************* SYSCFG *********************************/  
+  SYSCFG_DBG = (SYSCFG_TypeDef *)  SYSCFG_BASE;   
+
+/************************************* SDIO ***********************************/  
+  SDIO_DBG = (SDIO_TypeDef *)  SDIO_BASE; 
+
+/************************************* AES ************************************/  
+  AES_DBG = (AES_TypeDef *)  AES_BASE; 
+  
+/************************************* FSMC ***********************************/  
+  FSMC_Bank1_DBG = (FSMC_Bank1_TypeDef *)  FSMC_Bank1_R_BASE;
+  
+  FSMC_Bank1E_DBG = (FSMC_Bank1E_TypeDef *)  FSMC_Bank1E_R_BASE;
+
 }
 
 /**
@@ -208,4 +282,4 @@ void IP_Debug(void)
   * @}
   */
   
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

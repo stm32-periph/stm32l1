@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    RTC/TimeStamp/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,14 +15,17 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
-#include "stm32l152_eval_glass_lcd.h"
+#include "main.h"
+
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -34,23 +37,28 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+/* Uncomment the corresponding line to select the RTC Clock source */
+#define RTC_CLOCK_SOURCE_LSE   /* LSE used as RTC source clock */
+/* #define RTC_CLOCK_SOURCE_LSI */ /* LSI used as RTC source clock. The RTC Clock
+                                      may varies due to LSI frequency dispersion. */ 
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-RTC_InitTypeDef   RTC_InitStructure;
-RTC_TimeTypeDef   RTC_TimeStructure;
-RTC_DateTypeDef   RTC_DateStructure;
-__IO uint32_t DisplayTimeDate = 0;
-__IO uint32_t DisplayTimeDateStamp = 0;
+USART_InitTypeDef USART_InitStructure;
+GPIO_InitTypeDef GPIO_InitStructure;
+RTC_InitTypeDef RTC_InitStructure;
+RTC_TimeTypeDef RTC_TimeStructure;
+RTC_DateTypeDef RTC_DateStructure;
+RTC_TimeTypeDef  RTC_TimeStampStructure;
+RTC_DateTypeDef  RTC_TimeStampDateStructure;
+EXTI_InitTypeDef EXTI_InitStructure;
+__IO uint32_t AsynchPrediv = 0, SynchPrediv = 0;
 
 /* Private function prototypes -----------------------------------------------*/
-void RTC_Config(void);
-void LCD_ShowTimeCalendar(uint32_t DisplayTimeDate);
-void LCD_ShowDateCalendar(uint32_t DisplayTimeDate);
-
 /* Private functions ---------------------------------------------------------*/
 
 /**
-  * @brief   Main program
+  * @brief  Main program
   * @param  None
   * @retval None
   */
@@ -58,221 +66,380 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */     
        
-  /* RTC configuration -------------------------------------------------------*/
-  RTC_Config();
+  /* USARTx configured as follow:
+        - BaudRate = 115200 baud  
+        - Word Length = 8 Bits
+        - One Stop Bit
+        - No parity
+        - Hardware flow control disabled (RTS and CTS signals)
+        - Receive and transmit enabled
+  */
+  USART_InitStructure.USART_BaudRate = 115200;
+  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+  USART_InitStructure.USART_StopBits = USART_StopBits_1;
+  USART_InitStructure.USART_Parity = USART_Parity_No;
+  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+  STM_EVAL_COMInit(COM1, &USART_InitStructure);
+ 
+  /* GPIOC Periph clock enable */
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
   
-  /* LCD GLASS Initialization ------------------------------------------------*/
-  LCD_GLASS_Init();
+#ifdef USE_STM32L152D_EVAL 
+  /* Configure PC13 in alternate function mode */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
   
-  /* Clear the LCD GLASS -----------------------------------------------------*/
-  LCD_GLASS_Clear();
+  /* Connect PC13 to RTC_AF1 */
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource13, GPIO_AF_RTC_AF1);
+ 
+  /* Connect EXTI13 Line to PC13 pin */
+  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOC, EXTI_PinSource13);
 
-  /* Configure STM32L152-EVAL LED1 as Output push-pull */
-  STM_EVAL_LEDInit(LED1);
-  STM_EVAL_LEDInit(LED2);
-  STM_EVAL_LEDInit(LED3);
-  STM_EVAL_LEDInit(LED4);
+  /* Configure EXTI13 line */
+  EXTI_InitStructure.EXTI_Line = EXTI_Line13;
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);
+#endif
   
-  /* Initialize JoyStick Buttons */
-  STM_EVAL_PBInit(Button_SEL,  Mode_EXTI);
-  STM_EVAL_PBInit(Button_UP,   Mode_EXTI);
-  STM_EVAL_PBInit(Button_DOWN, Mode_EXTI);
-  STM_EVAL_PBInit(Button_KEY,  Mode_EXTI);
-  STM_EVAL_PBInit(Button_LEFT, Mode_EXTI);
-  STM_EVAL_PBInit(Button_RIGHT,Mode_EXTI);
+  /* Output a message on Hyperterminal using printf function */
+  printf("\n\r  *********************** RTC Time Stamp Example ***********************\n\r");
+
+  if (RTC_ReadBackupRegister(RTC_BKP_DR0) != 0x32F2)
+  {
+    /* RTC configuration  */
+    RTC_Config();
+
+    /* Configure the RTC data register and RTC prescaler */
+    RTC_InitStructure.RTC_AsynchPrediv = AsynchPrediv;
+    RTC_InitStructure.RTC_SynchPrediv = SynchPrediv;
+    RTC_InitStructure.RTC_HourFormat = RTC_HourFormat_24;
+   
+    /* Check on RTC init */
+    if (RTC_Init(&RTC_InitStructure) == ERROR)
+    {
+      printf("\n\r        /!\\***** RTC Prescaler Config failed ********/!\\ \n\r");
+    }
+
+    /* Configure the time register */
+    RTC_TimeRegulate(); 
+  }
+  else
+  {
+    /* Check if the Power On Reset flag is set */
+    if (RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET)
+    {
+      printf("\r\n Power On Reset occurred....\n\r");
+    }
+    /* Check if the Pin Reset flag is set */
+    else if (RCC_GetFlagStatus(RCC_FLAG_PINRST) != RESET)
+    {
+      printf("\r\n External Reset occurred....\n\r");
+    }
+
+    printf("\r\n No need to configure RTC....\n\r");
+    
+    /* Enable the PWR clock */
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+
+    /* Allow access to RTC */
+    PWR_RTCAccessCmd(ENABLE);
+
+    /* Wait for RTC APB registers synchronisation */
+    RTC_WaitForSynchro();
+
+    /* Clear the RTC Alarm Flag */
+    RTC_ClearFlag(RTC_FLAG_ALRAF);
+
+    /* Clear the EXTI Line 17 Pending bit (Connected internally to RTC Alarm) */
+    EXTI_ClearITPendingBit(EXTI_Line17);
+
+    /* Display the RTC Time/Date and TimeStamp Time/Date */
+    RTC_TimeShow();
+    RTC_DateShow();
+    RTC_TimeStampShow();
+  }
+   
+  /* Configure the external interrupt  "KEY" and "Joystick UP" buttons */
+  STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_EXTI); 
+  STM_EVAL_PBInit(BUTTON_UP, BUTTON_MODE_EXTI);
+#ifdef USE_STM32L152_EVAL 
+  STM_EVAL_PBInit(BUTTON_SEL, BUTTON_MODE_EXTI);
+#endif
+
+  /* Configure LED1 */
+  STM_EVAL_LEDInit(LED1);
+  STM_EVAL_LEDOn(LED1);
 
   while (1)
   {
-    /* Display Time and Date from TimeStamp */
-    if(DisplayTimeDateStamp == 1)
-    {
-      if(DisplayTimeDate == 0)
-      {
-        /* Display Time Stamp */
-        LCD_ShowTimeCalendar(DisplayTimeDateStamp);
-      }
-      else
-      {
-        /* Display Date  */
-        LCD_ShowDateCalendar(DisplayTimeDateStamp);
-      }
-    }
-    /* Display Time and Date */
-    else 
-    {
-      if(DisplayTimeDate == 0)
-      {
-        /* Display Time */
-        LCD_ShowTimeCalendar(DisplayTimeDateStamp);   
-      }
-      else 
-      {
-        /* Display Date */
-        LCD_ShowDateCalendar(DisplayTimeDateStamp);
-      }
-    }
   }
 }
 
 /**
-  * @brief  Configures the RTC clock source.
+  * @brief  Configure the RTC peripheral by selecting the clock source.
   * @param  None
   * @retval None
   */
 void RTC_Config(void)
 {
-  /* Enable The PWR Register */
+  /* Enable the PWR clock */
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
 
   /* Allow access to RTC */
   PWR_RTCAccessCmd(ENABLE);
 
-  /* Reset RTC Domain */
-  RCC_RTCResetCmd(ENABLE);
-  RCC_RTCResetCmd(DISABLE);
+#if defined (RTC_CLOCK_SOURCE_LSI)  /* LSI used as RTC source clock*/
+/* The RTC Clock may varies due to LSI frequency dispersion. */
+  /* Enable the LSI OSC */ 
+  RCC_LSICmd(ENABLE);
 
-  /*!< LSE Enable */
+  /* Wait till LSI is ready */  
+  while(RCC_GetFlagStatus(RCC_FLAG_LSIRDY) == RESET)
+  {
+  }
+
+  /* Select the RTC Clock Source */
+  RCC_RTCCLKConfig(RCC_RTCCLKSource_LSI);
+
+  SynchPrediv = 0xFF;
+  AsynchPrediv = 0x7F;
+
+#elif defined (RTC_CLOCK_SOURCE_LSE) /* LSE used as RTC source clock */
+  /* Enable the LSE OSC */
   RCC_LSEConfig(RCC_LSE_ON);
 
-  /*!< Wait till LSE is ready */
-  while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
-  {}
+  /* Wait till LSE is ready */  
+  while(RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
+  {
+  }
 
-  /*!< LCD Clock Source Selection */
+  /* Select the RTC Clock Source */
   RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
+
+  SynchPrediv = 0xFF;
+  AsynchPrediv = 0x7F;
+    
+#else
+  #error Please select the RTC Clock source inside the main.c file
+#endif /* RTC_CLOCK_SOURCE_LSI */
 
   /* Enable the RTC Clock */
   RCC_RTCCLKCmd(ENABLE);
 
   /* Wait for RTC APB registers synchronisation */
   RTC_WaitForSynchro();
-  
-  /* Set the Time */
-  RTC_TimeStructure.RTC_Hours   = 0x08;
-  RTC_TimeStructure.RTC_Minutes = 0x00;
-  RTC_TimeStructure.RTC_Seconds = 0x57;
-	
-  /* Set the Date */
-  RTC_DateStructure.RTC_Month = RTC_Month_December;
-  RTC_DateStructure.RTC_Date = 0x12;  
-  RTC_DateStructure.RTC_Year = 0x10; 
-  RTC_DateStructure.RTC_WeekDay = RTC_Weekday_Friday; 
-		
-  /* Calendar Configuration */
-  RTC_InitStructure.RTC_AsynchPrediv = 0x7F;
-  RTC_InitStructure.RTC_SynchPrediv	=  0xFF;
-  RTC_InitStructure.RTC_HourFormat = RTC_HourFormat_24;
-  RTC_Init(&RTC_InitStructure);
 
-  /* Set Time with BCD Format */
-  RTC_SetTime(RTC_Format_BCD, &RTC_TimeStructure);  
-  
-  /* Set Date with Bcd Format */
-  RTC_SetDate(RTC_Format_BCD, &RTC_DateStructure);  
-  
   /* Enable The TimeStamp */
-  RTC_TimeStampCmd(RTC_TimeStampEdge_Falling, ENABLE);  
+  RTC_TimeStampCmd(RTC_TimeStampEdge_Falling, ENABLE);    
 }
 
 /**
-  * @brief  Prints the Time Calendar in the GLASS LCD.
+  * @brief  Returns the time entered by user, using Hyperterminal.
   * @param  None
   * @retval None
   */
-
-void LCD_ShowTimeCalendar(uint32_t DisplayTimeDate)
+void RTC_TimeRegulate(void)
 {
-  uint8_t tmp = 0;
-  
-  if(DisplayTimeDateStamp == 0)
+  uint32_t tmp_hh = 0xFF, tmp_mm = 0xFF, tmp_ss = 0xFF;
+
+  printf("\n\r==============Time Settings=====================================\n\r");
+  RTC_TimeStructure.RTC_H12     = RTC_H12_AM;
+  printf("  Please Set Hours\n\r");
+  while (tmp_hh == 0xFF)
   {
-    /* Get the current Time*/
-    RTC_GetTime(RTC_Format_BCD, &RTC_TimeStructure);
+    tmp_hh = USART_Scanf(0, 23);
+    RTC_TimeStructure.RTC_Hours = tmp_hh;
   }
+  printf(":  %0.2d\n\r", tmp_hh);
+  
+  printf("  Please Set Minutes\n\r");
+  while (tmp_mm == 0xFF)
+  {
+    tmp_mm = USART_Scanf(0, 59);
+    RTC_TimeStructure.RTC_Minutes = tmp_mm;
+  }
+  printf(":  %0.2d\n\r", tmp_mm);
+  
+  printf("  Please Set Seconds\n\r");
+  while (tmp_ss == 0xFF)
+  {
+    tmp_ss = USART_Scanf(0, 59);
+    RTC_TimeStructure.RTC_Seconds = tmp_ss;
+  }
+  printf(":  %0.2d\n\r", tmp_ss);
+
+  /* Configure the RTC time register */
+  if(RTC_SetTime(RTC_Format_BIN, &RTC_TimeStructure) == ERROR)
+  {
+    printf("\n\r>> !! RTC Set Time failed. !! <<\n\r");
+  } 
   else
   {
-    RTC_GetTimeStamp(RTC_Format_BCD, &RTC_TimeStructure, &RTC_DateStructure);
-  }	
+    printf("\n\r>> !! RTC Set Time success. !! <<\n\r");
+    RTC_TimeShow();
+    /* Indicator for the RTC configuration */
+    RTC_WriteBackupRegister(RTC_BKP_DR0, 0x32F2);
+  }
+  
+  tmp_hh = 0xFF;
+  tmp_mm = 0xFF;
+  tmp_ss = 0xFF;
 
-  /*!< Wait Until the last LCD RAM update finish */
-  while(LCD_GetFlagStatus(LCD_FLAG_UDR) != RESET)
+  printf("\n\r==============Date Settings=====================================\n\r");
+
+  printf("  Please Set WeekDay (01-07)\n\r");
+  while (tmp_hh == 0xFF)
   {
+    tmp_hh = USART_Scanf(1, 7);
+    RTC_DateStructure.RTC_WeekDay = tmp_hh;
+  }
+  printf(":  %0.2d\n\r", tmp_hh);
+  tmp_hh = 0xFF;
+  printf("  Please Set Date (01-31)\n\r");
+  while (tmp_hh == 0xFF)
+  {
+    tmp_hh = USART_Scanf(1, 31);
+    RTC_DateStructure.RTC_Date = tmp_hh;
+  }
+  printf(":  %0.2d\n\r", tmp_hh);
+  
+  printf("  Please Set Month (01-12)\n\r");
+  while (tmp_mm == 0xFF)
+  {
+    tmp_mm = USART_Scanf(1, 12);
+    RTC_DateStructure.RTC_Month = tmp_mm;
+  }
+  printf(":  %0.2d\n\r", tmp_mm);
+  
+  printf("  Please Set Year (00-99)\n\r");
+  while (tmp_ss == 0xFF)
+  {
+    tmp_ss = USART_Scanf(0, 99);
+    RTC_DateStructure.RTC_Year = tmp_ss;
+  }
+  printf(":  %0.2d\n\r", tmp_ss);
+
+  /* Configure the RTC date register */
+  if(RTC_SetDate(RTC_Format_BIN, &RTC_DateStructure) == ERROR)
+  {
+    printf("\n\r>> !! RTC Set Date failed. !! <<\n\r");
+  } 
+  else
+  {
+    printf("\n\r>> !! RTC Set Date success. !! <<\n\r");
+    RTC_DateShow();
+    /* Indicator for the RTC configuration */
+    RTC_WriteBackupRegister(RTC_BKP_DR0, 0x32F2);
   }
 
-  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Hours & 0xF0) >> 0x04) + 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 0);
-
-  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Hours & 0x0F))+ 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 1);
-
-  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Minutes & 0xF0) >> 0x04) + 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 3);
-
-  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Minutes & 0x0F))+ (uint8_t)0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 4);
-
-  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Seconds & 0xF0) >> 0x04)+ 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 6);
-
-  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Seconds & 0x0F)) + 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 7); 
-
-  /*!< Requesy LCD RAM update */
-  LCD_UpdateDisplayRequest();
 }
 
 /**
-  * @brief  Prints the Date Calendar in the LCD.
+  * @brief  Display the current time on the Hyperterminal.
   * @param  None
   * @retval None
   */
-void LCD_ShowDateCalendar(uint32_t DisplayTimeDate)
+void RTC_TimeShow(void)
 {
-  uint8_t tmp = 0;
-  
-  if(DisplayTimeDateStamp == 0)
+  /* Get the current Time and Date */
+  RTC_GetTime(RTC_Format_BIN, &RTC_TimeStructure);
+  printf("\n\r============== Current Time Display ============================\n\r");
+  printf("\n\r  The current time (Hour-Minute-Second) is :  %0.2d:%0.2d:%0.2d \n\r", RTC_TimeStructure.RTC_Hours, RTC_TimeStructure.RTC_Minutes, RTC_TimeStructure.RTC_Seconds);
+  /* Unfreeze the RTC DR Register */
+  (void)RTC->DR;
+}
+
+/**
+  * @brief  Display the current date on the Hyperterminal.
+  * @param  None
+  * @retval None
+  */
+void RTC_DateShow(void)
+{
+  /* Get the current Date */
+  RTC_GetDate(RTC_Format_BIN, &RTC_DateStructure);
+  printf("\n\r============== Current Date Display ============================\n\r");
+  printf("\n\r  The current date (WeekDay-Date-Month-Year) is :  %0.2d-%0.2d-%0.2d-%0.2d \n\r", RTC_DateStructure.RTC_WeekDay, RTC_DateStructure.RTC_Date, RTC_DateStructure.RTC_Month, RTC_DateStructure.RTC_Year);
+}
+
+
+/**
+  * @brief  Display the current TimeStamp (time and date) on the Hyperterminal.
+  * @param  None
+  * @retval None
+  */
+void RTC_TimeStampShow(void)
+{
+  /* Get the current TimeStamp */
+  RTC_GetTimeStamp(RTC_Format_BIN, &RTC_TimeStampStructure, &RTC_TimeStampDateStructure);
+  printf("\n\r==============TimeStamp Display (Time and Date)=================\n\r");
+  printf("\n\r  The current time stamp time (Hour-Minute-Second) is :  %0.2d:%0.2d:%0.2d \n\r", RTC_TimeStampStructure.RTC_Hours, RTC_TimeStampStructure.RTC_Minutes, RTC_TimeStampStructure.RTC_Seconds);
+  printf("\n\r  The current timestamp date (WeekDay-Date-Month) is :  %0.2d-%0.2d-%0.2d \n\r", RTC_TimeStampDateStructure.RTC_WeekDay, RTC_TimeStampDateStructure.RTC_Date, RTC_TimeStampDateStructure.RTC_Month);
+}
+
+
+/**
+  * @brief  Gets numeric values from the hyperterminal.
+  * @param  MinValue: minimum value to be used.
+  * @param  MaxValue: maximum value to be used.
+  * @retval None
+  */
+uint8_t USART_Scanf(uint32_t MinValue, uint32_t MaxValue)
+{
+  uint32_t index = 0;
+  uint32_t tmp[2] = {0, 0};
+
+  while (index < 2)
   {
-    /* Get the current Date */
-    RTC_GetDate(RTC_Format_BCD, &RTC_DateStructure);
+    /* Loop until RXNE = 1 */
+    while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_RXNE) == RESET)
+    {}
+    tmp[index++] = (USART_ReceiveData(EVAL_COM1));
+    if ((tmp[index - 1] < 0x30) || (tmp[index - 1] > 0x39))
+    {
+      printf("\n\r Please enter valid number between 0 and 9\n\r");
+      index--;
+    }
   }
-  else
+  /* Calculate the Corresponding value */
+  index = (tmp[1] - 0x30) + ((tmp[0] - 0x30) * 10);
+  /* Checks the value */
+  if ((index < MinValue) || (index > MaxValue))
   {
-   /* Get the current Date */
-   RTC_GetTimeStamp(RTC_Format_BCD, &RTC_TimeStructure, &RTC_DateStructure);
+    printf("\n\r Please enter valid number between %d and %d\n\r", MinValue, MaxValue);
+    return 0xFF;
   }
+  return index;
+}
 
-  /*!< Wait Until the last LCD RAM update finish */
-  while(LCD_GetFlagStatus(LCD_FLAG_UDR) != RESET)
-  {
-  }
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART */
+  USART_SendData(EVAL_COM1, (uint8_t) ch);
 
-  tmp = (char)(((uint8_t)(RTC_DateStructure.RTC_Month & 0xF0) >> 4) + 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 0);
+  /* Loop until the end of transmission */
+  while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_TC) == RESET)
+  {}
 
-  tmp = (char)(((uint8_t)(RTC_DateStructure.RTC_Month & 0x0F)) + 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 1);
-
-  tmp = (char)(((uint8_t)(RTC_DateStructure.RTC_Date & 0xF0) >> 0x04) + 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 3);
-
-  tmp = (char)(((uint8_t)(RTC_DateStructure.RTC_Date & 0x0F)) + (uint8_t)0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 4);
-
-  tmp = (char)(((uint8_t)(RTC_DateStructure.RTC_Year & 0xF0) >> 4) + 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 6);
-
-  /* The RTC_Year member in the TimeStamp Date is always 00 (no years in the RTC_TSDR register) */ 
-  tmp = (char)(((uint8_t)(RTC_DateStructure.RTC_Year & 0x0F)) + 0x30);
-  LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 7); 
-
-  /*!< Requesy LCD RAM update */
-  LCD_UpdateDisplayRequest();
-
+  return ch;
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -304,4 +471,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    RTC/Calendar/stm32l1xx_it.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and peripherals
   *          interrupt service routine.
@@ -17,13 +17,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
-#include "stm32_eval.h"
+#include "main.h"
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -147,6 +155,67 @@ void SysTick_Handler(void)
 /*            STM32L1xx Peripherals Interrupt Handlers                        */
 /******************************************************************************/
  
+/******************************************************************************/
+/*                 STM32F2xx Peripherals Interrupt Handlers                   */
+/******************************************************************************/
+#ifdef USE_STM32L152D_EVAL 
+
+/**
+  * @brief  This function handles External lines 15 to 10 interrupt request.
+  * @param  None
+  * @retval None
+  */
+
+void EXTI15_10_IRQHandler(void)
+{
+  if(EXTI_GetITStatus(UP_BUTTON_EXTI_LINE) != RESET)
+  {  
+    /* Display the current alarm on the Hyperterminal */
+    RTC_AlarmShow();
+     
+    /* Clear the UP Button EXTI line pending bit */
+    EXTI_ClearITPendingBit(UP_BUTTON_EXTI_LINE);
+  } 
+  
+  if(EXTI_GetITStatus(SEL_BUTTON_EXTI_LINE) != RESET)
+  {
+    /* Set the new RTC configuration */
+     RTC_TimeRegulate();
+
+    /* Clear the SEL Button EXTI line pending bit */
+    EXTI_ClearITPendingBit(SEL_BUTTON_EXTI_LINE);
+  } 
+}
+
+#elif defined USE_STM32L152_EVAL 
+
+/**
+  * @brief  This function handles External lines 9 to 5 interrupt request.
+  * @param  None
+  * @retval None
+  */
+void EXTI9_5_IRQHandler(void)
+{
+  if(EXTI_GetITStatus(UP_BUTTON_EXTI_LINE) != RESET)
+  {  
+    /* Display the current alarm on the Hyperterminal */
+    RTC_AlarmShow();
+     
+    /* Clear the UP Button EXTI line pending bit */
+    EXTI_ClearITPendingBit(UP_BUTTON_EXTI_LINE);
+  } 
+  
+  if(EXTI_GetITStatus(SEL_BUTTON_EXTI_LINE) != RESET)
+  {
+    /* Set the new RTC configuration */
+     RTC_TimeRegulate();
+
+    /* Clear the SEL Button EXTI line pending bit */
+    EXTI_ClearITPendingBit(SEL_BUTTON_EXTI_LINE);
+  } 
+}
+#endif
+
 /**
   * @brief  This function handles External line 0 interrupt request.
   * @param  None
@@ -155,21 +224,36 @@ void SysTick_Handler(void)
 void EXTI0_IRQHandler(void)
 {
   if(EXTI_GetITStatus(KEY_BUTTON_EXTI_LINE) != RESET)
-  {
-    /* Toggle LED1 */
-    STM_EVAL_LEDToggle(LED1);
-
-    /* Clear the KEY Button EXTI line pending bit */
+  {  
+    /* Display the current time on the Hyperterminal */
+    RTC_TimeShow();
+     
+    /* Clear the Key Button EXTI line pending bit */
     EXTI_ClearITPendingBit(KEY_BUTTON_EXTI_LINE);
-    DisplayTimeDate = 1 - DisplayTimeDate;
   }
 }
+
+/**
+  * @brief  This function handles RTC Alarms interrupt request.
+  * @param  None
+  * @retval None
+  */
+void RTC_Alarm_IRQHandler(void)
+{
+  if(RTC_GetITStatus(RTC_IT_ALRA) != RESET)
+  {
+    STM_EVAL_LEDToggle(LED1);
+    RTC_ClearITPendingBit(RTC_IT_ALRA);
+    EXTI_ClearITPendingBit(EXTI_Line17);
+  } 
+}
+
 
 /******************************************************************************/
 /*                 STM32L1xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
 /*  available peripheral interrupt handler's name please refer to the startup */
-/*  file (startup_stm32l1xx_md.s).                                            */
+/*  file (startup_stm32l1xx_xx.s).                                            */
 /******************************************************************************/
 
 /**
@@ -189,4 +273,4 @@ void EXTI0_IRQHandler(void)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

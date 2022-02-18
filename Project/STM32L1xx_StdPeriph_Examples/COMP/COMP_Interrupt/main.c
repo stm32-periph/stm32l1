@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    COMP/COMP_Interrupt/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval.h"
+#else
+#include "stm32l152_eval.h"
+#endif
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -51,7 +59,7 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */
@@ -60,6 +68,8 @@ int main(void)
   STM_EVAL_LEDInit(LED1);
 
   /******************** comparator COMP1 configuration ************************/
+
+#ifdef USE_STM32L152_EVAL
   /* GPIOB Peripheral clock enable */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 
@@ -68,7 +78,17 @@ int main(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
+#elif USE_STM32L152D_EVAL
+  /* GPIOF Peripheral clock enable */
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF, ENABLE);
 
+  /* Configure PF10 in analog mode */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_Init(GPIOF, &GPIO_InitStructure);  
+#endif  
+  
   /* COMP Peripheral clock enable */
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_COMP, ENABLE);
 
@@ -81,9 +101,14 @@ int main(void)
   /* Close the ADC analog switch VCOMP */
   SYSCFG_RIIOSwitchConfig(RI_IOSwitch_VCOMP, ENABLE);
 
+#ifdef USE_STM32L152_EVAL
   /* Close the I/O analog switch number 18 */
   SYSCFG_RIIOSwitchConfig(RI_IOSwitch_CH18, ENABLE);
-
+#elif USE_STM32L152D_EVAL
+  /* Close the I/O analog switch number 31 */
+  SYSCFG_RIIOSwitchConfig(RI_IOSwitch_CH31, ENABLE);  
+#endif 
+  
   /* Configure and enable EXTI21 */
   EXTI_InitStructure.EXTI_Line = EXTI_Line21;  
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
@@ -132,4 +157,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

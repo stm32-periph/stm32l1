@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_syscfg.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the SYSCFG 
   *          firmware library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /*!< Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_SYSCFG_H
@@ -55,12 +58,16 @@
 #define EXTI_PortSourceGPIOD       ((uint8_t)0x03)
 #define EXTI_PortSourceGPIOE       ((uint8_t)0x04)
 #define EXTI_PortSourceGPIOH       ((uint8_t)0x05)
+#define EXTI_PortSourceGPIOF       ((uint8_t)0x06)
+#define EXTI_PortSourceGPIOG       ((uint8_t)0x07)
                                       
 #define IS_EXTI_PORT_SOURCE(PORTSOURCE) (((PORTSOURCE) == EXTI_PortSourceGPIOA) || \
                                          ((PORTSOURCE) == EXTI_PortSourceGPIOB) || \
                                          ((PORTSOURCE) == EXTI_PortSourceGPIOC) || \
                                          ((PORTSOURCE) == EXTI_PortSourceGPIOD) || \
                                          ((PORTSOURCE) == EXTI_PortSourceGPIOE) || \
+                                         ((PORTSOURCE) == EXTI_PortSourceGPIOF) || \
+                                         ((PORTSOURCE) == EXTI_PortSourceGPIOG) || \
                                          ((PORTSOURCE) == EXTI_PortSourceGPIOH)) 
 /**
   * @}
@@ -110,10 +117,12 @@
   */ 
 #define SYSCFG_MemoryRemap_Flash       ((uint8_t)0x00)
 #define SYSCFG_MemoryRemap_SystemFlash ((uint8_t)0x01)
+#define SYSCFG_MemoryRemap_FSMC        ((uint8_t)0x02)
 #define SYSCFG_MemoryRemap_SRAM        ((uint8_t)0x03)
    
 #define IS_SYSCFG_MEMORY_REMAP_CONFING(REMAP) (((REMAP) == SYSCFG_MemoryRemap_Flash) || \
                                                ((REMAP) == SYSCFG_MemoryRemap_SystemFlash) || \
+                                               ((REMAP) == SYSCFG_MemoryRemap_FSMC) || \
                                                ((REMAP) == SYSCFG_MemoryRemap_SRAM))
 
 /**
@@ -124,16 +133,46 @@
   * @{
   */
 
-#define RI_Resistor_10KPU          COMP_CSR_10KPU
-#define RI_Resistor_400KPU         COMP_CSR_400KPU
-#define RI_Resistor_10KPD          COMP_CSR_10KPD
-#define RI_Resistor_400KPD         COMP_CSR_400KPD
+#define RI_Resistor_10KPU              COMP_CSR_10KPU
+#define RI_Resistor_400KPU             COMP_CSR_400KPU
+#define RI_Resistor_10KPD              COMP_CSR_10KPD
+#define RI_Resistor_400KPD             COMP_CSR_400KPD
 
 #define IS_RI_RESISTOR(RESISTOR)  (((RESISTOR) == COMP_CSR_10KPU) || \
                                    ((RESISTOR) == COMP_CSR_400KPU) || \
                                    ((RESISTOR) == COMP_CSR_10KPD) || \
                                    ((RESISTOR) == COMP_CSR_400KPD))
  
+/**
+  * @}
+  */ 
+
+/** @defgroup RI_Channel
+  * @{
+  */
+
+#define RI_Channel_3                   ((uint32_t)0x04000000)
+#define RI_Channel_8                   ((uint32_t)0x08000000)
+#define RI_Channel_13                  ((uint32_t)0x10000000)
+
+#define IS_RI_CHANNEL(CHANNEL)  (((CHANNEL) == RI_Channel_3) || \
+                                 ((CHANNEL) == RI_Channel_8) || \
+                                 ((CHANNEL) == RI_Channel_13))
+
+/**
+  * @}
+  */ 
+
+/** @defgroup RI_ChannelSpeed
+  * @{
+  */
+
+#define RI_ChannelSpeed_Fast           ((uint32_t)0x00000000)
+#define RI_ChannelSpeed_Slow           ((uint32_t)0x00000001)
+
+#define IS_RI_CHANNELSPEED(SPEED)  (((SPEED) == RI_ChannelSpeed_Fast) || \
+                                    ((SPEED) == RI_ChannelSpeed_Slow))
+
 /**
   * @}
   */ 
@@ -233,6 +272,7 @@
 #define RI_IOSwitch_CH13       ((uint32_t)0x80002000)
 #define RI_IOSwitch_CH14       ((uint32_t)0x80004000)
 #define RI_IOSwitch_CH15       ((uint32_t)0x80008000)
+#define RI_IOSwitch_CH31       ((uint32_t)0x80010000)
 #define RI_IOSwitch_CH18       ((uint32_t)0x80040000)
 #define RI_IOSwitch_CH19       ((uint32_t)0x80080000)
 #define RI_IOSwitch_CH20       ((uint32_t)0x80100000)
@@ -243,6 +283,10 @@
 #define RI_IOSwitch_CH25       ((uint32_t)0x82000000)
 #define RI_IOSwitch_VCOMP      ((uint32_t)0x84000000) /* VCOMP is an internal switch used to connect 
                                                          selected channel to COMP1 non inverting input */
+#define RI_IOSwitch_CH27       ((uint32_t)0x88000000)
+#define RI_IOSwitch_CH28       ((uint32_t)0x90000000)
+#define RI_IOSwitch_CH29       ((uint32_t)0xA0000000)
+#define RI_IOSwitch_CH30       ((uint32_t)0xC0000000)
 
 /* ASCR2 IO switch: bit 31 is set to '0' to indicate that the mask is in ASCR2 register */  
 #define RI_IOSwitch_GR10_1     ((uint32_t)0x00000001)
@@ -257,6 +301,22 @@
 #define RI_IOSwitch_GR4_1      ((uint32_t)0x00000200)
 #define RI_IOSwitch_GR4_2      ((uint32_t)0x00000400)
 #define RI_IOSwitch_GR4_3      ((uint32_t)0x00000800)
+#define RI_IOSwitch_GR4_4      ((uint32_t)0x00008000)
+#define RI_IOSwitch_CH0b       ((uint32_t)0x00010000)
+#define RI_IOSwitch_CH1b       ((uint32_t)0x00020000)
+#define RI_IOSwitch_CH2b       ((uint32_t)0x00040000)
+#define RI_IOSwitch_CH3b       ((uint32_t)0x00080000)
+#define RI_IOSwitch_CH6b       ((uint32_t)0x00100000)
+#define RI_IOSwitch_CH7b       ((uint32_t)0x00200000)
+#define RI_IOSwitch_CH8b       ((uint32_t)0x00400000)
+#define RI_IOSwitch_CH9b       ((uint32_t)0x00800000)
+#define RI_IOSwitch_CH10b      ((uint32_t)0x01000000)
+#define RI_IOSwitch_CH11b      ((uint32_t)0x02000000)
+#define RI_IOSwitch_CH12b      ((uint32_t)0x04000000)
+#define RI_IOSwitch_GR6_3      ((uint32_t)0x08000000)
+#define RI_IOSwitch_GR6_4      ((uint32_t)0x10000000)
+#define RI_IOSwitch_GR5_4      ((uint32_t)0x20000000)
+
 
 #define IS_RI_IOSWITCH(IOSWITCH) (((IOSWITCH) == RI_IOSwitch_CH0) || \
                                   ((IOSWITCH) == RI_IOSwitch_CH1) || \
@@ -283,18 +343,38 @@
                                   ((IOSWITCH) == RI_IOSwitch_CH24) || \
                                   ((IOSWITCH) == RI_IOSwitch_CH25) || \
                                   ((IOSWITCH) == RI_IOSwitch_VCOMP) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH27) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH28) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH29) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH30) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH31) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR10_1) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR10_2) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR10_3) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR10_4) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR6_1) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR6_2) || \
+                                  ((IOSWITCH) == RI_IOSwitch_GR6_3) || \
+                                  ((IOSWITCH) == RI_IOSwitch_GR6_4) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR5_1) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR5_2) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR5_3) || \
+                                  ((IOSWITCH) == RI_IOSwitch_GR5_4) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR4_1) || \
                                   ((IOSWITCH) == RI_IOSwitch_GR4_2) || \
-                                  ((IOSWITCH) == RI_IOSwitch_GR4_3))
+                                  ((IOSWITCH) == RI_IOSwitch_GR4_3) || \
+                                  ((IOSWITCH) == RI_IOSwitch_GR4_4) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH0b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH1b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH2b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH3b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH6b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH7b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH8b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH9b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH10b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH11b) || \
+                                  ((IOSWITCH) == RI_IOSwitch_CH12b))
 
 /**
   * @}
@@ -309,12 +389,16 @@
 #define RI_PortC                 ((uint8_t)0x03)   /*!< GPIOC selected */
 #define RI_PortD                 ((uint8_t)0x04)   /*!< GPIOD selected */
 #define RI_PortE                 ((uint8_t)0x05)   /*!< GPIOE selected */
+#define RI_PortF                 ((uint8_t)0x06)   /*!< GPIOF selected */
+#define RI_PortG                 ((uint8_t)0x07)   /*!< GPIOG selected */
 
 #define IS_RI_PORT(PORT) (((PORT) == RI_PortA) || \
                           ((PORT) == RI_PortB) || \
                           ((PORT) == RI_PortC) || \
                           ((PORT) == RI_PortD) || \
-                          ((PORT) == RI_PortE))
+                          ((PORT) == RI_PortE) || \
+                          ((PORT) == RI_PortF) || \
+                          ((PORT) == RI_PortG))
 /**
   * @}
   */
@@ -353,12 +437,13 @@
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
-/*  Function used to set the RTC configuration to the default reset state *****/
+/*  Function used to set the SYSCFG and RI configuration to the default reset state **/
 void SYSCFG_DeInit(void);
 void SYSCFG_RIDeInit(void);
 
 /* SYSCFG Initialization and Configuration functions **************************/ 
 void SYSCFG_MemoryRemapConfig(uint8_t SYSCFG_MemoryRemap);
+uint32_t SYSCFG_GetBootMode(void);
 void SYSCFG_USBPuCmd(FunctionalState NewState);
 void SYSCFG_EXTILineConfig(uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex);
 
@@ -366,10 +451,11 @@ void SYSCFG_EXTILineConfig(uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex
 void SYSCFG_RITIMSelect(uint32_t TIM_Select);
 void SYSCFG_RITIMInputCaptureConfig(uint32_t RI_InputCapture, uint32_t RI_InputCaptureRouting);
 void SYSCFG_RIResistorConfig(uint32_t RI_Resistor, FunctionalState NewState);
+void SYSCFG_RIChannelSpeedConfig(uint32_t RI_Channel, uint32_t RI_ChannelSpeed);
 void SYSCFG_RISwitchControlModeCmd(FunctionalState NewState);
 void SYSCFG_RIIOSwitchConfig(uint32_t RI_IOSwitch, FunctionalState NewState);
-void SYSCFG_RIHysteresisConfig(uint8_t RI_Port, uint16_t RI_Pin,
-                               FunctionalState NewState);
+void SYSCFG_RIHysteresisConfig(uint8_t RI_Port, uint16_t RI_Pin, FunctionalState NewState);
+
 #ifdef __cplusplus
 }
 #endif
@@ -384,4 +470,4 @@ void SYSCFG_RIHysteresisConfig(uint8_t RI_Port, uint16_t RI_Pin,
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    I2C/I2C_TwoBoards/MasterTransmitterInterrupt/main.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,8 +15,11 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -29,7 +32,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+   
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval.h"
+#else
+#include "stm32l152_eval.h"
+#endif
 
 /* Exported typedef -----------------------------------------------------------*/
 #define countof(a)   (sizeof(a) / sizeof(*(a)))  
@@ -39,13 +47,13 @@ typedef enum {FAILED = 0, PASSED = !FAILED} TestStatus;
 /* Uncomment the line below if you will use the I2C peripheral as a Master*/
 #define I2C_MASTER
 /* Uncomment the line below if you will use the I2C peripheral as a Slave*/
-/* #define I2C_SLAVE  */
+/* #define I2C_SLAVE */  
 
   
 /* To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency (I2C peripheral
    input clock) must be a multiple of 10 MHz */
 /* Uncomment the line below if you will use the I2C peripheral in Fast Mode */
-/* #define FAST_I2C_MODE */
+/* #define FAST_I2C_MODE */ 
   
 /* Uncomment the line below if you will use the I2C peripheral in 10-bit addressing
    mode */
@@ -85,17 +93,25 @@ typedef enum {FAILED = 0, PASSED = !FAILED} TestStatus;
 #define I2Cx_EV_IRQHandler            I2C1_EV_IRQHandler
 #define I2Cx_ER_IRQHandler            I2C1_ER_IRQHandler
 
-#define I2Cx_SDA_GPIO_CLK             RCC_AHBPeriph_GPIOB
-#define I2Cx_SDA_PIN                  GPIO_Pin_7                
+#define I2Cx_SDA_GPIO_CLK             RCC_AHBPeriph_GPIOB               
 #define I2Cx_SDA_GPIO_PORT            GPIOB                       
-#define I2Cx_SDA_SOURCE               GPIO_PinSource7
 #define I2Cx_SDA_AF                   GPIO_AF_I2C1
 
-#define I2Cx_SCL_GPIO_CLK             RCC_AHBPeriph_GPIOB
-#define I2Cx_SCL_PIN                  GPIO_Pin_6                
+#define I2Cx_SCL_GPIO_CLK             RCC_AHBPeriph_GPIOB               
 #define I2Cx_SCL_GPIO_PORT            GPIOB                    
-#define I2Cx_SCL_SOURCE               GPIO_PinSource6
 #define I2Cx_SCL_AF                   GPIO_AF_I2C1
+
+#ifdef USE_STM32L152D_EVAL
+#define I2Cx_SDA_PIN                  GPIO_Pin_9
+#define I2Cx_SDA_SOURCE               GPIO_PinSource9
+#define I2Cx_SCL_PIN                  GPIO_Pin_8
+#define I2Cx_SCL_SOURCE               GPIO_PinSource8
+#else
+#define I2Cx_SDA_PIN                  GPIO_Pin_7
+#define I2Cx_SDA_SOURCE               GPIO_PinSource7
+#define I2Cx_SCL_PIN                  GPIO_Pin_6
+#define I2Cx_SCL_SOURCE               GPIO_PinSource6
+#endif
 
 /* Joystick Commands */
 #define CMD_RIGHT                        0x55
@@ -132,4 +148,4 @@ uint8_t GetVar_NbrOfDataToReceive(void);
 
 #endif /* __MAIN_H */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

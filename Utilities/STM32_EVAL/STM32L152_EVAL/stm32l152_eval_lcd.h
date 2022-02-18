@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l152_eval_lcd.h
   * @author  MCD Application Team
-  * @version V4.4.0
-  * @date    31-December-2010
+  * @version V5.0.1
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the stm32l152_eval_lcd
   *          firmware driver.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L152_EVAL_LCD_H
@@ -29,7 +32,7 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l1xx.h"
+#include "stm32l152_eval.h"
 #include "../Common/fonts.h"
 
 /** @addtogroup Utilities
@@ -324,19 +327,19 @@ void LCD_SetColors(__IO uint16_t _TextColor, __IO uint16_t _BackColor);
 void LCD_GetColors(__IO uint16_t *_TextColor, __IO uint16_t *_BackColor); 
 void LCD_SetTextColor(__IO uint16_t Color);
 void LCD_SetBackColor(__IO uint16_t Color);
-void LCD_ClearLine(uint8_t Line);
+void LCD_ClearLine(uint16_t Line);
 void LCD_Clear(uint16_t Color);
-void LCD_SetCursor(uint8_t Xpos, uint16_t Ypos);
-void LCD_DrawChar(uint8_t Xpos, uint16_t Ypos, const uint16_t *c);
-void LCD_DisplayChar(uint8_t Line, uint16_t Column, uint8_t Ascii);
+void LCD_SetCursor(uint16_t Xpos, uint16_t Ypos);
+void LCD_DrawChar(uint16_t Xpos, uint16_t Ypos, const uint16_t *c);
+void LCD_DisplayChar(uint16_t Line, uint16_t Column, uint8_t Ascii);
 void LCD_SetFont(sFONT *fonts);
 sFONT *LCD_GetFont(void);
-void LCD_DisplayStringLine(uint8_t Line, uint8_t *ptr);
-void LCD_SetDisplayWindow(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
+void LCD_DisplayStringLine(uint16_t Line, uint8_t *ptr);
+void LCD_SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
 void LCD_WindowModeDisable(void);
-void LCD_DrawLine(uint8_t Xpos, uint16_t Ypos, uint16_t Length, uint8_t Direction);
-void LCD_DrawRect(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
-void LCD_DrawCircle(uint8_t Xpos, uint16_t Ypos, uint16_t Radius);
+void LCD_DrawLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length, uint8_t Direction);
+void LCD_DrawRect(uint16_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
+void LCD_DrawCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius);
 void LCD_DrawMonoPict(const uint32_t *Pict);
 void LCD_DrawBMP(uint32_t BmpAddress);
 void LCD_DrawUniLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
@@ -389,4 +392,4 @@ void LCD_SPIConfig(void);
   * @}
   */   
   
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

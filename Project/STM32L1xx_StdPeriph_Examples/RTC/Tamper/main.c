@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    RTC/Tamper/main.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,9 +15,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -32,7 +35,12 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define RTC_BKP_DR_NUMBER              20
+#define RTC_BKP_DR_NUMBER              20 /* RTC Backup Data Register Number */
+
+/* Uncomment the corresponding line to select the RTC Clock source */
+#define RTC_CLOCK_SOURCE_LSE   /* LSE used as RTC source clock */
+/* #define RTC_CLOCK_SOURCE_LSI */ /* LSI used as RTC source clock. The RTC Clock
+                                      may varies due to LSI frequency dispersion. */ 
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -53,7 +61,7 @@ uint32_t CheckRTC_BKP_DR(uint32_t FirstRTCBackupData);
 /* Private functions ---------------------------------------------------------*/
 
 /**
-  * @brief   Main program
+  * @brief  Main program
   * @param  None
   * @retval None
   */
@@ -61,12 +69,12 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
-     */      
-  
-  /* Initialize Leds mounted on STM32LXXX-EVAL board */
+     */   
+
+  /* Initialize Leds mounted on STM32L1XX-EVAL board */
   STM_EVAL_LEDInit(LED1);
   STM_EVAL_LEDInit(LED2);
   STM_EVAL_LEDInit(LED3);
@@ -74,10 +82,10 @@ int main(void)
   
   /* RTC configuration */
   RTC_Config();
-      
+
   /* Write To RTC Backup Data registers */
-  WriteToRTC_BKP_DR(0xA53C);   
-  
+  WriteToRTC_BKP_DR(0xA53C);
+
   /* Check if the written data are correct */
   if(CheckRTC_BKP_DR(0xA53C) == 0x00)
   {
@@ -89,41 +97,61 @@ int main(void)
     /* Turn on LED3 */
     STM_EVAL_LEDOn(LED3);
   }
-               
+
   while (1)
-  {}
+  {
+  }
 }
 
 /**
-  * @brief  Configures the RTC clock source.
+  * @brief  Configure the RTC peripheral by selecting the clock source.
   * @param  None
   * @retval None
   */
 void RTC_Config(void)
 {
   NVIC_InitTypeDef NVIC_InitStructure;
-  EXTI_InitTypeDef  EXTI_InitStructure; 
-  
-  /* PWR Clock Enable */
+  EXTI_InitTypeDef  EXTI_InitStructure;
+
+  /* Enable the PWR clock */
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
-  
-  /* Allow access to BKP Domain */
+
+  /* Allow access to RTC */
   PWR_RTCAccessCmd(ENABLE);
 
-  /* Enable the LSE Clock */  
-  RCC_LSEConfig(RCC_LSE_ON);
+  /* Reset BKP Domain */
+  RCC_RTCResetCmd(ENABLE);
+  RCC_RTCResetCmd(DISABLE);
+      
+#if defined (RTC_CLOCK_SOURCE_LSI)  /* LSI used as RTC source clock*/
+/* The RTC Clock may varies due to LSI frequency dispersion. */
+  /* Enable the LSI OSC */ 
+  RCC_LSICmd(ENABLE);
+
+  /* Wait till LSI is ready */  
+  while(RCC_GetFlagStatus(RCC_FLAG_LSIRDY) == RESET)
+  {
+  }
+
+  /* Select the RTC Clock Source */
+  RCC_RTCCLKConfig(RCC_RTCCLKSource_LSI);
   
+#elif defined (RTC_CLOCK_SOURCE_LSE) /* LSE used as RTC source clock */
+  /* Enable the LSE OSC */
+  RCC_LSEConfig(RCC_LSE_ON);
+
   /* Wait till LSE is ready */  
   while(RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
-  {}
-  
+  {
+  }
+
   /* Select the RTC Clock Source */
   RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
   
-  /* Reset RTC Domain */
-  RCC_RTCResetCmd(ENABLE);
-  RCC_RTCResetCmd(DISABLE);
-
+#else
+  #error Please select the RTC Clock source inside the main.c file
+#endif /* RTC_CLOCK_SOURCE_LSI */
+  
   /* Enable The external line19 interrupt */
   EXTI_ClearITPendingBit(EXTI_Line19);
   EXTI_InitStructure.EXTI_Line = EXTI_Line19;
@@ -137,25 +165,25 @@ void RTC_Config(void)
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);   
+  NVIC_Init(&NVIC_InitStructure);
 
   /* Disable the Tamper 1 detection */
   RTC_TamperCmd(RTC_Tamper_1, DISABLE);
-  
+
   /* Clear Tamper 1 pin Event(TAMP1F) pending flag */
   RTC_ClearFlag(RTC_FLAG_TAMP1F);
-  
+
   /* Configure the Tamper 1 Trigger */
   RTC_TamperTriggerConfig(RTC_Tamper_1, RTC_TamperTrigger_FallingEdge);
-   
+
   /* Enable the Tamper interrupt */
   RTC_ITConfig(RTC_IT_TAMP, ENABLE);
-  
+
   /* Clear Tamper 1 pin interrupt pending bit */
   RTC_ClearITPendingBit(RTC_IT_TAMP1);
-  
+
   /* Enable the Tamper 1 detection */
-  RTC_TamperCmd(RTC_Tamper_1, ENABLE);   
+  RTC_TamperCmd(RTC_Tamper_1, ENABLE);
 }
 
 /**
@@ -171,14 +199,13 @@ void WriteToRTC_BKP_DR(uint32_t FirstRTCBackupData)
   {
     /* write To bkp data register */
     RTC_WriteBackupRegister(RTC_BKP_DR[index], FirstRTCBackupData + (index * 0x5A));
-  }  
+  }
 }
 
 /**
   * @brief  Checks if the RTC Backup DRx registers values are correct or not.
   * @param  FirstRTCBackupData: data to be compared with RTC Backup data registers.
-  * @retval 
-  *         - 0: All RTC Backup DRx registers values are correct
+  * @retval - 0: All RTC Backup DRx registers values are correct
   *         - Value different from 0: Number of the first Backup register
   *           which value is not correct
   */
@@ -194,16 +221,15 @@ uint32_t CheckRTC_BKP_DR(uint32_t FirstRTCBackupData)
       return (index + 1);
     }
   }
-    return 0;  
+    return 0;
 }
 
 /**
   * @brief  Checks if the RTC Backup DRx registers are reset or not.
   * @param  None
-  * @retval 
-  *          - 0: All RTC Backup DRx registers are reset
-  *          - Value different from 0: Number of the first Backup register
-  *            not reset
+  * @retval - 0: All RTC Backup DRx registers are reset
+  *         - Value different from 0: Number of the first Backup register
+  *           not reset
   */
 uint32_t IsBackupRegReset(void)
 {
@@ -217,7 +243,7 @@ uint32_t IsBackupRegReset(void)
       return (index + 1);
     }
   }
-  return 0;  
+  return 0;
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -249,4 +275,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

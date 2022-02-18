@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    NVIC/IRQ_Mask/stm32l1xx_it.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and peripherals
   *          interrupt service routine.
@@ -17,13 +17,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -147,11 +155,14 @@ void SysTick_Handler(void)
 /*            STM32L1xx Peripherals Interrupt Handlers                        */
 /******************************************************************************/
 
+#ifdef USE_STM32L152_EVAL 
+
 /**
   * @brief  This function handles EXTI Lines 9 to 5 interrupts requests.
   * @param  None
   * @retval None
   */
+
 void EXTI9_5_IRQHandler(void)
 {
   if(EXTI_GetITStatus(SEL_BUTTON_EXTI_LINE) != RESET)
@@ -177,6 +188,40 @@ void EXTI9_5_IRQHandler(void)
     EXTI_ClearITPendingBit(SEL_BUTTON_EXTI_LINE);  
   }
 } 
+#elif defined USE_STM32L152D_EVAL 
+
+/**
+  * @brief  This function handles EXTI Lines 15 to 10 interrupts requests.
+  * @param  None
+  * @retval None
+  */
+
+void EXTI15_10_IRQHandler(void)
+{
+  if(EXTI_GetITStatus(SEL_BUTTON_EXTI_LINE) != RESET)
+  {
+    if(index == 0)
+    {
+      /* Configure the BASEPRI register to 0x40 (Preemption priority = 1). 
+         Only IRQ with higher preemption priority than 1 are permitted. 
+         This will mask TIM3 and TIM4 IRQ from generation. */
+      __set_BASEPRI(0x40);
+      index++;
+    }
+    else
+    {
+      /* Configure the BASEPRI register to 0x00 (Preemption priority = 0). 
+         When this BASEPRI register is set to 0, it has no effect on the current 
+         priority.
+         TIM2, TIM3 and TIM4 generation is controlled by NVIC priority registers. */
+      __set_BASEPRI(0x00);
+      index = 0;
+    }
+    /* Clears the SEL Button EXTI line pending bits. */
+    EXTI_ClearITPendingBit(SEL_BUTTON_EXTI_LINE);  
+  }
+}
+#endif 
 
 /**
   * @brief  This function handles TIM2 global interrupt request.
@@ -224,7 +269,7 @@ void TIM4_IRQHandler(void)
 /*                 STM32L1xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
 /*  available peripheral interrupt handler's name please refer to the startup */
-/*  file (startup_stm32l1xx_md.s).                                            */
+/*  file (startup_stm32l1xx_xx.s).                                            */
 /******************************************************************************/
 
 /**
@@ -244,4 +289,4 @@ void TIM4_IRQHandler(void)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

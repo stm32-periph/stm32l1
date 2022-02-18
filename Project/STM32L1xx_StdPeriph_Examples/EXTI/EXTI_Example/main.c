@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    EXTI/EXTI_Example/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,13 +15,21 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL 
+  #include "stm32l152d_eval.h"
+#elif defined USE_STM32L152_EVAL 
+  #include "stm32l152_eval.h"
+#endif 
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -55,7 +63,7 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */
@@ -68,9 +76,9 @@ int main(void)
 
   /* Configure PA0 in interrupt mode */
   EXTI0_Config();
-  /* Configure PE9 and PE8 in interrupt mode */
+  /* Configure (PE8 and PE9) or PG8 in interrupt mode */
   EXTI9_5_Config();
-  /* Configure PE10 in interrupt mode */
+  /* Configure PE10 or (PG13 and PG11) in interrupt mode */
   EXTI15_10_Config();
 
   /* Generate software interrupt: simulate a falling edge applied on EXTI0 line */
@@ -117,26 +125,40 @@ void EXTI0_Config(void)
 }
 
 /**
-  * @brief  Configure PE8 and PE9 in interrupt mode
+  * @brief  Configure (PE8 and PE9) or PG8 in interrupt mode
   * @param  None
   * @retval None
   */
 void EXTI9_5_Config(void)
 {
-  /* Enable GPIOE clock */
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
-  /* Configure PE8 pin as input floating */
+  /* Configure (PE8 and PE9) or PG8 pin as input floating */
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+
+#if defined USE_STM32L152_EVAL
+  /* Enable GPIOE clock */
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9;
   GPIO_Init(GPIOE, &GPIO_InitStructure);
+#elif defined USE_STM32L152D_EVAL
+  /* Enable GPIOG clock */
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOG, ENABLE);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
+  GPIO_Init(GPIOG, &GPIO_InitStructure);
+#endif 
 
   /* Enable SYSCFG clock */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+  
+#if defined USE_STM32L152_EVAL
   /* Connect EXTI8 Line to PE8 pin */
   SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOE, EXTI_PinSource8);
   /* Connect EXTI9 Line to PE9 pin */
   SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOE, EXTI_PinSource9);
+#elif defined USE_STM32L152D_EVAL
+  /* Connect EXTI8 Line to PG8 pin */
+  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource8);
+#endif 
 
   /* Configure EXTI8 line */
   EXTI_InitStructure.EXTI_Line = EXTI_Line8;
@@ -160,31 +182,60 @@ void EXTI9_5_Config(void)
 }
 
 /**
-  * @brief  Configure PE10 in interrupt mode
+  * @brief  Configure PE10 or (PG13 and PG11) in interrupt mode
   * @param  None
   * @retval None
   */
 void EXTI15_10_Config(void)
 {
-  /* GPIOE clock is already enabled using RCC_AHBPeriphClockCmd() */
-  /* Configure PE10 pin as input floating */
+  /* GPIOE or GPIOG clock is already enabled using RCC_AHBPeriphClockCmd() */
+  /* Configure PE10 or (PG13 and PG11) pin as input floating */
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+
+#if defined USE_STM32L152_EVAL
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
   GPIO_Init(GPIOE, &GPIO_InitStructure);
-
+#elif defined USE_STM32L152D_EVAL
+  /* Enable GPIOG clock */
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOG, ENABLE);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_11;
+  GPIO_Init(GPIOG, &GPIO_InitStructure);
+#endif 
+  
   /* Enable SYSCFG clock */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-  /* Connect EXTI10 Line to PE10 pin */
-  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOE, EXTI_PinSource10);
 
+#if defined USE_STM32L152_EVAL
+   /* Connect EXTI10 Line to PE10 pin */
+  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOE, EXTI_PinSource10); 
+#elif defined USE_STM32L152D_EVAL
+  /* Connect EXTI13 Line to PG13 pin */
+  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource13);
+  /* Connect EXTI11 Line to PG11 pin */
+  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
+#endif 
+  
+  
+#if defined USE_STM32L152_EVAL
   /* Configure EXTI10 line */
   EXTI_InitStructure.EXTI_Line = EXTI_Line10;
+#elif defined USE_STM32L152D_EVAL
+  /* Configure EXTI13 line */
+  EXTI_InitStructure.EXTI_Line = EXTI_Line13;
+#endif   
+
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);
 
+#if defined USE_STM32L152D_EVAL
+  /* Configure EXTI11 line */
+  EXTI_InitStructure.EXTI_Line = EXTI_Line11;
+  EXTI_Init(&EXTI_InitStructure);
+#endif 
+  
   /* Enable and set EXTI15_10 Interrupt to the lowest priority */
   NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
@@ -223,4 +274,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

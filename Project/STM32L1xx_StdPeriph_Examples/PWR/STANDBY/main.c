@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    PWR/STANDBY/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body
   ******************************************************************************
   * @attention
@@ -15,14 +15,23 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
-#include "stm32_eval.h"
+
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval.h"
+#include "stm32l152d_eval_glass_lcd.h"
+#else
+#include "stm32l152_eval.h"
 #include "stm32l152_eval_glass_lcd.h"
+#endif
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -55,7 +64,7 @@ int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
-       file (startup_stm32l1xx_md.s) before to branch to application main.
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */     
@@ -195,6 +204,7 @@ void LCD_ShowTimeCalendar(void)
   {
   }
 
+#ifdef USE_STM32L152_EVAL    
   tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Hours & 0xF0) >> 0x04) + 0x30);
   LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 0);
 
@@ -213,6 +223,26 @@ void LCD_ShowTimeCalendar(void)
   tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Seconds & 0x0F)) + 0x30);
   LCD_GLASS_WriteChar(&tmp, POINT_OFF, APOSTROPHE_OFF, 7); 
 
+#elif USE_STM32L152D_EVAL  
+  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Hours & 0xF0) >> 0x04) + 0x30);
+  LCD_GLASS_WriteChar(&tmp, POINT_OFF, DOUBLEPOINT_OFF, 0);
+
+  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Hours & 0x0F))+ 0x30);
+  LCD_GLASS_WriteChar(&tmp, POINT_OFF, DOUBLEPOINT_OFF, 1);
+
+  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Minutes & 0xF0) >> 0x04) + 0x30);
+  LCD_GLASS_WriteChar(&tmp, POINT_OFF, DOUBLEPOINT_OFF, 2);
+
+  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Minutes & 0x0F))+ (uint8_t)0x30);
+  LCD_GLASS_WriteChar(&tmp, POINT_OFF, DOUBLEPOINT_OFF, 3);
+
+  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Seconds & 0xF0) >> 0x04)+ 0x30);
+  LCD_GLASS_WriteChar(&tmp, POINT_OFF, DOUBLEPOINT_OFF, 4);
+
+  tmp = (char)(((uint8_t)(RTC_TimeStructure.RTC_Seconds & 0x0F)) + 0x30);
+  LCD_GLASS_WriteChar(&tmp, POINT_OFF, DOUBLEPOINT_OFF, 5);
+#endif
+  
   /*!< Requesy LCD RAM update */
   LCD_UpdateDisplayRequest();
 }
@@ -246,4 +276,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

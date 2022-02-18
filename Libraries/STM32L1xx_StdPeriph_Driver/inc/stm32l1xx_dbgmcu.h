@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_dbgmcu.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the DBGMCU 
   *          firmware library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_DBGMCU_H
@@ -54,6 +57,7 @@
 #define DBGMCU_TIM2_STOP             ((uint32_t)0x00000001)
 #define DBGMCU_TIM3_STOP             ((uint32_t)0x00000002)
 #define DBGMCU_TIM4_STOP             ((uint32_t)0x00000004)
+#define DBGMCU_TIM5_STOP             ((uint32_t)0x00000008)
 #define DBGMCU_TIM6_STOP             ((uint32_t)0x00000010)
 #define DBGMCU_TIM7_STOP             ((uint32_t)0x00000020)
 #define DBGMCU_RTC_STOP              ((uint32_t)0x00000400)
@@ -61,7 +65,7 @@
 #define DBGMCU_IWDG_STOP             ((uint32_t)0x00001000)
 #define DBGMCU_I2C1_SMBUS_TIMEOUT    ((uint32_t)0x00200000)
 #define DBGMCU_I2C2_SMBUS_TIMEOUT    ((uint32_t)0x00400000)
-#define IS_DBGMCU_APB1PERIPH(PERIPH) ((((PERIPH) & 0xFF9FE3C8) == 0x00) && ((PERIPH) != 0x00))
+#define IS_DBGMCU_APB1PERIPH(PERIPH) ((((PERIPH) & 0xFF9FE3C0) == 0x00) && ((PERIPH) != 0x00))
 
 #define DBGMCU_TIM9_STOP             ((uint32_t)0x00000004)
 #define DBGMCU_TIM10_STOP            ((uint32_t)0x00000008)
@@ -95,4 +99,4 @@ void DBGMCU_APB2PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState);
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

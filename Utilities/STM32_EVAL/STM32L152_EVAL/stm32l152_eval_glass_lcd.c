@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l152_eval_glass_lcd.c
   * @author  MCD Application Team
-  * @version V4.4.0
-  * @date    31-December-2010
+  * @version V5.0.1
+  * @date    24-January-2012
   * @brief   This file includes the LCD Glass driver for Pacific Display 
   *          (LCD_PD878, PD878-DP-FH-W-LV-6-RH) Module of STM32L152-EVAL board RevB.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
   
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l152_eval_glass_lcd.h"
@@ -231,7 +234,7 @@ void LCD_GLASS_DisplayChar(uint8_t* ch, Point_Typedef point, Apostrophe_Typedef 
   */
 void LCD_GLASS_DisplayString(uint8_t* ptr)
 {
-  uint32_t i = 0x00;
+  uint8_t i = 0x00;
 
   /*!< Wait Until the last LCD RAM update finish */
   while(LCD_GetFlagStatus(LCD_FLAG_UDR) != RESET)
@@ -852,4 +855,4 @@ static void delay(__IO uint32_t nCount)
   * @}
   */   
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

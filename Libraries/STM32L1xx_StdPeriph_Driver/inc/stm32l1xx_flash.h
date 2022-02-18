@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_flash.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the FLASH 
   *          firmware library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_FLASH_H
@@ -86,8 +89,8 @@ typedef enum
   * @{
   */
   
-#define IS_FLASH_DATA_ADDRESS(ADDRESS) (((ADDRESS) >= 0x08080000) && ((ADDRESS) <= 0x08080FFF))
-#define IS_FLASH_PROGRAM_ADDRESS(ADDRESS) (((ADDRESS) >= 0x08000000) && ((ADDRESS) <= 0x0801FFFF))  
+#define IS_FLASH_DATA_ADDRESS(ADDRESS) (((ADDRESS) >= 0x08080000) && ((ADDRESS) <= 0x08082FFF))
+#define IS_FLASH_PROGRAM_ADDRESS(ADDRESS) (((ADDRESS) >= 0x08000000) && ((ADDRESS) <= 0x0805FFFF))  
 
 /**
   * @}
@@ -97,41 +100,110 @@ typedef enum
   * @{
   */
   
+#define OB_WRP_Pages0to15              ((uint32_t)0x00000001) /* Write protection of Sector0 */
+#define OB_WRP_Pages16to31             ((uint32_t)0x00000002) /* Write protection of Sector1 */
+#define OB_WRP_Pages32to47             ((uint32_t)0x00000004) /* Write protection of Sector2 */
+#define OB_WRP_Pages48to63             ((uint32_t)0x00000008) /* Write protection of Sector3 */
+#define OB_WRP_Pages64to79             ((uint32_t)0x00000010) /* Write protection of Sector4 */
+#define OB_WRP_Pages80to95             ((uint32_t)0x00000020) /* Write protection of Sector5 */
+#define OB_WRP_Pages96to111            ((uint32_t)0x00000040) /* Write protection of Sector6 */
+#define OB_WRP_Pages112to127           ((uint32_t)0x00000080) /* Write protection of Sector7 */
+#define OB_WRP_Pages128to143           ((uint32_t)0x00000100) /* Write protection of Sector8 */
+#define OB_WRP_Pages144to159           ((uint32_t)0x00000200) /* Write protection of Sector9 */
+#define OB_WRP_Pages160to175           ((uint32_t)0x00000400) /* Write protection of Sector10 */
+#define OB_WRP_Pages176to191           ((uint32_t)0x00000800) /* Write protection of Sector11 */
+#define OB_WRP_Pages192to207           ((uint32_t)0x00001000) /* Write protection of Sector12 */
+#define OB_WRP_Pages208to223           ((uint32_t)0x00002000) /* Write protection of Sector13 */
+#define OB_WRP_Pages224to239           ((uint32_t)0x00004000) /* Write protection of Sector14 */
+#define OB_WRP_Pages240to255           ((uint32_t)0x00008000) /* Write protection of Sector15 */
+#define OB_WRP_Pages256to271           ((uint32_t)0x00010000) /* Write protection of Sector16 */
+#define OB_WRP_Pages272to287           ((uint32_t)0x00020000) /* Write protection of Sector17 */
+#define OB_WRP_Pages288to303           ((uint32_t)0x00040000) /* Write protection of Sector18 */
+#define OB_WRP_Pages304to319           ((uint32_t)0x00080000) /* Write protection of Sector19 */
+#define OB_WRP_Pages320to335           ((uint32_t)0x00100000) /* Write protection of Sector20 */
+#define OB_WRP_Pages336to351           ((uint32_t)0x00200000) /* Write protection of Sector21 */
+#define OB_WRP_Pages352to367           ((uint32_t)0x00400000) /* Write protection of Sector22 */
+#define OB_WRP_Pages368to383           ((uint32_t)0x00800000) /* Write protection of Sector23 */
+#define OB_WRP_Pages384to399           ((uint32_t)0x01000000) /* Write protection of Sector24 */
+#define OB_WRP_Pages400to415           ((uint32_t)0x02000000) /* Write protection of Sector25 */
+#define OB_WRP_Pages416to431           ((uint32_t)0x04000000) /* Write protection of Sector26 */
+#define OB_WRP_Pages432to447           ((uint32_t)0x08000000) /* Write protection of Sector27 */
+#define OB_WRP_Pages448to463           ((uint32_t)0x10000000) /* Write protection of Sector28 */
+#define OB_WRP_Pages464to479           ((uint32_t)0x20000000) /* Write protection of Sector29 */
+#define OB_WRP_Pages480to495           ((uint32_t)0x40000000) /* Write protection of Sector30 */
+#define OB_WRP_Pages496to511           ((uint32_t)0x80000000) /* Write protection of Sector31 */
 
-#define OB_WRP_Pages0to15           ((uint32_t)0x00000001) /* Write protection of Sector0 */
-#define OB_WRP_Pages16to31          ((uint32_t)0x00000002) /* Write protection of Sector1 */
-#define OB_WRP_Pages32to47          ((uint32_t)0x00000004) /* Write protection of Sector2 */
-#define OB_WRP_Pages48to63          ((uint32_t)0x00000008) /* Write protection of Sector3 */
-#define OB_WRP_Pages64to79          ((uint32_t)0x00000010) /* Write protection of Sector4 */
-#define OB_WRP_Pages80to95          ((uint32_t)0x00000020) /* Write protection of Sector5 */
-#define OB_WRP_Pages96to111         ((uint32_t)0x00000040) /* Write protection of Sector6 */
-#define OB_WRP_Pages112to127        ((uint32_t)0x00000080) /* Write protection of Sector7 */
-#define OB_WRP_Pages128to143        ((uint32_t)0x00000100) /* Write protection of Sector8 */
-#define OB_WRP_Pages144to159        ((uint32_t)0x00000200) /* Write protection of Sector9 */
-#define OB_WRP_Pages160to175        ((uint32_t)0x00000400) /* Write protection of Sector10 */
-#define OB_WRP_Pages176to191        ((uint32_t)0x00000800) /* Write protection of Sector11 */
-#define OB_WRP_Pages192to207        ((uint32_t)0x00001000) /* Write protection of Sector12 */
-#define OB_WRP_Pages208to223        ((uint32_t)0x00002000) /* Write protection of Sector13 */
-#define OB_WRP_Pages224to239        ((uint32_t)0x00004000) /* Write protection of Sector14 */
-#define OB_WRP_Pages240to255        ((uint32_t)0x00008000) /* Write protection of Sector15 */
-#define OB_WRP_Pages256to271        ((uint32_t)0x00010000) /* Write protection of Sector16 */
-#define OB_WRP_Pages272to287        ((uint32_t)0x00020000) /* Write protection of Sector17 */
-#define OB_WRP_Pages288to303        ((uint32_t)0x00040000) /* Write protection of Sector18 */
-#define OB_WRP_Pages304to319        ((uint32_t)0x00080000) /* Write protection of Sector19 */
-#define OB_WRP_Pages320to335        ((uint32_t)0x00100000) /* Write protection of Sector20 */
-#define OB_WRP_Pages336to351        ((uint32_t)0x00200000) /* Write protection of Sector21 */
-#define OB_WRP_Pages352to367        ((uint32_t)0x00400000) /* Write protection of Sector22 */
-#define OB_WRP_Pages368to383        ((uint32_t)0x00800000) /* Write protection of Sector23 */
-#define OB_WRP_Pages384to399        ((uint32_t)0x01000000) /* Write protection of Sector24 */
-#define OB_WRP_Pages400to415        ((uint32_t)0x02000000) /* Write protection of Sector25 */
-#define OB_WRP_Pages416to431        ((uint32_t)0x04000000) /* Write protection of Sector26 */
-#define OB_WRP_Pages432to447        ((uint32_t)0x08000000) /* Write protection of Sector27 */
-#define OB_WRP_Pages448to463        ((uint32_t)0x10000000) /* Write protection of Sector28 */
-#define OB_WRP_Pages464to479        ((uint32_t)0x20000000) /* Write protection of Sector29 */
-#define OB_WRP_Pages480to495        ((uint32_t)0x40000000) /* Write protection of Sector30 */
-#define OB_WRP_Pages496to511        ((uint32_t)0x80000000) /* Write protection of Sector31 */
+#define OB_WRP_AllPages                ((uint32_t)0xFFFFFFFF) /*!< Write protection of all Sectors */
 
-#define OB_WRP_AllPages       ((uint32_t)0xFFFFFFFF) /*!< Write protection of all Sectors */
+#define OB_WRP1_Pages512to527          ((uint32_t)0x00000001) /* Write protection of Sector32 */
+#define OB_WRP1_Pages528to543          ((uint32_t)0x00000002) /* Write protection of Sector33 */
+#define OB_WRP1_Pages544to559          ((uint32_t)0x00000004) /* Write protection of Sector34 */
+#define OB_WRP1_Pages560to575          ((uint32_t)0x00000008) /* Write protection of Sector35 */
+#define OB_WRP1_Pages576to591          ((uint32_t)0x00000010) /* Write protection of Sector36 */
+#define OB_WRP1_Pages592to607          ((uint32_t)0x00000020) /* Write protection of Sector37 */
+#define OB_WRP1_Pages608to623          ((uint32_t)0x00000040) /* Write protection of Sector38 */
+#define OB_WRP1_Pages624to639          ((uint32_t)0x00000080) /* Write protection of Sector39 */
+#define OB_WRP1_Pages640to655          ((uint32_t)0x00000100) /* Write protection of Sector40 */
+#define OB_WRP1_Pages656to671          ((uint32_t)0x00000200) /* Write protection of Sector41 */
+#define OB_WRP1_Pages672to687          ((uint32_t)0x00000400) /* Write protection of Sector42 */
+#define OB_WRP1_Pages688to703          ((uint32_t)0x00000800) /* Write protection of Sector43 */
+#define OB_WRP1_Pages704to719          ((uint32_t)0x00001000) /* Write protection of Sector44 */
+#define OB_WRP1_Pages720to735          ((uint32_t)0x00002000) /* Write protection of Sector45 */
+#define OB_WRP1_Pages736to751          ((uint32_t)0x00004000) /* Write protection of Sector46 */
+#define OB_WRP1_Pages752to767          ((uint32_t)0x00008000) /* Write protection of Sector47 */
+#define OB_WRP1_Pages768to783          ((uint32_t)0x00010000) /* Write protection of Sector48 */
+#define OB_WRP1_Pages784to799          ((uint32_t)0x00020000) /* Write protection of Sector49 */
+#define OB_WRP1_Pages800to815          ((uint32_t)0x00040000) /* Write protection of Sector50 */
+#define OB_WRP1_Pages816to831          ((uint32_t)0x00080000) /* Write protection of Sector51 */
+#define OB_WRP1_Pages832to847          ((uint32_t)0x00100000) /* Write protection of Sector52 */
+#define OB_WRP1_Pages848to863          ((uint32_t)0x00200000) /* Write protection of Sector53 */
+#define OB_WRP1_Pages864to879          ((uint32_t)0x00400000) /* Write protection of Sector54 */
+#define OB_WRP1_Pages880to895          ((uint32_t)0x00800000) /* Write protection of Sector55 */
+#define OB_WRP1_Pages896to911          ((uint32_t)0x01000000) /* Write protection of Sector56 */
+#define OB_WRP1_Pages912to927          ((uint32_t)0x02000000) /* Write protection of Sector57 */
+#define OB_WRP1_Pages928to943          ((uint32_t)0x04000000) /* Write protection of Sector58 */
+#define OB_WRP1_Pages944to959          ((uint32_t)0x08000000) /* Write protection of Sector59 */
+#define OB_WRP1_Pages960to975          ((uint32_t)0x10000000) /* Write protection of Sector60 */
+#define OB_WRP1_Pages976to991          ((uint32_t)0x20000000) /* Write protection of Sector61 */
+#define OB_WRP1_Pages992to1007         ((uint32_t)0x40000000) /* Write protection of Sector62 */
+#define OB_WRP1_Pages1008to1023        ((uint32_t)0x80000000) /* Write protection of Sector63 */
+
+#define OB_WRP1_AllPages               ((uint32_t)0xFFFFFFFF) /*!< Write protection of all Sectors */
+
+#define OB_WRP2_Pages1024to1039        ((uint32_t)0x00000001) /* Write protection of Sector64 */
+#define OB_WRP2_Pages1040to1055        ((uint32_t)0x00000002) /* Write protection of Sector65 */
+#define OB_WRP2_Pages1056to1071        ((uint32_t)0x00000004) /* Write protection of Sector66 */
+#define OB_WRP2_Pages1072to1087        ((uint32_t)0x00000008) /* Write protection of Sector67 */
+#define OB_WRP2_Pages1088to1103        ((uint32_t)0x00000010) /* Write protection of Sector68 */
+#define OB_WRP2_Pages1104to1119        ((uint32_t)0x00000020) /* Write protection of Sector69 */
+#define OB_WRP2_Pages1120to1135        ((uint32_t)0x00000040) /* Write protection of Sector70 */
+#define OB_WRP2_Pages1136to1151        ((uint32_t)0x00000080) /* Write protection of Sector71 */
+#define OB_WRP2_Pages1152to1167        ((uint32_t)0x00000100) /* Write protection of Sector72 */
+#define OB_WRP2_Pages1168to1183        ((uint32_t)0x00000200) /* Write protection of Sector73 */
+#define OB_WRP2_Pages1184to1199        ((uint32_t)0x00000400) /* Write protection of Sector74 */
+#define OB_WRP2_Pages1200to1215        ((uint32_t)0x00000800) /* Write protection of Sector75 */
+#define OB_WRP2_Pages1216to1231        ((uint32_t)0x00001000) /* Write protection of Sector76 */
+#define OB_WRP2_Pages1232to1247        ((uint32_t)0x00002000) /* Write protection of Sector77 */
+#define OB_WRP2_Pages1248to1263        ((uint32_t)0x00004000) /* Write protection of Sector78 */
+#define OB_WRP2_Pages1264to1279        ((uint32_t)0x00008000) /* Write protection of Sector79 */
+#define OB_WRP2_Pages1280to1295        ((uint32_t)0x00010000) /* Write protection of Sector80 */
+#define OB_WRP2_Pages1296to1311        ((uint32_t)0x00020000) /* Write protection of Sector81 */
+#define OB_WRP2_Pages1312to1327        ((uint32_t)0x00040000) /* Write protection of Sector82 */
+#define OB_WRP2_Pages1328to1343        ((uint32_t)0x00080000) /* Write protection of Sector83 */
+#define OB_WRP2_Pages1344to1359        ((uint32_t)0x00100000) /* Write protection of Sector84 */
+#define OB_WRP2_Pages1360to1375        ((uint32_t)0x00200000) /* Write protection of Sector85 */
+#define OB_WRP2_Pages1376to1391        ((uint32_t)0x00400000) /* Write protection of Sector86 */
+#define OB_WRP2_Pages1392to1407        ((uint32_t)0x00800000) /* Write protection of Sector87 */
+#define OB_WRP2_Pages1408to1423        ((uint32_t)0x01000000) /* Write protection of Sector88 */
+#define OB_WRP2_Pages1424to1439        ((uint32_t)0x02000000) /* Write protection of Sector89 */
+#define OB_WRP2_Pages1440to1455        ((uint32_t)0x04000000) /* Write protection of Sector90 */
+#define OB_WRP2_Pages1456to1471        ((uint32_t)0x08000000) /* Write protection of Sector91 */
+#define OB_WRP2_Pages1472to1487        ((uint32_t)0x10000000) /* Write protection of Sector92 */
+#define OB_WRP2_Pages1488to1503        ((uint32_t)0x20000000) /* Write protection of Sector93 */
+#define OB_WRP2_Pages1504to1519        ((uint32_t)0x40000000) /* Write protection of Sector94 */
+#define OB_WRP2_Pages1520to1535        ((uint32_t)0x80000000) /* Write protection of Sector95 */
+
+#define OB_WRP2_AllPages               ((uint32_t)0xFFFFFFFF) /*!< Write protection of all Sectors */
 
 #define IS_OB_WRP(PAGE) (((PAGE) != 0x0000000))
 
@@ -194,6 +266,21 @@ typedef enum
   * @}
   */
 
+/** @defgroup Option_Bytes_BOOT
+  * @{
+  */
+
+#define OB_BOOT_BANK2                  ((uint8_t)0x00) /*!< At startup, if boot pins are set in boot from user Flash position
+                                                            and this parameter is selected the device will boot from Bank 2 
+                                                            or Bank 1, depending on the activation of the bank */
+#define OB_BOOT_BANK1                  ((uint8_t)0x80) /*!< At startup, if boot pins are set in boot from user Flash position
+                                                            and this parameter is selected the device will boot from Bank1(Default) */
+#define IS_OB_BOOT_BANK(BANK) (((BANK) == OB_BOOT_BANK2) || ((BANK) == OB_BOOT_BANK1))
+
+/**
+  * @}
+  */
+
 /** @defgroup Option_Bytes_BOR_Level 
   * @{
   */
@@ -229,13 +316,15 @@ typedef enum
 #define FLASH_FLAG_PGAERR              FLASH_SR_PGAERR  /*!< FLASH Programming Alignment error flag */
 #define FLASH_FLAG_SIZERR              FLASH_SR_SIZERR  /*!< FLASH Size error flag  */
 #define FLASH_FLAG_OPTVERR             FLASH_SR_OPTVERR  /*!< FLASH Option Validity error flag  */
+#define FLASH_FLAG_OPTVERRUSR          FLASH_SR_OPTVERRUSR  /*!< FLASH Option User Validity error flag  */
  
-#define IS_FLASH_CLEAR_FLAG(FLAG) ((((FLAG) & (uint32_t)0xFFFFF0FD) == 0x00000000) && ((FLAG) != 0x00000000))
+#define IS_FLASH_CLEAR_FLAG(FLAG) ((((FLAG) & (uint32_t)0xFFFFE0FD) == 0x00000000) && ((FLAG) != 0x00000000))
 
 #define IS_FLASH_GET_FLAG(FLAG)  (((FLAG) == FLASH_FLAG_BSY) || ((FLAG) == FLASH_FLAG_EOP) || \
                                   ((FLAG) == FLASH_FLAG_ENDHV) || ((FLAG) == FLASH_FLAG_READY ) || \
                                   ((FLAG) ==  FLASH_FLAG_WRPERR) || ((FLAG) == FLASH_FLAG_PGAERR ) || \
-                                  ((FLAG) ==  FLASH_FLAG_SIZERR) || ((FLAG) == FLASH_FLAG_OPTVERR))
+                                  ((FLAG) ==  FLASH_FLAG_SIZERR) || ((FLAG) == FLASH_FLAG_OPTVERR) || \
+                                  ((FLAG) ==  FLASH_FLAG_OPTVERRUSR))
 /**
   * @}
   */ 
@@ -273,6 +362,15 @@ typedef enum
   * @}
   */ 
 
+/** @defgroup CMSIS_Legacy 
+  * @{
+  */
+#if defined ( __ICCARM__ )   
+#define InterruptType_ACTLR_DISMCYCINT_Msk         IntType_ACTLR_DISMCYCINT_Msk
+#endif
+/**
+  * @}
+  */ 
 /**
   * @}
   */ 
@@ -299,6 +397,8 @@ FLASH_Status FLASH_FastProgramWord(uint32_t Address, uint32_t Data);
 void DATA_EEPROM_Unlock(void);
 void DATA_EEPROM_Lock(void);
 void DATA_EEPROM_FixedTimeProgramCmd(FunctionalState NewState);
+FLASH_Status DATA_EEPROM_EraseByte(uint32_t Address);
+FLASH_Status DATA_EEPROM_EraseHalfWord(uint32_t Address);
 FLASH_Status DATA_EEPROM_EraseWord(uint32_t Address);
 FLASH_Status DATA_EEPROM_FastProgramByte(uint32_t Address, uint8_t Data);
 FLASH_Status DATA_EEPROM_FastProgramHalfWord(uint32_t Address, uint16_t Data);
@@ -312,11 +412,16 @@ void FLASH_OB_Unlock(void);
 void FLASH_OB_Lock(void);
 void FLASH_OB_Launch(void);
 FLASH_Status FLASH_OB_WRPConfig(uint32_t OB_WRP, FunctionalState NewState);
+FLASH_Status FLASH_OB_WRP1Config(uint32_t OB_WRP1, FunctionalState NewState);
+FLASH_Status FLASH_OB_WRP2Config(uint32_t OB_WRP2, FunctionalState NewState);
 FLASH_Status FLASH_OB_RDPConfig(uint8_t OB_RDP);
 FLASH_Status FLASH_OB_UserConfig(uint8_t OB_IWDG, uint8_t OB_STOP, uint8_t OB_STDBY);
 FLASH_Status FLASH_OB_BORConfig(uint8_t OB_BOR);
+FLASH_Status FLASH_OB_BootConfig(uint8_t OB_BOOT);
 uint8_t FLASH_OB_GetUser(void);
 uint32_t FLASH_OB_GetWRP(void);
+uint32_t FLASH_OB_GetWRP1(void);
+uint32_t FLASH_OB_GetWRP2(void);
 FlagStatus FLASH_OB_GetRDP(void);
 uint8_t FLASH_OB_GetBOR(void);
 
@@ -332,10 +437,12 @@ FLASH_Status FLASH_WaitForLastOperation(uint32_t Timeout);
   *         These functions are defined inside the "stm32l1xx_flash_ramfunc.c"
   *         file.
   */ 
-FLASH_Status FLASH_RUNPowerDownCmd(FunctionalState NewState);
-FLASH_Status FLASH_ProgramHalfPage(uint32_t Address, uint32_t* pBuffer);
-FLASH_Status DATA_EEPROM_EraseDoubleWord(uint32_t Address);
-FLASH_Status DATA_EEPROM_ProgramDoubleWord(uint32_t Address, uint64_t Data);
+__RAM_FUNC FLASH_RUNPowerDownCmd(FunctionalState NewState);
+__RAM_FUNC FLASH_EraseParallelPage(uint32_t Page_Address1, uint32_t Page_Address2);
+__RAM_FUNC FLASH_ProgramHalfPage(uint32_t Address, uint32_t* pBuffer);
+__RAM_FUNC FLASH_ProgramParallelHalfPage(uint32_t Address1, uint32_t* pBuffer1, uint32_t Address2, uint32_t* pBuffer2);
+__RAM_FUNC DATA_EEPROM_EraseDoubleWord(uint32_t Address);
+__RAM_FUNC DATA_EEPROM_ProgramDoubleWord(uint32_t Address, uint64_t Data);
   
 #ifdef __cplusplus
 }
@@ -351,4 +458,4 @@ FLASH_Status DATA_EEPROM_ProgramDoubleWord(uint32_t Address, uint64_t Data);
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

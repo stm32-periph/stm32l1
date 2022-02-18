@@ -2,62 +2,57 @@
   ******************************************************************************
   * @file    stm32l1xx_comp.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the comparators (COMP1 and COMP2) peripheral: 
-  *           - Comparators configuration
-  *           - Window mode control
-  *           - Internal Reference Voltage (VREFINT) output
+  *           + Comparators configuration
+  *           + Window mode control
+  *           + Internal Reference Voltage (VREFINT) output
   *
   *  @verbatim
-  *
-  *          ===================================================================
-  *                                 How to use this driver
-  *          ===================================================================
-  *                 
-  *          The device integrates two analog comparators COMP1 and COMP2:            
-  *             - COMP1 is a fixed threshold (VREFINT) that shares the non inverting
-  *               input with the ADC channels.
-  *
-  *             - COMP2 is a rail-to-rail comparator whose the inverting input 
-  *               can be selected among: DAC_OUT1, DAC_OUT2, 1/4 VREFINT,
-  *               1/2 VERFINT, 3/4 VREFINT, VREFINT, PB3 and whose the output
-  *               can be redirected to embedded timers: TIM2, TIM3, TIM4, TIM10
-  *
-  *             - The two comparators COMP1 and COMP2 can be combined in window
-  *               mode.
-  *
-  * @note
-  *          1- Comparator APB clock must be enabled to get write access
-  *             to comparator register using
-  *             RCC_APB1PeriphClockCmd(RCC_APB1Periph_COMP, ENABLE);
-  *
-  *          2- COMP1 comparator and ADC can't be used at the same time since
-  *             they share the same ADC switch matrix (analog switches).
-  *
-  *          3- When an I/O is used as comparator input, the corresponding GPIO 
-  *             registers should be configured in analog mode.
-  *
-  *          4- Comparators outputs (CMP1OUT and CMP2OUT) are not mapped on
-  *             GPIO pin. They are only internal.
-  *             To get the comparator output level, use COMP_GetOutputLevel()
-  *
-  *          5- COMP1 and COMP2 outputs are internally connected to EXTI Line 21
-  *             and EXTI Line 22 respectively.
-  *             Interrupts can be used by configuring the EXTI Line using the 
-  *             EXTI peripheral driver.
-  *
-  *          6- After enabling the comparator (COMP1 or COMP2), user should wait
-  *             for start-up time (tSTART) to get right output levels.
-  *             Please refer to product datasheet for more information on tSTART.  
-  *
-  *          7- Comparators cannot be used to exit the device from Sleep or Stop 
-  *             mode when the internal reference voltage is switched off using 
-  *             the PWR_UltraLowPowerCmd() function (ULP bit in the PWR_CR register).
-  *
-  *  @endverbatim
-  *    
+ ===============================================================================
+                     ##### How to use this driver #####
+ ===============================================================================
+    [..] The device integrates two analog comparators COMP1 and COMP2:
+         (+) COMP1 is a fixed threshold (VREFINT) that shares the non inverting
+             input with the ADC channels.
+         (+) COMP2 is a rail-to-rail comparator whose the inverting input can be 
+             selected among: DAC_OUT1, DAC_OUT2, 1/4 VREFINT, 1/2 VERFINT, 3/4 
+             VREFINT, VREFINT, PB3 and whose the output can be redirected to 
+             embedded timers: TIM2, TIM3, TIM4, TIM10.
+  
+         (+) The two comparators COMP1 and COMP2 can be combined in window mode.
+
+         -@-
+            (#@) Comparator APB clock must be enabled to get write access
+                 to comparator register using
+                 RCC_APB1PeriphClockCmd(RCC_APB1Periph_COMP, ENABLE).
+  
+            (#@) COMP1 comparator and ADC can't be used at the same time since
+                 they share the same ADC switch matrix (analog switches).
+  
+            (#@) When an I/O is used as comparator input, the corresponding GPIO 
+                 registers should be configured in analog mode.
+  
+            (#@) Comparators outputs (CMP1OUT and CMP2OUT) are not mapped on
+                 GPIO pin. They are only internal.
+                 To get the comparator output level, use COMP_GetOutputLevel().
+  
+            (#@) COMP1 and COMP2 outputs are internally connected to EXTI Line 21
+                 and EXTI Line 22 respectively.
+                 Interrupts can be used by configuring the EXTI Line using the 
+                 EXTI peripheral driver.
+  
+            (#@) After enabling the comparator (COMP1 or COMP2), user should wait
+                 for start-up time (tSTART) to get right output levels.
+                 Please refer to product datasheet for more information on tSTART.
+  
+            (#@) Comparators cannot be used to exit the device from Sleep or Stop 
+                 mode when the internal reference voltage is switched off using 
+                 the PWR_UltraLowPowerCmd() function (ULP bit in the PWR_CR register).
+  
+    @endverbatim
   ******************************************************************************
   * @attention
   *
@@ -68,9 +63,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_comp.h"
@@ -80,7 +78,7 @@
   */
 
 /** @defgroup COMP 
-  * @brief COMP driver modules
+  * @brief COMP driver modules.
   * @{
   */ 
 
@@ -96,12 +94,12 @@
   */
 
 /** @defgroup COMP_Group1 Initialization and Configuration functions
- *  @brief   Initialization and Configuration functions 
+ *  @brief   Initialization and Configuration functions.
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                        Initialization and Configuration functions
- ===============================================================================  
+              ##### Initialization and Configuration functions #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -119,16 +117,12 @@ void COMP_DeInit(void)
 
 /**
   * @brief  Initializes the COMP2 peripheral according to the specified parameters
-  *         in the COMP_InitStruct:
-  *           - COMP_InvertingInput specify the inverting input of COMP2
-  *           - COMP_OutputSelect connect the output of COMP2 to selected timer
-  *             input (Input capture / Output Compare Reference Clear)
-  *           - COMP_Speed configures COMP2 speed for optimum speed/consumption ratio
+  *         in the COMP_InitStruct.
   * @note   This function configures only COMP2.
   * @note   COMP2 comparator is enabled as soon as the INSEL[2:0] bits are 
   *         different from "000".
   * @param  COMP_InitStruct: pointer to an COMP_InitTypeDef structure that contains 
-  *         the configuration information for the specified COMP peripheral.
+  *         the configuration information for the specified COMP peripheral.  
   * @retval None
   */
 void COMP_Init(COMP_InitTypeDef* COMP_InitStruct)
@@ -161,12 +155,12 @@ void COMP_Init(COMP_InitTypeDef* COMP_InitStruct)
 
 /**
   * @brief  Enable or disable the COMP1 peripheral.
-  *         After enabling COMP1, the following functions should be called to 
+  * @note   After enabling COMP1, the following functions should be called to 
   *         connect the selected GPIO input to COMP1 non inverting input:
-  *          - Enable switch control mode using SYSCFG_RISwitchControlModeCmd()
-  *          - Close VCOMP switch using SYSCFG_RIIOSwitchConfig()
-  *          - Close the I/O switch number n corresponding to the I/O 
-  *            using SYSCFG_RIIOSwitchConfig()
+  * @note   Enable switch control mode using SYSCFG_RISwitchControlModeCmd()
+  * @note   Close VCOMP switch using SYSCFG_RIIOSwitchConfig()
+  * @note   Close the I/O switch number n corresponding to the I/O 
+  *         using SYSCFG_RIIOSwitchConfig()
   * @param  NewState: new state of the COMP1 peripheral.
   *         This parameter can be: ENABLE or DISABLE.
   * @note   This function enables/disables only the COMP1.
@@ -190,18 +184,18 @@ void COMP_Cmd(FunctionalState NewState)
 }
 
 /**
-  * @brief  Return the output level (high or low) of the selected comparator:
-  *         - Comparator output is low when the non-inverting input is at a lower
-  *           voltage than the inverting input
-  *         - Comparator output is high when the non-inverting input is at a higher
-  *           voltage than the inverting input
+  * @brief  Return the output level (high or low) of the selected comparator.
+  * @note   Comparator output is low when the noninverting input is at a lower
+  *         voltage than the inverting input.
+  * @note   Comparator output is high when the noninverting input is at a higher
+  *         voltage than the inverting input.
   * @note   Comparators outputs aren't available on GPIO (outputs levels are 
   *         only internal). The COMP1 and COMP2 outputs are connected internally 
-  *         to the EXTI Line 21 and Line 22 respectively.  
-  * @param  COMP_Selection: the selected comparator. 
+  *         to the EXTI Line 21 and Line 22 respectively.
+  * @param  COMP_Selection: the selected comparator.
   *   This parameter can be one of the following values:
   *     @arg COMP_Selection_COMP1: COMP1 selected
-  *     @arg COMP_Selection_COMP2: COMP2 selected  
+  *     @arg COMP_Selection_COMP2: COMP2 selected
   * @retval Returns the selected comparator output level.
   */
 uint8_t COMP_GetOutputLevel(uint32_t COMP_Selection)
@@ -248,16 +242,41 @@ uint8_t COMP_GetOutputLevel(uint32_t COMP_Selection)
 }
 
 /**
+  * @brief  Close or Open the SW1 switch.
+  * @param  NewState: new state of the SW1 switch.
+  *         This parameter can be: ENABLE or DISABLE.
+  * @note   ENABLE to close the SW1 switch
+  * @note   DISABLE to open the SW1 switch
+  * @retval None.
+  */
+void COMP_SW1SwitchConfig(FunctionalState NewState)
+{
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+  {
+    /* Close SW1 switch */
+    COMP->CSR |= (uint32_t) COMP_CSR_SW1;
+  }
+  else
+  {
+    /* Open SW1 switch */
+    COMP->CSR &= (uint32_t)(~COMP_CSR_SW1);
+  }
+}
+
+/**
   * @}
   */
 
 /** @defgroup COMP_Group2 Window mode control function
- *  @brief   Window mode control function 
+ *  @brief   Window mode control function.
  *
-@verbatim   
+@verbatim
  ===============================================================================
-                              Window mode control function
- ===============================================================================  
+                  ##### Window mode control function #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -266,14 +285,14 @@ uint8_t COMP_GetOutputLevel(uint32_t COMP_Selection)
 /**
   * @brief  Enables or disables the window mode.
   *         In window mode:
-  *          - COMP1 inverting input is fixed to VREFINT defining the first
-  *            threshold
-  *          - COMP2 inverting input is configurable (DAC_OUT1, DAC_OUT2, VREFINT
-  *            sub-multiples, PB3) defining the second threshold
-  *          - COMP1 and COMP2 non inverting inputs are connected together.
+  * @note   COMP1 inverting input is fixed to VREFINT defining the first
+  *         threshold.
+  * @note   COMP2 inverting input is configurable (DAC_OUT1, DAC_OUT2, VREFINT
+  *         sub-multiples, PB3) defining the second threshold.
+  * @note   COMP1 and COMP2 non inverting inputs are connected together.
   * @note   In window mode, only the Group 6 (PB4 or PB5) can be used as
-  *         non-inverting inputs.
-  * param   NewState: new state of the window mode. 
+  *         noninverting inputs.
+  * @param   NewState: new state of the window mode. 
   *   This parameter can be ENABLE or DISABLE.
   * @retval None
   */
@@ -299,12 +318,12 @@ void COMP_WindowCmd(FunctionalState NewState)
   */
 
 /** @defgroup COMP_Group3 Internal Reference Voltage output function
- *  @brief   Internal Reference Voltage (VREFINT) output function 
+ *  @brief   Internal Reference Voltage (VREFINT) output function.
  *
-@verbatim   
+@verbatim
  ===============================================================================
-             Internal Reference Voltage (VREFINT) output function
- ===============================================================================  
+      ##### Internal Reference Voltage (VREFINT) output function #####
+ ===============================================================================
 
 @endverbatim
   * @{
@@ -353,4 +372,4 @@ void COMP_VrefintOutputCmd(FunctionalState NewState)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

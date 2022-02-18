@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx_tim.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   This file contains all the functions prototypes for the TIM firmware 
   *          library.
   ******************************************************************************
@@ -16,9 +16,12 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_TIM_H
@@ -54,7 +57,7 @@ typedef struct
   uint16_t TIM_CounterMode;       /*!< Specifies the counter mode.
                                        This parameter can be a value of @ref TIM_Counter_Mode */
 
-  uint16_t TIM_Period;            /*!< Specifies the period value to be loaded into the active
+  uint32_t TIM_Period;            /*!< Specifies the period value to be loaded into the active
                                        Auto-Reload Register at the next update event.
                                        This parameter must be a number between 0x0000 and 0xFFFF.  */ 
 
@@ -75,7 +78,7 @@ typedef struct
   uint16_t TIM_OutputState;   /*!< Specifies the TIM Output Compare state.
                                    This parameter can be a value of @ref TIM_Output_Compare_state */
 
-  uint16_t TIM_Pulse;         /*!< Specifies the pulse value to be loaded into the Capture Compare Register. 
+  uint32_t TIM_Pulse;         /*!< Specifies the pulse value to be loaded into the Capture Compare Register. 
                                    This parameter can be a number between 0x0000 and 0xFFFF */
 
   uint16_t TIM_OCPolarity;    /*!< Specifies the output polarity.
@@ -116,49 +119,57 @@ typedef struct
 #define IS_TIM_ALL_PERIPH(PERIPH) (((PERIPH) == TIM2) || \
                                    ((PERIPH) == TIM3) || \
                                    ((PERIPH) == TIM4) || \
+                                   ((PERIPH) == TIM5) || \
                                    ((PERIPH) == TIM6) || \
                                    ((PERIPH) == TIM7) || \
                                    ((PERIPH) == TIM9) || \
                                    ((PERIPH) == TIM10) || \
                                    ((PERIPH) == TIM11))
 
-/* LIST1: TIM2, TIM3, TIM4, TIM9, TIM10 and TIM11 */
+/* LIST1: TIM2, TIM3, TIM4, TIM5, TIM9, TIM10 and TIM11 */
 #define IS_TIM_LIST1_PERIPH(PERIPH) (((PERIPH) == TIM2) || \
                                      ((PERIPH) == TIM3) || \
                                      ((PERIPH) == TIM4) || \
+                                     ((PERIPH) == TIM5) || \
                                      ((PERIPH) == TIM9) || \
                                      ((PERIPH) == TIM10) || \
                                      ((PERIPH) == TIM11))
 
-/* LIST3: TIM2, TIM3 and TIM4 */
+/* LIST3: TIM2, TIM3, TIM4 and TIM5 */
 #define IS_TIM_LIST3_PERIPH(PERIPH) (((PERIPH) == TIM2) || \
                                      ((PERIPH) == TIM3) || \
-                                     ((PERIPH) == TIM4))
+                                     ((PERIPH) == TIM4) || \
+                                     ((PERIPH) == TIM5))
 
-/* LIST2: TIM2, TIM3, TIM4 and TIM9 */
+/* LIST2: TIM2, TIM3, TIM4, TIM5 and TIM9 */
 #define IS_TIM_LIST2_PERIPH(PERIPH) (((PERIPH) == TIM2) || \
                                      ((PERIPH) == TIM3) || \
-                                     ((PERIPH) == TIM4) ||\
+                                     ((PERIPH) == TIM4) || \
+                                     ((PERIPH) == TIM5) || \
                                      ((PERIPH) == TIM9))
 
-/* LIST5: TIM2, TIM3, TIM4, TIM6, TIM7 and TIM9 */
+/* LIST5: TIM2, TIM3, TIM4, TIM5, TIM6, TIM7 and TIM9 */
 #define IS_TIM_LIST5_PERIPH(PERIPH) (((PERIPH) == TIM2) || \
                                      ((PERIPH) == TIM3) || \
-                                     ((PERIPH) == TIM4) ||\
+                                     ((PERIPH) == TIM4) || \
+                                     ((PERIPH) == TIM5) ||\
                                      ((PERIPH) == TIM6) || \
                                      ((PERIPH) == TIM7) ||\
                                      ((PERIPH) == TIM9))
 
-/* LIST4: TIM2, TIM3, TIM4, TIM6 and TIM7 */
+/* LIST4: TIM2, TIM3, TIM4, TIM5, TIM6 and TIM7 */
 #define IS_TIM_LIST4_PERIPH(PERIPH) (((PERIPH) == TIM2) || \
                                      ((PERIPH) == TIM3) || \
-                                     ((PERIPH) == TIM4) ||\
+                                     ((PERIPH) == TIM4) || \
+                                     ((PERIPH) == TIM5) ||\
                                      ((PERIPH) == TIM6) || \
                                      ((PERIPH) == TIM7))
 
-/* LIST6: TIM9, TIM10 and TIM11 */
-#define IS_TIM_LIST6_PERIPH(PERIPH) (((PERIPH) == TIM9) || \
-                                     ((PERIPH) == TIM10) ||\
+/* LIST6: TIM2, TIM3, TIM9, TIM10 and TIM11 */
+#define IS_TIM_LIST6_PERIPH(PERIPH) (((PERIPH) == TIM2) || \
+                                     ((PERIPH) == TIM3) || \
+                                     ((PERIPH) == TIM9) || \
+                                     ((PERIPH) == TIM10) || \
                                      ((PERIPH) == TIM11))
 
 
@@ -378,12 +389,12 @@ typedef struct
 #define TIM_DMABase_CNT                    ((uint16_t)0x0009)
 #define TIM_DMABase_PSC                    ((uint16_t)0x000A)
 #define TIM_DMABase_ARR                    ((uint16_t)0x000B)
-#define TIM_DMABase_RCR                    ((uint16_t)0x000C)
 #define TIM_DMABase_CCR1                   ((uint16_t)0x000D)
 #define TIM_DMABase_CCR2                   ((uint16_t)0x000E)
 #define TIM_DMABase_CCR3                   ((uint16_t)0x000F)
 #define TIM_DMABase_CCR4                   ((uint16_t)0x0010)
 #define TIM_DMABase_DCR                    ((uint16_t)0x0012)
+#define TIM_DMABase_OR                     ((uint16_t)0x0013)
 #define IS_TIM_DMA_BASE(BASE) (((BASE) == TIM_DMABase_CR1) || \
                                ((BASE) == TIM_DMABase_CR2) || \
                                ((BASE) == TIM_DMABase_SMCR) || \
@@ -400,7 +411,8 @@ typedef struct
                                ((BASE) == TIM_DMABase_CCR2) || \
                                ((BASE) == TIM_DMABase_CCR3) || \
                                ((BASE) == TIM_DMABase_CCR4) || \
-                               ((BASE) == TIM_DMABase_DCR))                     
+                               ((BASE) == TIM_DMABase_DCR) || \
+                               ((BASE) == TIM_DMABase_OR))
 /**
   * @}
   */ 
@@ -409,42 +421,42 @@ typedef struct
   * @{
   */
 
-#define TIM_DMABurstLength_1Byte           ((uint16_t)0x0000)
-#define TIM_DMABurstLength_2Bytes          ((uint16_t)0x0100)
-#define TIM_DMABurstLength_3Bytes          ((uint16_t)0x0200)
-#define TIM_DMABurstLength_4Bytes          ((uint16_t)0x0300)
-#define TIM_DMABurstLength_5Bytes          ((uint16_t)0x0400)
-#define TIM_DMABurstLength_6Bytes          ((uint16_t)0x0500)
-#define TIM_DMABurstLength_7Bytes          ((uint16_t)0x0600)
-#define TIM_DMABurstLength_8Bytes          ((uint16_t)0x0700)
-#define TIM_DMABurstLength_9Bytes          ((uint16_t)0x0800)
-#define TIM_DMABurstLength_10Bytes         ((uint16_t)0x0900)
-#define TIM_DMABurstLength_11Bytes         ((uint16_t)0x0A00)
-#define TIM_DMABurstLength_12Bytes         ((uint16_t)0x0B00)
-#define TIM_DMABurstLength_13Bytes         ((uint16_t)0x0C00)
-#define TIM_DMABurstLength_14Bytes         ((uint16_t)0x0D00)
-#define TIM_DMABurstLength_15Bytes         ((uint16_t)0x0E00)
-#define TIM_DMABurstLength_16Bytes         ((uint16_t)0x0F00)
-#define TIM_DMABurstLength_17Bytes         ((uint16_t)0x1000)
-#define TIM_DMABurstLength_18Bytes         ((uint16_t)0x1100)
-#define IS_TIM_DMA_LENGTH(LENGTH) (((LENGTH) == TIM_DMABurstLength_1Byte) || \
-                                   ((LENGTH) == TIM_DMABurstLength_2Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_3Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_4Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_5Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_6Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_7Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_8Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_9Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_10Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_11Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_12Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_13Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_14Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_15Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_16Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_17Bytes) || \
-                                   ((LENGTH) == TIM_DMABurstLength_18Bytes))
+#define TIM_DMABurstLength_1Transfer           ((uint16_t)0x0000)
+#define TIM_DMABurstLength_2Transfers          ((uint16_t)0x0100)
+#define TIM_DMABurstLength_3Transfers          ((uint16_t)0x0200)
+#define TIM_DMABurstLength_4Transfers          ((uint16_t)0x0300)
+#define TIM_DMABurstLength_5Transfers          ((uint16_t)0x0400)
+#define TIM_DMABurstLength_6Transfers          ((uint16_t)0x0500)
+#define TIM_DMABurstLength_7Transfers          ((uint16_t)0x0600)
+#define TIM_DMABurstLength_8Transfers          ((uint16_t)0x0700)
+#define TIM_DMABurstLength_9Transfers          ((uint16_t)0x0800)
+#define TIM_DMABurstLength_10Transfers         ((uint16_t)0x0900)
+#define TIM_DMABurstLength_11Transfers         ((uint16_t)0x0A00)
+#define TIM_DMABurstLength_12Transfers         ((uint16_t)0x0B00)
+#define TIM_DMABurstLength_13Transfers         ((uint16_t)0x0C00)
+#define TIM_DMABurstLength_14Transfers         ((uint16_t)0x0D00)
+#define TIM_DMABurstLength_15Transfers         ((uint16_t)0x0E00)
+#define TIM_DMABurstLength_16Transfers         ((uint16_t)0x0F00)
+#define TIM_DMABurstLength_17Transfers         ((uint16_t)0x1000)
+#define TIM_DMABurstLength_18Transfers         ((uint16_t)0x1100)
+#define IS_TIM_DMA_LENGTH(LENGTH) (((LENGTH) == TIM_DMABurstLength_1Transfer) || \
+                                   ((LENGTH) == TIM_DMABurstLength_2Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_3Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_4Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_5Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_6Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_7Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_8Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_9Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_10Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_11Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_12Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_13Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_14Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_15Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_16Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_17Transfers) || \
+                                   ((LENGTH) == TIM_DMABurstLength_18Transfers))
 /**
   * @}
   */ 
@@ -754,28 +766,83 @@ typedef struct
   * @{
   */
 
-#define TIM9_GPIO                          ((uint16_t)0x0000)
-#define TIM9_LSE                           ((uint16_t)0x0001)
+#define TIM2_TIM10_OC                      ((uint32_t)0xFFFE0000)
+#define TIM2_TIM5_TRGO                     ((uint32_t)0xFFFE0001)
 
-#define TIM10_GPIO                         ((uint16_t)0x0000)
-#define TIM10_LSI                          ((uint16_t)0x0001)
-#define TIM10_LSE                          ((uint16_t)0x0002)
-#define TIM10_RTC                          ((uint16_t)0x0003)
+#define TIM3_TIM11_OC                      ((uint32_t)0xFFFE0000)
+#define TIM3_TIM5_TRGO                     ((uint32_t)0xFFFE0001)
 
-#define TIM11_GPIO                         ((uint16_t)0x0000)
-#define TIM11_MSI                          ((uint16_t)0x0001)
-#define TIM11_HSE_RTC                      ((uint16_t)0x0002)
+#define TIM9_GPIO                          ((uint32_t)0xFFFC0000)
+#define TIM9_LSE                           ((uint32_t)0xFFFC0001)
 
-#define IS_TIM_REMAP(TIM_REMAP)	 (((TIM_REMAP) == TIM9_GPIO)||\
-                                  ((TIM_REMAP) == TIM9_LSE)||\
-                                  ((TIM_REMAP) == TIM10_GPIO)||\
-                                  ((TIM_REMAP) == TIM10_LSI)||\
-                                  ((TIM_REMAP) == TIM10_LSE)||\
-                                  ((TIM_REMAP) == TIM10_RTC)||\
-                                  ((TIM_REMAP) == TIM11_GPIO)||\
-                                  ((TIM_REMAP) == TIM11_MSI)||\
-                                  ((TIM_REMAP) == TIM11_HSE_RTC)) 
+#define TIM9_TIM3_TRGO                     ((uint32_t)0xFFFB0000)
+#define TIM9_TS_IO                         ((uint32_t)0xFFFB0004)
 
+#define TIM10_GPIO                         ((uint32_t)0xFFF40000)
+#define TIM10_LSI                          ((uint32_t)0xFFF40001)
+#define TIM10_LSE                          ((uint32_t)0xFFF40002)
+#define TIM10_RTC                          ((uint32_t)0xFFF40003)
+#define TIM10_RI                           ((uint32_t)0xFFF40008)
+
+#define TIM10_ETR_LSE                      ((uint32_t)0xFFFB0000)
+#define TIM10_ETR_TIM9_TRGO                ((uint32_t)0xFFFB0004)
+
+#define TIM11_GPIO                         ((uint32_t)0xFFF40000)
+#define TIM11_MSI                          ((uint32_t)0xFFF40001)
+#define TIM11_HSE_RTC                      ((uint32_t)0xFFF40002)
+#define TIM11_RI                           ((uint32_t)0xFFF40008)
+
+#define TIM11_ETR_LSE                      ((uint32_t)0xFFFB0000)
+#define TIM11_ETR_TIM9_TRGO                ((uint32_t)0xFFFB0004)
+
+#define IS_TIM_REMAP(TIM_REMAP)  (((TIM_REMAP) == TIM2_TIM10_OC)|| \
+                                  ((TIM_REMAP) == TIM2_TIM5_TRGO)|| \
+                                  ((TIM_REMAP) == TIM3_TIM11_OC)|| \
+                                  ((TIM_REMAP) == TIM3_TIM5_TRGO)|| \
+                                  ((TIM_REMAP) == TIM9_GPIO)|| \
+                                  ((TIM_REMAP) == TIM9_LSE)|| \
+                                  ((TIM_REMAP) == TIM9_TIM3_TRGO)|| \
+                                  ((TIM_REMAP) == TIM9_TS_IO)|| \
+                                  ((TIM_REMAP) == TIM10_GPIO)|| \
+                                  ((TIM_REMAP) == TIM10_LSI)|| \
+                                  ((TIM_REMAP) == TIM10_LSE)|| \
+                                  ((TIM_REMAP) == TIM10_RTC)|| \
+                                  ((TIM_REMAP) == TIM10_RI)|| \
+                                  ((TIM_REMAP) == TIM10_ETR_LSE)|| \
+                                  ((TIM_REMAP) == TIM10_ETR_TIM9_TRGO)|| \
+                                  ((TIM_REMAP) == TIM11_GPIO)|| \
+                                  ((TIM_REMAP) == TIM11_MSI)|| \
+                                  ((TIM_REMAP) == TIM11_HSE_RTC)|| \
+                                  ((TIM_REMAP) == TIM11_RI)|| \
+                                  ((TIM_REMAP) == TIM11_ETR_LSE)|| \
+                                  ((TIM_REMAP) == TIM11_ETR_TIM9_TRGO))
+
+/**
+  * @}
+  */
+
+/** @defgroup TIM_Legacy 
+  * @{
+  */
+
+#define TIM_DMABurstLength_1Byte           TIM_DMABurstLength_1Transfer
+#define TIM_DMABurstLength_2Bytes          TIM_DMABurstLength_2Transfers
+#define TIM_DMABurstLength_3Bytes          TIM_DMABurstLength_3Transfers
+#define TIM_DMABurstLength_4Bytes          TIM_DMABurstLength_4Transfers
+#define TIM_DMABurstLength_5Bytes          TIM_DMABurstLength_5Transfers
+#define TIM_DMABurstLength_6Bytes          TIM_DMABurstLength_6Transfers
+#define TIM_DMABurstLength_7Bytes          TIM_DMABurstLength_7Transfers
+#define TIM_DMABurstLength_8Bytes          TIM_DMABurstLength_8Transfers
+#define TIM_DMABurstLength_9Bytes          TIM_DMABurstLength_9Transfers
+#define TIM_DMABurstLength_10Bytes         TIM_DMABurstLength_10Transfers
+#define TIM_DMABurstLength_11Bytes         TIM_DMABurstLength_11Transfers
+#define TIM_DMABurstLength_12Bytes         TIM_DMABurstLength_12Transfers
+#define TIM_DMABurstLength_13Bytes         TIM_DMABurstLength_13Transfers
+#define TIM_DMABurstLength_14Bytes         TIM_DMABurstLength_14Transfers
+#define TIM_DMABurstLength_15Bytes         TIM_DMABurstLength_15Transfers
+#define TIM_DMABurstLength_16Bytes         TIM_DMABurstLength_16Transfers
+#define TIM_DMABurstLength_17Bytes         TIM_DMABurstLength_17Transfers
+#define TIM_DMABurstLength_18Bytes         TIM_DMABurstLength_18Transfers
 /**
   * @}
   */
@@ -887,7 +954,7 @@ void TIM_EncoderInterfaceConfig(TIM_TypeDef* TIMx, uint16_t TIM_EncoderMode,
 void TIM_SelectHallSensor(TIM_TypeDef* TIMx, FunctionalState NewState);
 
 /* Specific remapping management **********************************************/
-void TIM_RemapConfig(TIM_TypeDef* TIMx, uint16_t TIM_Remap);
+void TIM_RemapConfig(TIM_TypeDef* TIMx, uint32_t TIM_Remap);
 
 
 #ifdef __cplusplus
@@ -904,4 +971,4 @@ void TIM_RemapConfig(TIM_TypeDef* TIMx, uint16_t TIM_Remap);
   * @}
   */
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/

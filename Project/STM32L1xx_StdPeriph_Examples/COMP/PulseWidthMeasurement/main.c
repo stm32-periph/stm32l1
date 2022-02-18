@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    COMP/PulseWidthMeasurement/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    31-December-2010
+  * @version V1.1.0
+  * @date    24-January-2012
   * @brief   Main program body.
   ******************************************************************************
   * @attention
@@ -15,13 +15,24 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
+  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx.h"
+
+#ifdef USE_STM32L152D_EVAL
+#include "stm32l152d_eval_glass_lcd.h"
+#include "stm32l152d_eval_lcd.h"
+#else
 #include "stm32l152_eval_glass_lcd.h"
+#include "stm32l152_eval_lcd.h"
+#endif
+
 
 /** @addtogroup STM32L1xx_StdPeriph_Examples
   * @{
@@ -61,8 +72,27 @@ void DisplayOnLCD(uint16_t data);
   */
 int main(void)
 {
+  /*!< At this stage the microcontroller clock setting is already configured, 
+       this is done through SystemInit() function which is called from startup
+       file (startup_stm32l1xx_xx.s) before to branch to application main.
+       To reconfigure the default setting of SystemInit() function, refer to
+       system_stm32l1xx.c file
+     */
+  
+#ifdef USE_STM32L152_EVAL  
   /* LCD GLASS Configuration */
   LCD_Glass_Config();
+  /* Initialize the TFT-LCD */
+  STM32L152_LCD_Init();
+#elif defined USE_STM32L152D_EVAL
+  /* Initialize the TFT-LCD */
+  STM32L152D_LCD_Init();
+#else  
+
+#endif 
+
+  /* Clear the TFT-LCD */
+   LCD_Clear(LCD_COLOR_WHITE);
 
   /* DAC Channel2 configuration */
   DAC_Config();
@@ -79,8 +109,8 @@ int main(void)
     {
       /* Compute the pulse width in us */
       MeasuredPulse = (uint32_t)(((uint64_t) Capture * 1000000) / ((uint32_t)SystemCoreClock));
-
-      /* Display measured pulse width on Glass LCD */
+      
+      /* Display measured pulse width on Glass LCD and color LCD */
       DisplayOnLCD(MeasuredPulse);
       DisplayActive = 0;
     }
@@ -113,7 +143,7 @@ void LCD_Glass_Config(void)
   
   /* LCD Clock Source Selection */
   RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
-
+  
   /* Init LCD Glass */
   LCD_GLASS_Init();
 }
@@ -225,6 +255,10 @@ void TIM_Config(void)
   */
 void DisplayOnLCD(uint16_t data)
 {
+  static uint8_t LCDSTRING[]     = "      US            ";
+  uint32_t index = 0;
+
+#ifdef USE_STM32L152_EVAL
   uint8_t lcdstring[8]="      US";
 
   /* Fill the LCDString fields with the measured value */
@@ -237,6 +271,8 @@ void DisplayOnLCD(uint16_t data)
   while(LCD_GetFlagStatus(LCD_FLAG_UDR) != RESET)
   {
   }
+  
+ 
   /* Display one character on LCD */
   LCD_GLASS_WriteChar(&lcdstring[0], POINT_OFF, APOSTROPHE_OFF, 0);
   
@@ -260,9 +296,21 @@ void DisplayOnLCD(uint16_t data)
   
   /* Display one character on LCD */
   LCD_GLASS_WriteChar(&lcdstring[7], POINT_OFF, APOSTROPHE_OFF, 7);
-  
+
   /* Request LCD RAM update */
   LCD_UpdateDisplayRequest();
+#endif
+
+  LCDSTRING[1] = (uint8_t)((uint8_t)(data / 1000) + 0x30);
+  LCDSTRING[2] = (uint8_t)((uint8_t)((data % 1000) / 100) + 0x30);
+  LCDSTRING[3] = (uint8_t)((uint8_t)((data % 100) / 10) + 0x30);
+  LCDSTRING[4] = (uint8_t)((uint8_t)(data % 10) + 0x30);
+
+  /* Display measured value on LCD */
+  for (index = 0; index < 20; index++)
+  {
+    LCD_DisplayChar(LCD_LINE_3, (319 - (16 * index)), LCDSTRING[index]);
+  }
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -294,4 +342,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
   */ 
 
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/
