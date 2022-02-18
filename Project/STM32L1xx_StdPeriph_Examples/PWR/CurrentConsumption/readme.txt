@@ -2,11 +2,11 @@
   @page PWR_CurrentConsumption PWR Current Consumption example
   
   @verbatim
-  ******************** (C) COPYRIGHT 2012 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2014 STMicroelectronics *******************
   * @file    PWR/CurrentConsumption/readme.txt 
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   Description of the PWR Current Consumption example.
   ******************************************************************************
   *
@@ -71,8 +71,8 @@ Here below a detailed description of the example code:
 
  3. Ultra Low power modes description:
 
-    - Low Power Run mode:
-    ===================== 
+    - Low Power Run mode
+    ==================== 
       The maximum clock when the system is in Low Power Run mode is ~128KHz.
       This mode can only be entered when Voltage Range 2 is selected. 
         Low Power Run Mode from SRAM:
@@ -188,6 +188,7 @@ Here below a detailed description of the example code:
       is provided with STM32L152-EVAL board demonstration firmware.
       For more details, refer to UM1009 available on <a href="http://www.st.com/internet/mcu/family/141.jsp">  ST Microcontrollers </a>      
 
+
 @par Directory contents 
 
   - PWR/CurrentConsumption/stm32l1xx_conf.h              Library Configuration file
@@ -203,7 +204,8 @@ Here below a detailed description of the example code:
       system and can be easily customized to your own configuration. 
       To select different clock setup, use the "STM32L1xx_Clock_Configuration_V1.1.0.xls" 
       provided with the AN3309 package available on <a href="http://www.st.com/internet/mcu/family/141.jsp">  ST Microcontrollers </a>
-         
+
+
 @par Hardware and Software environment
 
   - This example runs on STM32L1xx Ultra Low Power High-, Medium-Density and Medium-Density Plus Devices.
@@ -222,13 +224,20 @@ Here below a detailed description of the example code:
     - Use LED1 connected  to PD.03 pin.
     - Use Key Button connected to PA.00 pin.
     - Connect an amperemeter to JP10 (1<->2 position) to measure the IDD current
-      
+
+
 @par How to use it ? 
 
 In order to make the program work, you must do the following :
  - Copy all source files from this example folder to the template folder under
    Project\STM32L1xx_StdPeriph_Templates
- - Open your preferred toolchain 
+ - Open your preferred toolchain
+ - If the used device is STM32L1XX_MD choose "STM32L1XX_MD(STM32L1xxxBxx)" workspace
+    - Add the following files to the project source list
+       - Utilities\STM32_EVAL\STM32L152_EVAL\stm32l152_eval.c
+ - If the used device is STM32L1XX_HD choose "STM32L1XX_HD(STM32L1xxxDxx)" workspace
+    - Add the following files to the project source list
+       - Utilities\STM32_EVAL\STM32L152D_EVAL\stm32l152d_eval.c    
  - Add the required example files
    - stm32l1xx_ulp_modes.c 
    - stm32l1xx_lowpowerrun_sram.c
@@ -254,11 +263,6 @@ In order to make the program work, you must do the following :
        ------------
       RAM functions are defined using a specific toolchain attribute
       "__attribute__((section(".data")))".
- 
-      TASKING Compiler
-      ----------------
-      RAM functions are defined using a specific toolchain pragma. This 
-      pragma is defined inside this file.
         
    @endverbatim
    
@@ -266,12 +270,14 @@ In order to make the program work, you must do the following :
  - Run the example
 
 @note
-- Ultra Low Power Medium-density devices are STM32L151xx and STM32L152xx 
-  microcontrollers where the Flash memory density ranges between 64 and 128 Kbytes.
-- Ultra Low Power Medium-density Plus devices are STM32L151xx, STM32L152xx and 
-  STM32L162xx microcontrollers where the Flash memory density is 256 Kbytes.
-- Ultra Low Power High-density devices are STM32L151xx, STM32L152xx and STM32L162xx 
-  microcontrollers where the Flash memory density is 384 Kbytes.
+- Ultra Low Power Medium-density devices: - STM32L151x6xx, STM32L151x8xx, STM32L151xBxx, STM32L152x6xx,
+                                            STM32L152x8xx, STM32L152xBxx, STM32L151x6xxA, STM32L151x8xxA,
+                                            STM32L151xBxxA, STM32L152x6xxA, STM32L152x8xxA and STM32L152xBxxA
+                                          - STM32L100x6xx, STM32L100x8xx and STM32L100xBxx
+- Ultra Low Power Medium-density Plus devices: - STM32L151xCxx, STM32L152xCxx and STM32L162xCxx 
+                                               - STM32L100xCxx
+- Ultra Low Power High-density devices: STM32L151xDxx, STM32L152xDxx and STM32L162xDxx
+- Ultra Low Power XL-density devices: STM32L151xExx, STM32L152xExx and STM32L162xExx
     
  * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */

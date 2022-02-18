@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    DMA/FSMC/main.c 
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    24-January-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   Main program body
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.

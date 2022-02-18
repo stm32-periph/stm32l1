@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    Project/STM32L1xx_StdPeriph_Templates/main.c 
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   Main program body
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -34,31 +34,9 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#if defined (USE_STM32L152_EVAL)
-  #define MESSAGE1   "    STM32L ULP MD   " 
-  #define MESSAGE2   " Device running on  " 
-  #define MESSAGE3   "   STM32L152-EVAL   " 
-#elif defined (USE_STM32L152D_EVAL)
-  #define MESSAGE1   "    STM32L ULP HD   " 
-  #define MESSAGE2   " Device running on  " 
-  #define MESSAGE3   "   STM32L152D-EVAL  " 
-#endif
-
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-USART_InitTypeDef USART_InitStructure;
-static __IO uint32_t TimingDelay;
-RCC_ClocksTypeDef RCC_Clocks;
- 
 /* Private function prototypes -----------------------------------------------*/
-#ifdef __GNUC__
-/* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
-   set to 'Yes') calls __io_putchar() */
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
-
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -75,62 +53,6 @@ int main(void)
        system_stm32l1xx.c file
      */ 
 
-  /* SysTick end of count event each 10ms */
-  RCC_GetClocksFreq(&RCC_Clocks);
-  SysTick_Config(RCC_Clocks.HCLK_Frequency / 100);
-
-  /* Initialize LEDs, Key Button, LCD and COM port(USART) available on
-     STM32L1XX-EVAL board *****************************************************/
-  STM_EVAL_LEDInit(LED1);
-  STM_EVAL_LEDInit(LED2);
-
-  /* USARTx configured as follow:
-        - BaudRate = 115200 baud  
-        - Word Length = 8 Bits
-        - One Stop Bit
-        - No parity
-        - Hardware flow control disabled (RTS and CTS signals)
-        - Receive and transmit enabled
-  */
-  USART_InitStructure.USART_BaudRate = 115200;
-  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-  USART_InitStructure.USART_StopBits = USART_StopBits_1;
-  USART_InitStructure.USART_Parity = USART_Parity_No;
-  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-
-  STM_EVAL_COMInit(COM1, &USART_InitStructure);
-
-  /* Initialize the LCD */
-#if defined (USE_STM32L152_EVAL)
-  STM32L152_LCD_Init();
-  /* Initialize the LCD */
-#elif defined (USE_STM32L152D_EVAL)
-  STM32L152D_LCD_Init();
-#endif
-
-  /* Display message on STM32L1XX-EVAL LCD ************************************/
-  /* Clear the LCD */ 
-  LCD_Clear(LCD_COLOR_WHITE);
-
-  /* Set the LCD Back Color */
-  LCD_SetBackColor(LCD_COLOR_BLUE);
-  
-  /* Set the LCD Text Color */
-  LCD_SetTextColor(LCD_COLOR_WHITE);
-  LCD_DisplayStringLine(LCD_LINE_0, (uint8_t *)MESSAGE1);
-  LCD_DisplayStringLine(LCD_LINE_1, (uint8_t *)MESSAGE2);
-  LCD_DisplayStringLine(LCD_LINE_2, (uint8_t *)MESSAGE3);
-
-  /* Retarget the C library printf function to the USARTx, can be USART2 or USART3
-     depending on the EVAL board you are using ********************************/
-  printf("\n\r %s", MESSAGE1);
-  printf(" %s", MESSAGE2);
-  printf(" %s\n\r", MESSAGE3);
-
-  /* Turn on leds available on STM32L1XX-EVAL *********************************/
-  STM_EVAL_LEDOn(LED1);
-  STM_EVAL_LEDOn(LED2);
 
   /* Add your application code here
      */
@@ -138,62 +60,10 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-    /* Toggle LD1 */
-    STM_EVAL_LEDToggle(LED1);
 
-    /* Insert 50 ms delay */
-    Delay(5);
-
-    /* Toggle LD2 */
-    STM_EVAL_LEDToggle(LED2);
-
-    /* Insert 50 ms delay */
-    Delay(5);
   }
 }
 
-/**
-  * @brief  Retargets the C library printf function to the USART.
-  * @param  None
-  * @retval None
-  */
-PUTCHAR_PROTOTYPE
-{
-  /* Place your implementation of fputc here */
-  /* e.g. write a character to the USART */
-  USART_SendData(EVAL_COM1, (uint8_t) ch);
-
-  /* Loop until the end of transmission */
-  while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_TC) == RESET)
-  {}
-
-  return ch;
-}
-
-/**
-  * @brief  Inserts a delay time.
-  * @param  nTime: specifies the delay time length, in 10 ms.
-  * @retval None
-  */
-void Delay(__IO uint32_t nTime)
-{
-  TimingDelay = nTime;
-
-  while(TimingDelay != 0);
-}
-
-/**
-  * @brief  Decrements the TimingDelay variable.
-  * @param  None
-  * @retval None
-  */
-void TimingDelay_Decrement(void)
-{
-  if (TimingDelay != 0x00)
-  { 
-    TimingDelay--;
-  }
-}
 
 #ifdef  USE_FULL_ASSERT
 

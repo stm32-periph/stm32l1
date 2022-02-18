@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    LCD/LCD_SegmentsDrive/stm32l1xx_it.h 
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************
   * @attention
@@ -18,7 +18,7 @@
   * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
   * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   ******************************************************************************
   */
 

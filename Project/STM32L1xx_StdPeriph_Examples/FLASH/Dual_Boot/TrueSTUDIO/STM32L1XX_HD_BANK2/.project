@@ -31,7 +31,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/STM32L1XX_HD_BANK2/Debug}</value>
+					<value>${workspace_loc:/STM32100B-EVAL/Debug}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>
@@ -74,32 +74,37 @@
 		<link>
 			<name>CMSIS</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>Doc</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>STM32_EVAL</name>
+			<name>STM32L152D_EVAL</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>StdPeriph_Driver</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>TrueSTUDIO</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>/TrueSTUDIO</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>User</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/.metadata/Link</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>CMSIS/system_stm32l1xx.c</name>
@@ -109,92 +114,22 @@
 		<link>
 			<name>Doc/readme.txt</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/STM32L1XX_HD_BANK2/readme.txt</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/readme.txt</locationURI>
 		</link>
 		<link>
-			<name>STM32_EVAL/stm32l152d_eval.c</name>
+			<name>STM32L152D_EVAL/stm32l152d_eval.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Utilities/STM32_EVAL/STM32L152D_EVAL/stm32l152d_eval.c</locationURI>
 		</link>
 		<link>
-			<name>STM32_EVAL/stm32l152d_eval_fsmc_nor.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Utilities/STM32_EVAL/STM32L152D_EVAL/stm32l152d_eval_fsmc_nor.c</locationURI>
-		</link>
-		<link>
-			<name>STM32_EVAL/stm32l152d_eval_fsmc_sram.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Utilities/STM32_EVAL/STM32L152D_EVAL/stm32l152d_eval_fsmc_sram.c</locationURI>
-		</link>
-		<link>
-			<name>STM32_EVAL/stm32l152d_eval_glass_lcd.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Utilities/STM32_EVAL/STM32L152D_EVAL/stm32l152d_eval_glass_lcd.c</locationURI>
-		</link>
-		<link>
-			<name>STM32_EVAL/stm32l152d_eval_i2c_tsensor.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Utilities/STM32_EVAL/STM32L152D_EVAL/stm32l152d_eval_i2c_tsensor.c</locationURI>
-		</link>
-		<link>
-			<name>STM32_EVAL/stm32l152d_eval_lcd.c</name>
+			<name>STM32L152D_EVAL/stm32l152d_eval_lcd.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Utilities/STM32_EVAL/STM32L152D_EVAL/stm32l152d_eval_lcd.c</locationURI>
-		</link>
-		<link>
-			<name>STM32_EVAL/stm32l152d_eval_sdio_sd.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Utilities/STM32_EVAL/STM32L152D_EVAL/stm32l152d_eval_sdio_sd.c</locationURI>
-		</link>
-		<link>
-			<name>STM32_EVAL/stm32l152d_eval_spi_ee.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Utilities/STM32_EVAL/STM32L152D_EVAL/stm32l152d_eval_spi_ee.c</locationURI>
 		</link>
 		<link>
 			<name>StdPeriph_Driver/misc.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/misc.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_adc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_adc.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_aes.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_aes.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_aes_util.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_aes_util.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_comp.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_comp.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_crc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_crc.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_dac.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_dac.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_dbgmcu.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_dbgmcu.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_dma.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_dma.c</locationURI>
 		</link>
 		<link>
 			<name>StdPeriph_Driver/stm32l1xx_exti.c</name>
@@ -227,44 +162,9 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_i2c.c</locationURI>
 		</link>
 		<link>
-			<name>StdPeriph_Driver/stm32l1xx_iwdg.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_iwdg.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_lcd.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_lcd.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_opamp.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_opamp.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_pwr.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_pwr.c</locationURI>
-		</link>
-		<link>
 			<name>StdPeriph_Driver/stm32l1xx_rcc.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_rcc.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_rtc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_rtc.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_sdio.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_sdio.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_spi.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_spi.c</locationURI>
 		</link>
 		<link>
 			<name>StdPeriph_Driver/stm32l1xx_syscfg.c</name>
@@ -272,19 +172,9 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_syscfg.c</locationURI>
 		</link>
 		<link>
-			<name>StdPeriph_Driver/stm32l1xx_tim.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_tim.c</locationURI>
-		</link>
-		<link>
 			<name>StdPeriph_Driver/stm32l1xx_usart.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_usart.c</locationURI>
-		</link>
-		<link>
-			<name>StdPeriph_Driver/stm32l1xx_wwdg.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_wwdg.c</locationURI>
 		</link>
 		<link>
 			<name>TrueSTUDIO/startup_stm32l1xx_hd.s</name>

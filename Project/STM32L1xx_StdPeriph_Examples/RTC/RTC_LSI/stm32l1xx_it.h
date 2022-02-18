@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    RTC/RTC_LSI/stm32l1xx_it.h 
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -52,6 +52,7 @@ void PendSV_Handler(void);
 void SysTick_Handler(void);
 void TAMPER_STAMP_IRQHandler(void);
 void TIM10_IRQHandler(void);
+void RTC_WKUP_IRQHandler(void);
 
 #ifdef __cplusplus
 }

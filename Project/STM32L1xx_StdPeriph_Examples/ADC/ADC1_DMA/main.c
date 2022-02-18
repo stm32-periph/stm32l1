@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    ADC/ADC1_DMA/main.c 
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   Main program body
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -120,7 +120,7 @@ void ADC_DMA_Config(void)
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);  
+  GPIO_Init(GPIOF, &GPIO_InitStructure);  
 #endif
 
   /* Check that HSI oscillator is ready */

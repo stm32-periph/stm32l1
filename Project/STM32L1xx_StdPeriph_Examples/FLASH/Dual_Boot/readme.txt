@@ -2,11 +2,11 @@
   @page FLASH_DualBoot FLASH Dual Boot example
   
   @verbatim
-  ******************** (C) COPYRIGHT 2012 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2014 STMicroelectronics *******************
   * @file    FLASH/Dual_Boot/readme.txt 
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   FLASH Dual Boot capability example.
   ******************************************************************************
   *
@@ -129,20 +129,6 @@ In order to load the IAP code, you have to do the following:
     - Load project image: Debug->Start/Stop Debug Session
     - Run program: Debug->Run (F5)
 
- - Ride 
-    - Open the Project.rprj project.
-    - In the configuration toolbar(Project->properties) select the project config:
-        - STM32L1XX_HD_BANK1: to load the program in Flash bank1 (BOOT_FROM_BANK1
-                              already defined in the project preprocessor)    
-        - STM32L1XX_HD_BANK2: to load the whole program in Flash (bank1 and bank2). 
-                              BOOT_FROM_BANK2 already defined in the project preprocessor
-                              and the elf of the 1st configuration (STM32L1XX_HD_BANK1) 
-                              is also included to insure the existance of two config 
-                              in the wo banks.                               
-    - Rebuild all files: Project->build project
-    - Load project image: Debug->start(ctrl+D)
-    - Run program: Debug->Run(ctrl+F9)  
-
  - TrueSTUDIO 
     - Open the TrueSTUDIO toolchain.
     - Click on File->Switch Workspace->Other and browse to TrueSTUDIO workspace 
@@ -160,12 +146,14 @@ In order to load the IAP code, you have to do the following:
       Run->Debug (F11)
         
 @note
-- Ultra Low Power Medium-density devices are STM32L151xx and STM32L152xx 
-  microcontrollers where the Flash memory density ranges between 64 and 128 Kbytes.
-- Ultra Low Power Medium-density Plus devices are STM32L151xx, STM32L152xx and 
-  STM32L162xx microcontrollers where the Flash memory density is 256 Kbytes.
-- Ultra Low Power High-density devices are STM32L151xx, STM32L152xx and STM32L162xx 
-  microcontrollers where the Flash memory density is 384 Kbytes.
+- Ultra Low Power Medium-density devices: - STM32L151x6xx, STM32L151x8xx, STM32L151xBxx, STM32L152x6xx,
+                                            STM32L152x8xx, STM32L152xBxx, STM32L151x6xxA, STM32L151x8xxA,
+                                            STM32L151xBxxA, STM32L152x6xxA, STM32L152x8xxA and STM32L152xBxxA
+                                          - STM32L100x6xx, STM32L100x8xx and STM32L100xBxx
+- Ultra Low Power Medium-density Plus devices: - STM32L151xCxx, STM32L152xCxx and STM32L162xCxx 
+                                               - STM32L100xCxx
+- Ultra Low Power High-density devices: STM32L151xDxx, STM32L152xDxx and STM32L162xDxx
+- Ultra Low Power XL-density devices: STM32L151xExx, STM32L152xExx and STM32L162xExx
     
  * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */

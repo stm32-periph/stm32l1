@@ -2,11 +2,11 @@
   @page exampletemplate Project Example Template
   
   @verbatim
-  ******************** (C) COPYRIGHT 2012 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2014 STMicroelectronics *******************
   * @file    readme.txt 
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   This sub-directory contains all the user-modifiable files 
   *          needed to create a new project linked with the STM32L1xx  
   *          Standard Peripheral Library.
@@ -30,16 +30,15 @@
 @par Project Example Template Description 
 
 This example is used as a template that can be used as refrence to build any new 
-firmware development for STM32L1xx Ultra Low Power Medium- and High-density 
-devices using the STM32L1xx Standard Peripherals Library.
+firmware development for STM32L1xx devices using the STM32L1xx Standard Peripherals
+Library.
 
 
 @par Directory contents 
 
-This folder contains standard template projects for EWARM, TASKING, MDK-ARM, RIDE
-and TrueSTUDIO toolchains that compile the needed STM32L1xx Standard Peripheral's 
-drivers plus all the user-modifiable files that are necessary to create a new 
-project. 
+This folder contains standard template projects for EWARM, MDK-ARM and TrueSTUDIO
+toolchains that compile the needed STM32L1xx Standard Peripheral's drivers plus
+all the user-modifiable files that are necessary to create a new project. 
 
   - Project/STM32L1xx_StdPeriph_Templates/stm32l1xx_conf.h    Library Configuration file
 
@@ -57,14 +56,7 @@ project.
           system and can be easily customized to your own configuration.
           To select different clock setup, use the "STM32L1xx_Clock_Configuration_V1.1.0.xls" 
           provided with the AN3309 package available on <a href="http://www.st.com/internet/mcu/family/141.jsp">  ST Microcontrollers </a>
-        
-@note
-- Ultra Low Power Medium-density devices are STM32L151xx and STM32L152xx 
-  microcontrollers where the Flash memory density ranges between 64 and 128 Kbytes.
-- Ultra Low Power Medium-density Plus devices are STM32L151xx, STM32L152xx and 
-  STM32L162xx microcontrollers where the Flash memory density is 256 Kbytes.
-- Ultra Low Power High-density devices are STM32L151xx, STM32L152xx and STM32L162xx 
-  microcontrollers where the Flash memory density is 384 Kbytes.
+
 
  * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */

@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    FLASH/Dual_Boot/main.c
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   Main program body
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -87,7 +87,7 @@ USART_InitTypeDef USART_InitStructure;
 
 static __IO uint32_t TimingDelay;
 RCC_ClocksTypeDef RCC_Clocks;
-uint32_t index = 0;
+uint32_t AddrCntr = 0;
 
 /* Private function prototypes -----------------------------------------------*/
 void Delay(__IO uint32_t nTime);
@@ -306,17 +306,17 @@ int main(void)
       /* Erase one page in BANK2 to store the first page */
       FLASH_ErasePage(0x08030000);
 
-      for(index = 0; index < 64; index++)
+      for(AddrCntr = 0; AddrCntr < 64; AddrCntr++)
       {
-        FLASH_FastProgramWord((0x08030000 + (index * 4)), (*(uint32_t *)(0x08020000 + (index * 4))));
+        FLASH_FastProgramWord((0x08030000 + (AddrCntr * 4)), (*(uint32_t *)(0x08020000 + (AddrCntr * 4))));
       }
 #elif defined (BOOT_FROM_BANK2)
       /* Erase one page in BANK1 to store the first page */
       FLASH_ErasePage(0x08000000);
 
-      for(index = 0; index < 64; index++)
+      for(AddrCntr = 0; AddrCntr < 64; AddrCntr++)
       {
-        FLASH_FastProgramWord((0x08000000 + (index * 4)), (*(uint32_t *)(0x08050000 + (index * 4))));
+        FLASH_FastProgramWord((0x08000000 + (AddrCntr * 4)), (*(uint32_t *)(0x08050000 + (AddrCntr * 4))));
       }
 #endif
 
@@ -374,9 +374,9 @@ void FLASH_SaveBANK1(void)
   /* Erase one page in BANK2 to store the first page */
   FLASH_ErasePage(0x08050000);
 
-  for(index = 0; index < 64; index++)
+  for(AddrCntr = 0; AddrCntr < 64; AddrCntr++)
   {
-    FLASH_FastProgramWord((0x08050000 + (index * 4)), (*(uint32_t *)(0x08000000 + (index * 4))));
+    FLASH_FastProgramWord((0x08050000 + (AddrCntr * 4)), (*(uint32_t *)(0x08000000 + (AddrCntr * 4))));
   }
 }
 
@@ -393,9 +393,9 @@ void FLASH_SaveBANK2(void)
   /* Erase one page in BANK1 to store the first page */
   FLASH_ErasePage(0x08020000);
 
-  for(index = 0; index < 64; index++)
+  for(AddrCntr = 0; AddrCntr < 64; AddrCntr++)
   {
-    FLASH_FastProgramWord((0x08020000 + (index * 4)), (*(uint32_t *)(0x08030000 + (index * 4))));
+    FLASH_FastProgramWord((0x08020000 + (AddrCntr * 4)), (*(uint32_t *)(0x08030000 + (AddrCntr * 4))));
   }
 }
 

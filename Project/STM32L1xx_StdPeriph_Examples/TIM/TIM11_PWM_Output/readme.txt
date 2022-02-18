@@ -2,11 +2,11 @@
   @page TIM11_PWM_Output TIM11 PWM Output example
   
   @verbatim
-  ******************** (C) COPYRIGHT 2012 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2014 STMicroelectronics *******************
   * @file    TIM/TIM11_PWM_Output/readme.txt 
   * @author  MCD Application Team
-  * @version V1.1.1
-  * @date    13-April-2012
+  * @version V1.2.0
+  * @date    16-May-2014
   * @brief   Description of the TIM11 PWM Output example.
   ******************************************************************************
   *
@@ -71,20 +71,22 @@ The PWM waveform can be displayed using an oscilloscope.
 
 @par How to use it ? 
 
-In order to make the program work, you must do the following :
+In order to make the program work, you must do the following:
  - Copy all source files from this example folder to the template folder under
    Project\STM32L1xx_StdPeriph_Templates
- - Open your preferred toolchain 
+ - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the example
 
 @note
-- Ultra Low Power Medium-density devices are STM32L151xx and STM32L152xx 
-  microcontrollers where the Flash memory density ranges between 64 and 128 Kbytes.
-- Ultra Low Power Medium-density Plus devices are STM32L151xx, STM32L152xx and 
-  STM32L162xx microcontrollers where the Flash memory density is 256 Kbytes.
-- Ultra Low Power High-density devices are STM32L151xx, STM32L152xx and STM32L162xx 
-  microcontrollers where the Flash memory density is 384 Kbytes.  
+- Ultra Low Power Medium-density devices: - STM32L151x6xx, STM32L151x8xx, STM32L151xBxx, STM32L152x6xx,
+                                            STM32L152x8xx, STM32L152xBxx, STM32L151x6xxA, STM32L151x8xxA,
+                                            STM32L151xBxxA, STM32L152x6xxA, STM32L152x8xxA and STM32L152xBxxA
+                                          - STM32L100x6xx, STM32L100x8xx and STM32L100xBxx
+- Ultra Low Power Medium-density Plus devices: - STM32L151xCxx, STM32L152xCxx and STM32L162xCxx 
+                                               - STM32L100xCxx
+- Ultra Low Power High-density devices: STM32L151xDxx, STM32L152xDxx and STM32L162xDxx
+- Ultra Low Power XL-density devices: STM32L151xExx, STM32L152xExx and STM32L162xExx  
    
  * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */
