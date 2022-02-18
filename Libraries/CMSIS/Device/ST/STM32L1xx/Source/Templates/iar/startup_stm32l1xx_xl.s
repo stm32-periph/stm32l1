@@ -1,8 +1,8 @@
-;/******************** (C) COPYRIGHT 2014 STMicroelectronics ********************
+;/******************** (C) COPYRIGHT 2015 STMicroelectronics ********************
 ;* File Name          : startup_stm32l1xx_xl.s
 ;* Author             : MCD Application Team
-;* Version            : V1.3.2
-;* Date               : 10-April-2014
+;* Version            : V1.3.3
+;* Date               : 20-April-2015
 ;* Description        : STM32L1xx Ultra Low Power XL-density Devices vector 
 ;*                      table for EWARM toolchain.
 ;*                      This module performs:

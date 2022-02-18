@@ -1,8 +1,8 @@
-;******************** (C) COPYRIGHT 2014 STMicroelectronics ********************
+;******************** (C) COPYRIGHT 2015 STMicroelectronics ********************
 ;* File Name          : startup_stm32l1xx_hd.s
 ;* Author             : MCD Application Team
-;* Version            : V1.2.0
-;* Date               : 16-May-2014
+;* Version            : V1.2.1
+;* Date               : 20-April-2015
 ;* Description        : STM32L1xx Ultra Low Power High-density Devices vector 
 ;*                      table for MDK-ARM toolchain.
 ;*                      This module performs:
@@ -356,4 +356,4 @@ __user_initial_stackheap
 
                  END
 
-;******************* (C) COPYRIGHT 2014 STMicroelectronics *****END OF FILE*****
+;******************* (C) COPYRIGHT 2015 STMicroelectronics *****END OF FILE*****

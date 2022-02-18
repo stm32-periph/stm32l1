@@ -2,11 +2,11 @@
   @page OPAMP_InternalFollower  Use OPAMP2 as internal follower
   
   @verbatim
-  ******************** (C) COPYRIGHT 2014 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2015 STMicroelectronics *******************
   * @file    OPAMP/InternalFollower/readme.txt 
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    16-May-2014
+  * @version V1.2.1
+  * @date    20-April-2015
   * @brief   Description of the OPAMP internal follower example.
   ******************************************************************************
   *

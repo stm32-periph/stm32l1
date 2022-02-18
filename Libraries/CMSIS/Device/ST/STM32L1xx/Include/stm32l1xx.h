@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx.h
   * @author  MCD Application Team
-  * @version V1.3.2
-  * @date    10-April-2014
+  * @version V1.3.3
+  * @date    20-April-2015
   * @brief   CMSIS Cortex-M3 Device Peripheral Access Layer Header File. 
   *          This file contains all the peripheral register's definitions, bits 
   *          definitions and memory mapping for STM32L1xx High-density, Medium-density,
@@ -26,7 +26,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -90,6 +90,36 @@
  #error "Please select first the target STM32L1xx device used in your application (in stm32l1xx.h file)"
 #endif
 
+/*
+  The table below provides the list of available part numbers per category, and the corresponding preprocessor
+  switch to be defined in the StdLib. 
+  ==============================================================================================================+
+   Memory density level |           RPNs                | StdLib switch | Cat.1 | Cat.2 | Cat.3 | Cat.4 | Cat.5 |
+  ==============================================================================================================+
+                        | STM32L100x6xx, STM32L151x6xx, |               |       |       |       |       |       |
+     32KB               | STM32L152x6xx, STM32L151x6xxA | STM32L1XX_MD  |   X   |   X   |       |       |       |
+                        | and STM32L152x6xxA            |               |       |       |       |       |       |
+  --------------------------------------------------------------------------------------------------------------+
+                        | STM32L100x8xx, STM32L151x8xx, |               |       |       |       |       |       |
+     64KB               | STM32L152x8xx, STM32L151x8xxA | STM32L1XX_MD  |   X   |   X   |       |       |       |
+                        | and STM32L152x8xxA            |               |       |       |       |       |       |
+  --------------------------------------------------------------------------------------------------------------+
+                        | STM32L100xBxx, STM32L151xBxx, |               |       |       |       |       |       |
+     128KB              | STM32L152xBxx, STM32L151xBxxA | STM32L1XX_MD  |   X   |   X   |       |       |       |
+                        | and STM32L152xBxxA            |               |       |       |       |       |       |
+  --------------------------------------------------------------------------------------------------------------+
+                        | STM32L100xCxx, STM32L151xCxx, |               |       |       |       |       |       |
+     256KB              | STM32L152xCxx and             | STM32L1XX_MDP |       |       |    X  |   X   |       |
+                        | STM32L162xCxx                 |               |       |       |       |       |       |
+  --------------------------------------------------------------------------------------------------------------+
+                        | STM32L151xDxx, STM32L152xDxx  |               |       |       |       |       |       |
+     384KB              | and STM32L162xDxx             | STM32L1XX_HD  |       |       |       |   X   |       |
+  --------------------------------------------------------------------------------------------------------------+
+                        | STM32L151xExx, STM32L152xExx  |               |       |       |       |       |       |
+     512KB              | and STM32L162xExx             | STM32L1XX_XL  |       |       |       |       |   X   |
+  ==============================================================================================================+
+*/
+
 #if !defined  USE_STDPERIPH_DRIVER
 /**
  * @brief Comment the line below if you will not use the peripherals drivers.
@@ -143,11 +173,11 @@
 #endif
 
 /**
- * @brief STM32L1xx Standard Peripheral Library version number V1.3.2
+ * @brief STM32L1xx Standard Peripheral Library version number V1.3.3
    */
 #define __STM32L1XX_STDPERIPH_VERSION_MAIN   (0x01) /*!< [31:24] main version */
 #define __STM32L1XX_STDPERIPH_VERSION_SUB1   (0x03) /*!< [23:16] sub1 version */
-#define __STM32L1XX_STDPERIPH_VERSION_SUB2   (0x02) /*!< [15:8]  sub2 version */
+#define __STM32L1XX_STDPERIPH_VERSION_SUB2   (0x03) /*!< [15:8]  sub2 version */
 #define __STM32L1XX_STDPERIPH_VERSION_RC     (0x00) /*!< [7:0]  release candidate */ 
 #define __STM32L1XX_STDPERIPH_VERSION       ( (__STM32L1XX_STDPERIPH_VERSION_MAIN << 24)\
                                              |(__STM32L1XX_STDPERIPH_VERSION_SUB1 << 16)\
@@ -508,10 +538,19 @@ typedef struct
   __IO uint32_t SR;           /*!< Status register,                             Address offset: 0x18 */
   __IO uint32_t OBR;          /*!< Option byte register,                        Address offset: 0x1c */
   __IO uint32_t WRPR;         /*!< Write protection register,                   Address offset: 0x20 */
-  uint32_t   RESERVED[23];    /*!< Reserved,                                    0x24                 */
-  __IO uint32_t WRPR1;        /*!< Write protection register 1,                 Address offset: 0x28 */
-  __IO uint32_t WRPR2;        /*!< Write protection register 2,                 Address offset: 0x2C */
+  uint32_t   RESERVED[23];    /*!< Reserved,                                    0x24-0x7C            */
+  __IO uint32_t WRPR1;        /*!< Write protection register 1,                 Address offset: 0x80 */
+  __IO uint32_t WRPR2;        /*!< Write protection register 2,                 Address offset: 0x84 */
+  __IO uint32_t WRPR3;        /*!< Write protection register 3,                 Address offset: 0x88 */
 } FLASH_TypeDef;
+/* IMPORTANT NOTE
+   ============== 
+    In the StdLib, the naming of WRP registers is shifted vs. the Reference Manual:
+      - WRPR correspond to WRPR1
+      - WRPR1 correspond to WRPR2
+      - WRPR2 correspond to WRPR3
+      - WRPR3 correspond to WRPR4
+  */
 
 /** 
   * @brief Option Bytes Registers
@@ -527,6 +566,9 @@ typedef struct
   __IO uint32_t WRP67;             /*!< write protection register 6 7,          Address offset: 0x14 */
   __IO uint32_t WRP89;             /*!< write protection register 8 9,          Address offset: 0x18 */
   __IO uint32_t WRP1011;           /*!< write protection register 10 11,        Address offset: 0x1C */
+  uint32_t   RESERVED[24];         /*!< Reserved,                               0x20-0x7C            */
+  __IO uint32_t WRP1213;           /*!< write protection register 12 13,        Address offset: 0x80 */
+  __IO uint32_t WRP1415;           /*!< write protection register 14 15,        Address offset: 0x84 */  
 } OB_TypeDef;
 
 /** 
@@ -992,6 +1034,17 @@ typedef struct
 #define FSMC_Bank1E_R_BASE    (FSMC_R_BASE + 0x0104) /*!< FSMC Bank1E registers base address */
 
 #define DBGMCU_BASE           ((uint32_t)0xE0042000) /*!< Debug MCU registers base address */
+
+/*!< Unique device ID registers */
+#if defined (STM32L1XX_MD)
+ #define         UID1          ((uint32_t)0x1FF80050)
+ #define         UID2          ((uint32_t)0x1FF80054)
+ #define         UID3          ((uint32_t)0x1FF80064)
+#elif defined (STM32L1XX_MDP) || defined (STM32L1XX_HD) || defined (STM32L1XX_XL)
+ #define         UID1          ((uint32_t)0x1FF800D0)
+ #define         UID2          ((uint32_t)0x1FF800D4)
+ #define         UID3          ((uint32_t)0x1FF800E4)
+#endif 
 
 /**
   * @}

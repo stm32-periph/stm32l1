@@ -2,15 +2,15 @@
   ******************************************************************************
   * @file    PWR/STANDBY/stm32l1xx_it.c 
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    16-May-2014
+  * @version V1.2.1
+  * @date    20-April-2015
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and peripherals
   *          interrupt service routine.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -188,7 +188,7 @@ void EXTI9_5_IRQHandler(void)
     /* Disable the Alarm A */
     RTC_AlarmCmd(RTC_Alarm_A, DISABLE);
     
-    RTC_GetTime(RTC_Format_BCD, &RTC_TimeStructure);
+    RTC_GetTime(RTC_Format_BIN, &RTC_TimeStructure);
 
     /* Set the alarm X+5s */
     RTC_AlarmStructure.RTC_AlarmTime.RTC_H12     = RTC_TimeStructure.RTC_H12;
@@ -198,21 +198,22 @@ void EXTI9_5_IRQHandler(void)
     RTC_AlarmStructure.RTC_AlarmDateWeekDay = 0x31;
     RTC_AlarmStructure.RTC_AlarmDateWeekDaySel = RTC_AlarmDateWeekDaySel_Date;
     RTC_AlarmStructure.RTC_AlarmMask = RTC_AlarmMask_DateWeekDay;
-    RTC_SetAlarm(RTC_Format_BCD, RTC_Alarm_A, &RTC_AlarmStructure);
+    RTC_SetAlarm(RTC_Format_BIN, RTC_Alarm_A, &RTC_AlarmStructure);
+
+    /* Clear PWR WakeUp flag */
+    PWR_ClearFlag(PWR_FLAG_WU);
+
+    /* Clear RTC Alarm A flag */ 
+    RTC_ClearFlag(RTC_FLAG_ALRAF);
   
-    /* Enable RTC Alarm A Interrupt */
+    /* Enable RTC Alarm A Interrupt: this Interrupt will wake-up the system from
+       STANDBY mode (RTC Alarm IT not enabled in NVIC) */
     RTC_ITConfig(RTC_IT_ALRA, ENABLE);
   
     /* Enable the Alarm A */
     RTC_AlarmCmd(RTC_Alarm_A, ENABLE);
-
-    /* Clear RTC Alarm A flag */ 
-    RTC_ClearFlag(RTC_FLAG_ALRAF);
-
-    /* Clear WakeUp flag */
-    PWR_ClearFlag(PWR_FLAG_WU);
     
-    /* Request to enter STANDBY mode (Wake Up flag is cleared in PWR_EnterSTANDBYMode function) */
+    /* Request to enter STANDBY mode */
     PWR_EnterSTANDBYMode();
   }
 }

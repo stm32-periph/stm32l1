@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    PWR/STANDBY/main.c 
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    16-May-2014
+  * @version V1.2.1
+  * @date    20-April-2015
   * @brief   Main program body
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -71,8 +71,13 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32l1xx.c file
      */     
-       
-  /* System clocks configuration ---------------------------------------------*/
+
+  /* Initialize LEDs and Key Button mounted on STM32L152X-EVAL board */       
+  STM_EVAL_LEDInit(LED1);
+  STM_EVAL_LEDInit(LED2);
+  STM_EVAL_PBInit(BUTTON_SEL, BUTTON_MODE_EXTI);
+  
+  /* System clocks configuration */
   RCC_Config();
 
   /* LCD GLASS Initialization */
@@ -80,21 +85,13 @@ int main(void)
   
   /* Clear the LCD GLASS */
   LCD_GLASS_Clear();
-
-  /* Initialize LEDs and Key Button mounted on STM32X-EVAL board */       
-  STM_EVAL_LEDInit(LED1);
-  STM_EVAL_LEDInit(LED2);
-  STM_EVAL_PBInit(BUTTON_SEL, BUTTON_MODE_EXTI);
-
-  /* Turn on LED2 */
-  STM_EVAL_LEDOn(LED2);
-  
+ 
   /* Enable WKUP pin 1 */
   PWR_WakeUpPinCmd(PWR_WakeUpPin_1, ENABLE);  
 
   /* Configure the SysTick to generate an interrupt each 250 ms */
   SysTickConfig();
-             
+  
   while (1)
   {
   }
@@ -112,15 +109,15 @@ void RCC_Config(void)
   /* Allow access to RTC Domain */
   PWR_RTCAccessCmd(ENABLE);
 
-  /* Clear WakeUp flag */
-  PWR_ClearFlag(PWR_FLAG_WU);
-
   /* Check if the StandBy flag is set */
   if (PWR_GetFlagStatus(PWR_FLAG_SB) != RESET)
   {
     /* Clear StandBy flag */
     PWR_ClearFlag(PWR_FLAG_SB);
 
+    /* Turn on LED2 */
+    STM_EVAL_LEDOn(LED2);
+    
     /* Wait for RTC APB registers synchronisation */
     RTC_WaitForSynchro();
     /* No need to configure the RTC as the RTC config(clock source, enable,

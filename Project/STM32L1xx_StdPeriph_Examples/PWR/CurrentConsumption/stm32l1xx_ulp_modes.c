@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    PWR/CurrentConsumption/stm32l1xx_ulp_modes.c 
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    16-May-2014
+  * @version V1.2.1
+  * @date    20-April-2015
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the STM32L1xx Ultra Low Power Modes:           
   *           - Low Power Run Mode from Internal SRAM
@@ -15,7 +15,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -819,10 +819,13 @@ void StandbyMode_Measure(void)
   /* Enable Ultra low power mode */
   PWR_UltraLowPowerCmd(ENABLE);
 
+  /* Clear PWR WakeUp flag */
+  PWR_ClearFlag(PWR_FLAG_WU);
+
   /* Enable WKUP pin 1 */
   PWR_WakeUpPinCmd(PWR_WakeUpPin_1, ENABLE);
 
-  /* Request to enter STANDBY mode (Wake Up flag is cleared in PWR_EnterSTANDBYMode function) */
+  /* Request to enter STANDBY mode */
   PWR_EnterSTANDBYMode();
   
   /* Infinite loop */
@@ -884,17 +887,20 @@ void StandbyRTCLSEMode_Measure(void)
   */
   RTC_WakeUpClockConfig(RTC_WakeUpClock_RTCCLK_Div16);
   RTC_SetWakeUpCounter(0x1FFF);
+
+  /* Clear PWR WakeUp flag */
+  PWR_ClearFlag(PWR_FLAG_WU);
+  
+  /* Clear RTC WakeUp (WUTF) flag */
+  RTC_ClearFlag(RTC_FLAG_WUTF);
   
   /* Enable the Wakeup Interrupt */
   RTC_ITConfig(RTC_IT_WUT, ENABLE); 
 
   /* Enable Wakeup Counter */
   RTC_WakeUpCmd(ENABLE);
-
-  /* Clear WakeUp (WUTF) pending flag */
-  RTC_ClearFlag(RTC_FLAG_WUTF);
     
-  /* Request to enter STANDBY mode (Wake Up flag is cleared in PWR_EnterSTANDBYMode function) */
+  /* Request to enter STANDBY mode */
   PWR_EnterSTANDBYMode();
   
   /* Infinite loop */
@@ -956,17 +962,20 @@ void StandbyRTCLSIMode_Measure(void)
   */
   RTC_WakeUpClockConfig(RTC_WakeUpClock_RTCCLK_Div16);
   RTC_SetWakeUpCounter(0x2421);
+
+  /* Clear PWR WakeUp flag */
+  PWR_ClearFlag(PWR_FLAG_WU);
   
+  /* Clear RTC WakeUp (WUTF) flag */
+  RTC_ClearFlag(RTC_FLAG_WUTF);
+
   /* Enable the Wakeup Interrupt */
   RTC_ITConfig(RTC_IT_WUT, ENABLE);
 
   /* Enable Wakeup Counter */
   RTC_WakeUpCmd(ENABLE); 
 
-  /* Clear WakeUp (WUTF) pending flag */
-  RTC_ClearFlag(RTC_FLAG_WUTF);
-
-  /* Request to enter STANDBY mode (Wake Up flag is cleared in PWR_EnterSTANDBYMode function) */
+  /* Request to enter STANDBY mode */
   PWR_EnterSTANDBYMode();
   
   /* Infinite loop */

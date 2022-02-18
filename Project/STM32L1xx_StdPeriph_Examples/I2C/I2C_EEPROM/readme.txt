@@ -2,11 +2,11 @@
   @page I2C_EEPROM  How to use the I2C to drive an EEPROM memory
   
   @verbatim
-  ******************** (C) COPYRIGHT 2014 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2015 STMicroelectronics *******************
   * @file    I2C/I2C_EEPROM/readme.txt 
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    16-May-2014
+  * @version V1.2.1
+  * @date    20-April-2015
   * @brief   Description of the I2C and M24Cxx or M24Lxx EEPROM communication example.
   ******************************************************************************
   *

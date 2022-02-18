@@ -2,11 +2,11 @@
   @page AES_MODES  Use AES to encrypt then to decrypt data
   
   @verbatim
-  ******************** (C) COPYRIGHT 2014 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2015 STMicroelectronics *******************
   * @file    AES/AES_MODES/readme.txt 
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    16-May-2014
+  * @version V1.2.1
+  * @date    20-April-2015
   * @brief   Description of the AES encryption decryption example.
   ******************************************************************************
   *

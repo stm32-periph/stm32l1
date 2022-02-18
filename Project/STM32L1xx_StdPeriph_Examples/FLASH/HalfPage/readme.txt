@@ -2,11 +2,11 @@
   @page FLASH_HalfPage FLASH Half Page Program example
   
   @verbatim
-  ******************** (C) COPYRIGHT 2014 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2015 STMicroelectronics *******************
   * @file    FLASH/HalfPage/readme.txt 
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    16-May-2014
+  * @version V1.2.1
+  * @date    20-April-2015
   * @brief   Description of the FLASH Half Page Program example.
   ******************************************************************************
   *
