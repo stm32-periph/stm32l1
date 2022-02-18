@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    LCD/LCD_SegmentsDrive/stm32l1xx_it.h 
   * @author  MCD Application Team
-  * @version V1.2.1
-  * @date    20-April-2015
+  * @version V1.2.2
+  * @date    17-November-2021
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************
   * @attention
@@ -54,4 +54,3 @@ void SysTick_Handler(void);
 
 #endif /* __STM32L1xx_IT_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
