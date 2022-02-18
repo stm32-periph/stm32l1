@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32l1xx.h
   * @author  MCD Application Team
-  * @version V1.1.0
-  * @date    24-January-2012
+  * @version V1.1.1
+  * @date    09-March-2012
   * @brief   CMSIS Cortex-M3 Device Peripheral Access Layer Header File. 
   *          This file contains all the peripheral register's definitions, bits 
   *          definitions and memory mapping for STM32L1xx High-, Medium-density
@@ -26,17 +26,20 @@
   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-  *
-  * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
-  * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
-  *
   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  *
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -136,11 +139,11 @@
 #endif
 
 /**
- * @brief STM32L1xx Standard Peripheral Library version number V1.1.0
+ * @brief STM32L1xx Standard Peripheral Library version number V1.1.1
    */
 #define __STM32L1XX_STDPERIPH_VERSION_MAIN   (0x01) /*!< [31:24] main version */
 #define __STM32L1XX_STDPERIPH_VERSION_SUB1   (0x01) /*!< [23:16] sub1 version */
-#define __STM32L1XX_STDPERIPH_VERSION_SUB2   (0x00) /*!< [15:8]  sub2 version */
+#define __STM32L1XX_STDPERIPH_VERSION_SUB2   (0x01) /*!< [15:8]  sub2 version */
 #define __STM32L1XX_STDPERIPH_VERSION_RC     (0x00) /*!< [7:0]  release candidate */ 
 #define __STM32L1XX_STDPERIPH_VERSION       ( (__STM32L1XX_STDPERIPH_VERSION_MAIN << 24)\
                                              |(__STM32L1XX_STDPERIPH_VERSION_SUB1 << 16)\
@@ -6345,4 +6348,4 @@ typedef struct
   * @}
   */
 
-/******************* (C) COPYRIGHT 2012 STMicroelectronics *****END OF FILE****/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

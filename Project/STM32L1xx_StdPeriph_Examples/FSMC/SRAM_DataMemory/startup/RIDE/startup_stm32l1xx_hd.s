@@ -1,36 +1,39 @@
 /**
- ******************************************************************************
- * @file      startup_stm32l1xx_hd.s
- * @author    MCD Application Team
- * @version   V1.1.0
- * @date      24-January-2012
- * @brief     STM32L1xx Ultra Low Power High-density Devices vector table for 
- *            RIDE7 toolchain.
- *
- *            This module performs:
- *                - Set the initial SP
- *                - Set the initial PC == Reset_Handler,
- *                - Set the vector table entries with the exceptions ISR address
- *                - Branches to main in the C library (which eventually
- *                  calls main()).
- *            After Reset the Cortex-M3 processor is in Thread mode,
- *            priority is Privileged, and the Stack is set to Main.
- *******************************************************************************
- * @attention
- *
- * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
- * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
- * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
- * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
- * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
- * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
- *
- * FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
- * LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
- *  
- * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
- ******************************************************************************* 
- */
+  ******************************************************************************
+  * @file      startup_stm32l1xx_hd.s
+  * @author    MCD Application Team
+  * @version   V1.1.0
+  * @date      13-April-2012
+  * @brief     STM32L1xx Ultra Low Power High-density Devices vector table for 
+  *            RIDE7 toolchain.
+  *
+  *            This module performs:
+  *                - Set the initial SP
+  *                - Set the initial PC == Reset_Handler,
+  *                - Set the vector table entries with the exceptions ISR address
+  *                - Branches to main in the C library (which eventually
+  *                  calls main()).
+  *            After Reset the Cortex-M3 processor is in Thread mode,
+  *            priority is Privileged, and the Stack is set to Main.
+  ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  *
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
+  ******************************************************************************
+  */
     
   .syntax unified
   .cpu cortex-m3

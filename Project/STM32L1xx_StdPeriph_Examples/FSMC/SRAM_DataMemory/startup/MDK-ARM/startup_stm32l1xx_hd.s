@@ -2,7 +2,7 @@
 ;* File Name          : startup_stm32l1xx_hd.s
 ;* Author             : MCD Application Team
 ;* Version            : V1.1.0
-;* Date               : 24-January-2012
+;* Date               : 13-April-2012
 ;* Description        : STM32L1xx Ultra Low Power High-density Devices vector 
 ;*                      table for MDK-ARM toolchain.
 ;*                      This module performs:
@@ -15,14 +15,19 @@
 ;*                      priority is Privileged, and the Stack is set to Main.
 ;* <<< Use Configuration Wizard in Context Menu >>>   
 ;*******************************************************************************
-; THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-; WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
-; AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
-; INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
-; CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
-; INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-; FOR MORE INFORMATION PLEASE READ CAREFULLY THE LICENSE AGREEMENT FILE
-; LOCATED IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
+; 
+; Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+; You may not use this file except in compliance with the License.
+; You may obtain a copy of the License at:
+; 
+;        http://www.st.com/software_license_agreement_liberty_v2
+; 
+; Unless required by applicable law or agreed to in writing, software 
+; distributed under the License is distributed on an "AS IS" BASIS, 
+; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+; See the License for the specific language governing permissions and
+; limitations under the License.
+; 
 ;*******************************************************************************
 
 ; Amount of memory (in bytes) allocated for Stack

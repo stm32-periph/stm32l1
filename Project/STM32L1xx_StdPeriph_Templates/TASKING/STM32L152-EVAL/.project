@@ -204,11 +204,6 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Libraries/STM32L1xx_StdPeriph_Driver/src/stm32l1xx_wwdg.c</locationURI>
 		</link>
 		<link>
-			<name>TASKING/cstart_thumb2.asm</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Libraries/CMSIS/Device/ST/STM32L1xx/Source/Templates/TASKING/cstart_thumb2.asm</locationURI>
-		</link>
-		<link>
 			<name>User/main.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/main.c</locationURI>
